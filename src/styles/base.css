@@ -1,0 +1,3 @@
+body {
+  @apply text-textBlack bg-background box-border;
+}

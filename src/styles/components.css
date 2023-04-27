@@ -1,0 +1,11 @@
+.content-container {
+  @apply mx-auto px-6;
+}
+
+.carousel-item {
+  @apply text-sm cursor-pointer w-[50px] hover:font-semibold text-center transition-all;
+}
+
+.carousel-item-selected {
+  @apply text-xl w-[73px];
+}

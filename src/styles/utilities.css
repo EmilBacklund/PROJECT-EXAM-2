@@ -1,0 +1,13 @@
+.custom-transition {
+  transition: all cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.4s;
+}
+
+.gradient-opacity {
+  background-image: linear-gradient(
+    to right,
+    rgba(248, 244, 242, 1) 0,
+    rgba(0, 0, 0, 0) 25%,
+    rgba(0, 0, 0, 0) 85%,
+    rgba(248, 244, 242, 1) 100%
+  );
+}

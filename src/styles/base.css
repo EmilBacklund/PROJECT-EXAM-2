@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'Carena';
+  src: url('/fonts/carena.otf') format('opentype');
+}
+
 body {
-  @apply text-textBlack bg-background box-border;
+  @apply text-textBlack bg-background box-border font-openSans;
+}
+
+h2 {
+  font-family: 'Carena';
 }

@@ -1,0 +1,20 @@
+.embla {
+  overflow: hidden;
+}
+.embla__container {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 50%; /* Each slide covers 80% of the viewport */
+  gap: 20px;
+}
+
+.embla__slide {
+  flex: 0 0 100%;
+  margin-right: 20px;
+}
+
+@media (min-width: 768px) {
+  .embla__container {
+    grid-auto-columns: 33%; /* Each slide covers 80% of the viewport */
+  }
+}

@@ -10,6 +10,9 @@ export default {
         holidazeGrey: '#9A9A9A',
         background: '#F8F4F2',
       },
+      fontFamily: {
+        openSans: ['Open Sans', 'sans-serif'],
+      },
     },
   },
   plugins: [],

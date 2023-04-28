@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSingleImage } from '../../store/modules/headerImageSlice';
 import {
@@ -16,9 +16,7 @@ const Main = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log(selectedView);
-
-  function toggleView() {
+  const toggleView = useMemo(() => {
     switch (selectedView) {
       case 'Booking':
         return <Booking />;
@@ -29,12 +27,13 @@ const Main = () => {
       default:
         console.error('Something went wrong');
     }
-  }
+  }, [selectedView]);
 
   const storedMobileImage = localStorage.getItem('mobileImage');
   const storedDesktopImage = localStorage.getItem('desktopImage');
 
   const checkWindowSize = () => {
+    console.log('checkWindowSize, rendered');
     const width = window.innerWidth;
     setWindowWidth(width);
   };
@@ -59,7 +58,6 @@ const Main = () => {
         const { image, altText, timestamp } = JSON.parse(storedImage);
 
         if (currentTime - timestamp < maxAge) {
-          console.log(image);
           if (orientation === 'portrait') {
             dispatch(SET_SINGLE_IMAGE_MOBILE({ urls: { full: image }, alt_description: altText }));
           } else {
@@ -93,8 +91,8 @@ const Main = () => {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div className='relative h-0 overflow-hidden min-h-[420px] pb-[75%]'>
-          <div className='absolute inset-0'>
+        <div className='relative h-0 overflow-hidden min-h-[600px] '>
+          <div className='absolute inset-0 max-h-[760px]'>
             {windowWidth > 768 && imageDesktop ? (
               <img
                 className='w-full h-full object-cover max-h-[760px]'
@@ -110,8 +108,8 @@ const Main = () => {
                 />
               )
             )}
+            {toggleView}
           </div>
-          {toggleView()}
         </div>
       )}
     </>

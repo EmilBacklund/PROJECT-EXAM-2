@@ -1,36 +1,43 @@
-import { useState } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { setSelectedView } from '../../store/modules/displayedHomepageViewSlice';
 import { motion, AnimatePresence } from 'framer-motion';
 import classNames from 'classnames';
 
-const swipeConfidenceThreshold = 1;
-const swipePower = (offset, velocity) => {
-  return Math.abs(offset) * velocity;
-};
-
 const AuthCarousel = () => {
   const dispatch = useDispatch();
   const [currentIndex, setCurrentIndex] = useState(1);
-  const views = ['Login', 'Booking', 'Register'];
+  const [isDragTriggered, setIsDragTriggered] = useState(false);
+  const views = useMemo(() => ['Login', 'Booking', 'Register'], []);
 
-  const goPrev = async () => {
+  const goPrev = useCallback(() => {
     setCurrentIndex((currentIndex - 1 + views.length) % views.length);
-    await dispatch(setSelectedView(views[(currentIndex - 1 + views.length) % views.length]));
-  };
+  }, [currentIndex, views]);
 
-  const goNext = async () => {
+  const goNext = useCallback(() => {
     setCurrentIndex((currentIndex + 1) % views.length);
-    await dispatch(setSelectedView(views[(currentIndex + 1) % views.length]));
-  };
+  }, [currentIndex, views]);
 
-  const handleClick = async (view, index) => {
-    await dispatch(setSelectedView(view));
+  useEffect(() => {
+    if (!isDragTriggered) return;
+    dispatch(setSelectedView(views[currentIndex]));
+    setIsDragTriggered(false);
+  }, [dispatch, currentIndex, isDragTriggered, views]);
+
+  const handleClick = (view, index) => {
+    setIsDragTriggered(false);
+    dispatch(setSelectedView(view));
+
     if (index === 0) {
       goPrev();
     } else if (index === 2) {
       goNext();
     }
+  };
+
+  const swipeConfidenceThreshold = 1;
+  const swipePower = (offset, velocity) => {
+    return Math.abs(offset) * velocity;
   };
 
   const orderedViews = [
@@ -44,7 +51,7 @@ const AuthCarousel = () => {
   return (
     <AnimatePresence>
       <motion.div
-        className='flex sm:gap-8 gap-5 items-center justify-center relative select-none px-2 '
+        className='flex md:gap-20 gap-5 items-center justify-center relative select-none px-2 '
         drag='x'
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.03}
@@ -52,8 +59,10 @@ const AuthCarousel = () => {
           const swipe = swipePower(offset.x, velocity.x);
 
           if (swipe < -swipeConfidenceThreshold) {
+            setIsDragTriggered(true);
             goNext();
           } else if (swipe > swipeConfidenceThreshold) {
+            setIsDragTriggered(true);
             goPrev();
           }
         }}
@@ -69,11 +78,11 @@ const AuthCarousel = () => {
               y: { duration: durations[index] },
               scale: { type: 'spring', stiffness: 400, damping: 50 },
             }}
-            className={classNames('text-xs sm:text-sm cursor-pointer text-center', {
+            className={classNames('text-xs md:text-lg cursor-pointer text-center', {
               'font-semibold': index === 1,
             })}
-            onClick={async () => {
-              await handleClick(view, index);
+            onClick={() => {
+              handleClick(view, index);
             }}
           >
             {view}

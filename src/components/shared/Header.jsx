@@ -12,9 +12,12 @@ const Header = () => {
 
   return (
     <header className='content-container py-4 flex items-center justify-between border-b border-holidazeGrey'>
-      <a className='w-10' href='/'>
-        <img className='w-full' src='/images/mobileIcon.svg' alt='' />
-      </a>
+      <div className='w-10 md:w-auto'>
+        <a className='w-10 md:w-full' href='/'>
+          <img className='w-full md:hidden' src='/images/mobileIcon.svg' alt='' />
+          <img className=' hidden md:block' src='/images/Group13.svg' alt='' />
+        </a>
+      </div>
       {!isAuthenticated && isHomepage && <AuthCarousel />}
       <nav>
         <div

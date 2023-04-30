@@ -12,6 +12,8 @@ export default {
       },
       fontFamily: {
         openSans: ['Open Sans', 'sans-serif'],
+        josefinsSans: ['Josefin Sans', 'sans-serif'],
+        carena: ['Carena', 'sans-serif'],
       },
     },
   },

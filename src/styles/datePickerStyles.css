@@ -3,25 +3,6 @@
   display: inline;
 }
 
-/* customCalendarStyles.css */
-.react-calendar__tile--range {
-  background-color: #804141; /* Change the color as per your preference */
-}
-.react-calendar__tile--range:hover,
-.react-calendar__tile--range:focus {
-  background-color: #804141; /* Change the color as per your preference */
-}
-.react-calendar__tile--rangeStart,
-.react-calendar__tile--rangeEnd {
-  background-color: #804141; /* Change the color as per your preference */
-}
-.react-calendar__tile--rangeStart:hover,
-.react-calendar__tile--rangeStart:focus,
-.react-calendar__tile--rangeEnd:hover,
-.react-calendar__tile--rangeEnd:focus {
-  background-color: #804141; /* Change the color as per your preference */
-}
-
 .react-calendar__tile--disabled {
   background-color: #4a4a4a; /* Dark grey color */
   opacity: 1;

@@ -14,8 +14,8 @@ const SellingSection = ({ title }) => {
   }, [emblaApi]);
 
   return (
-    <div className='mt-6 mb-4 md:mb-[120px] md:mt-[120px] text-center md:text-start section-container'>
-      <h2 className='text-xl md:text-[32px] mb-4'>{title}</h2>
+    <div className='mt-6 mb-4 md:mb-[80px] lg:mb-[120px] md:mt-[80px] lg:mt-[120px] text-center md:text-start section-container w-full'>
+      <h2>{title}</h2>
       <div className='embla' ref={emblaRef}>
         <div className='embla__container'>
           <div className='sellingSectionCard embla__slide'>

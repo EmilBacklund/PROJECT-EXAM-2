@@ -78,7 +78,7 @@ const AuthCarousel = () => {
               y: { duration: durations[index] },
               scale: { type: 'spring', stiffness: 400, damping: 50 },
             }}
-            className={classNames('text-xs md:text-lg cursor-pointer text-center', {
+            className={classNames('text-xs sm:text-base md:text-lg cursor-pointer text-center', {
               'font-semibold': index === 1,
             })}
             onClick={() => {

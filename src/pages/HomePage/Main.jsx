@@ -16,7 +16,7 @@ const Main = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isLoading, setIsLoading] = useState(true);
 
-  const toggleView = useMemo(() => {
+  const toggleView = () => {
     switch (selectedView) {
       case 'Booking':
         return <Booking />;
@@ -27,7 +27,7 @@ const Main = () => {
       default:
         console.error('Something went wrong');
     }
-  }, [selectedView]);
+  };
 
   const storedMobileImage = localStorage.getItem('mobileImage');
   const storedDesktopImage = localStorage.getItem('desktopImage');
@@ -108,7 +108,7 @@ const Main = () => {
                 />
               )
             )}
-            {toggleView}
+            {toggleView()}
           </div>
         </div>
       )}

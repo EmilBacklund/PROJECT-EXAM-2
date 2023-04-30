@@ -1,9 +1,9 @@
 .content-container {
-  @apply mx-auto px-6 md:px-20;
+  @apply mx-auto px-6 2xl:px-20;
 }
 
 .section-container {
-  @apply mx-auto max-w-[1440px];
+  @apply mx-auto max-w-[1440px] px-6 md:px-0 md:w-11/12;
 }
 
 .input {
@@ -19,5 +19,5 @@
 }
 
 .sellingSectionCard {
-  @apply aspect-square rounded-tl-[32px] rounded-tr-[8px] rounded-bl-[8px] rounded-br-[32px] overflow-hidden;
+  @apply rounded-tl-[32px] rounded-tr-[8px] rounded-bl-[8px] rounded-br-[32px] overflow-hidden;
 }

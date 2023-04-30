@@ -18,11 +18,13 @@ const TrendingCard = () => {
           a serene countryside, this majestic fortress provides the perfect escape to an enchanting
           world of opulence and splendor..…{' '}
         </p>
-        <div className='flex justify-between items-center'>
-          <p className='text-2xl font-bold'>2576 kr /night</p>
-          <button className='border font-carena border-textBlack leading-[42px] h-[42px] px-[66px] rounded-tl-[24px] rounded-tr-[4px] rounded-bl-[4px] rounded-br-[24px]'>
-            Book
-          </button>
+        <div className='flex justify-between items-end'>
+          <p className='text-lg md:text-2xl font-bold'>2576 kr /night</p>
+          <div className='relative overflow-hidden'>
+            <button className='border after:overflow-hidden font-carena border-textBlack leading-[42px] h-[42px] px-[66px] rounded-tl-[24px] rounded-tr-[4px] rounded-bl-[4px] rounded-br-[24px] hover:bg-textBlack hover:text-background transition duration-500 before:absolute before:left-0 before:top-0 before:w-full before:h-full before:bg-textBlack before:-z-10 before:transition-transform before:duration-300 before:origin-center before:buttonCTAeffect before:scale-x-0  hover:before:-scale-x-100 before:rounded-tl-[4px] before:rounded-tr-[24px] before:rounded-bl-[24px] before:rounded-br-[4px]'>
+              Book
+            </button>
+          </div>
         </div>
       </div>
     </div>

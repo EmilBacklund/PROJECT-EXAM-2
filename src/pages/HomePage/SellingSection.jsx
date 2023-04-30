@@ -21,7 +21,7 @@ const SellingSection = ({ title }) => {
           <div className='sellingSectionCard embla__slide'>
             <img
               loading='lazy'
-              className='aspect-square object-cover'
+              className='aspect-square object-cover h-full'
               src='/images/image1.jpg '
               alt=''
             />
@@ -29,7 +29,7 @@ const SellingSection = ({ title }) => {
           <div className='sellingSectionCard embla__slide'>
             <img
               loading='lazy'
-              className='aspect-square object-cover'
+              className='aspect-square object-cover h-full'
               src='/images/image2.jpg'
               alt=''
             />
@@ -37,7 +37,7 @@ const SellingSection = ({ title }) => {
           <div className='sellingSectionCard embla__slide'>
             <img
               loading='lazy'
-              className='aspect-square object-cover'
+              className='aspect-square object-cover h-full'
               src='/images/image3.jpg'
               alt=''
             />
@@ -45,7 +45,7 @@ const SellingSection = ({ title }) => {
           <div className='sellingSectionCard embla__slide'>
             <img
               loading='lazy'
-              className='aspect-square object-cover'
+              className='aspect-square object-cover h-full'
               src='/images/image1.jpg '
               alt=''
             />
@@ -53,7 +53,7 @@ const SellingSection = ({ title }) => {
           <div className='sellingSectionCard embla__slide'>
             <img
               loading='lazy'
-              className='aspect-square object-cover'
+              className='aspect-square object-cover h-full'
               src='/images/image2.jpg'
               alt=''
             />
@@ -61,7 +61,7 @@ const SellingSection = ({ title }) => {
           <div className='sellingSectionCard embla__slide'>
             <img
               loading='lazy'
-              className='aspect-square object-cover'
+              className='aspect-square object-cover h-full'
               src='/images/image3.jpg'
               alt=''
             />

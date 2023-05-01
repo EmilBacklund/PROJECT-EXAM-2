@@ -20,3 +20,12 @@
   transition-timing-function: cubic-bezier(0.5, 1.6, 0.4, 0.7);
   content: '';
 }
+
+.gradient-divider {
+  background-image: linear-gradient(
+    to right,
+    rgba(248, 244, 242, 0) 0,
+    rgba(235, 115, 122, 1) 50%,
+    rgba(248, 244, 242, 0) 100%
+  );
+}

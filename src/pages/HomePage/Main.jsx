@@ -11,7 +11,9 @@ import Booking from './Booking';
 
 const Main = () => {
   const dispatch = useDispatch();
-  const { imageDesktop, imageMobile } = useSelector((state) => state.headerImage);
+  const { imageDesktop, imageMobile } = useSelector(
+    (state) => state.headerImage
+  );
   const { selectedView } = useSelector((state) => state.displayedHomepageView);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isLoading, setIsLoading] = useState(true);
@@ -50,7 +52,8 @@ const Main = () => {
 
   const fetchImageIfNeeded = (orientation) => {
     return new Promise(async (resolve) => {
-      const storedImage = orientation === 'portrait' ? storedMobileImage : storedDesktopImage;
+      const storedImage =
+        orientation === 'portrait' ? storedMobileImage : storedDesktopImage;
       const currentTime = Date.now();
       const maxAge = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
@@ -59,9 +62,19 @@ const Main = () => {
 
         if (currentTime - timestamp < maxAge) {
           if (orientation === 'portrait') {
-            dispatch(SET_SINGLE_IMAGE_MOBILE({ urls: { full: image }, alt_description: altText }));
+            dispatch(
+              SET_SINGLE_IMAGE_MOBILE({
+                urls: { full: image },
+                alt_description: altText,
+              })
+            );
           } else {
-            dispatch(SET_SINGLE_IMAGE_DESKTOP({ urls: { full: image }, alt_description: altText }));
+            dispatch(
+              SET_SINGLE_IMAGE_DESKTOP({
+                urls: { full: image },
+                alt_description: altText,
+              })
+            );
           }
           resolve();
           return;
@@ -91,18 +104,18 @@ const Main = () => {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div className='relative h-0 overflow-hidden min-h-[600px] '>
-          <div className='absolute inset-0 max-h-[760px]'>
+        <div className="relative h-0 overflow-hidden min-h-[600px] ">
+          <div className="absolute inset-0 max-h-[760px]">
             {windowWidth > 768 && imageDesktop ? (
               <img
-                className='w-full h-full object-cover max-h-[760px]'
+                className="w-full h-full object-cover max-h-[760px]"
                 src={imageDesktop.urls.full}
                 alt={imageDesktop.alt_description}
               />
             ) : (
               imageMobile && (
                 <img
-                  className='w-full h-full object-cover '
+                  className="w-full h-full object-cover "
                   src={imageMobile.urls.full}
                   alt={imageMobile.alt_description}
                 />

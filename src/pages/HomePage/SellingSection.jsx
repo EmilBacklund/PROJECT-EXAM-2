@@ -14,56 +14,56 @@ const SellingSection = ({ title }) => {
   }, [emblaApi]);
 
   return (
-    <div className='mt-6 mb-4 md:mb-[80px] lg:mb-[120px] md:mt-[80px] lg:mt-[120px] text-center md:text-start section-container w-full'>
+    <div className="mt-6 mb-10 md:mb-[80px] lg:mb-[120px] md:mt-[80px] lg:mt-[120px] text-center md:text-start section-container w-full">
       <h2>{title}</h2>
-      <div className='embla' ref={emblaRef}>
-        <div className='embla__container'>
-          <div className='sellingSectionCard embla__slide'>
+      <div className="embla" ref={emblaRef}>
+        <div className="embla__container">
+          <div className="sellingSectionCard embla__slide">
             <img
-              loading='lazy'
-              className='aspect-square object-cover h-full'
-              src='/images/image1.jpg '
-              alt=''
+              loading="lazy"
+              className="aspect-square object-cover h-full"
+              src="/images/image1.jpg "
+              alt=""
             />
           </div>
-          <div className='sellingSectionCard embla__slide'>
+          <div className="sellingSectionCard embla__slide">
             <img
-              loading='lazy'
-              className='aspect-square object-cover h-full'
-              src='/images/image2.jpg'
-              alt=''
+              loading="lazy"
+              className="aspect-square object-cover h-full"
+              src="/images/image2.jpg"
+              alt=""
             />
           </div>
-          <div className='sellingSectionCard embla__slide'>
+          <div className="sellingSectionCard embla__slide">
             <img
-              loading='lazy'
-              className='aspect-square object-cover h-full'
-              src='/images/image3.jpg'
-              alt=''
+              loading="lazy"
+              className="aspect-square object-cover h-full"
+              src="/images/image3.jpg"
+              alt=""
             />
           </div>
-          <div className='sellingSectionCard embla__slide'>
+          <div className="sellingSectionCard embla__slide">
             <img
-              loading='lazy'
-              className='aspect-square object-cover h-full'
-              src='/images/image1.jpg '
-              alt=''
+              loading="lazy"
+              className="aspect-square object-cover h-full"
+              src="/images/image1.jpg "
+              alt=""
             />
           </div>
-          <div className='sellingSectionCard embla__slide'>
+          <div className="sellingSectionCard embla__slide">
             <img
-              loading='lazy'
-              className='aspect-square object-cover h-full'
-              src='/images/image2.jpg'
-              alt=''
+              loading="lazy"
+              className="aspect-square object-cover h-full"
+              src="/images/image2.jpg"
+              alt=""
             />
           </div>
-          <div className='sellingSectionCard embla__slide'>
+          <div className="sellingSectionCard embla__slide">
             <img
-              loading='lazy'
-              className='aspect-square object-cover h-full'
-              src='/images/image3.jpg'
-              alt=''
+              loading="lazy"
+              className="aspect-square object-cover h-full"
+              src="/images/image3.jpg"
+              alt=""
             />
           </div>
         </div>

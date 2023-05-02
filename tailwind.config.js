@@ -15,6 +15,9 @@ export default {
         josefinsSans: ['Josefin Sans', 'sans-serif'],
         carena: ['Carena', 'sans-serif'],
       },
+      screens: {
+        smallScreen: '394px',
+      },
     },
   },
   plugins: [],

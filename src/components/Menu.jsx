@@ -75,11 +75,11 @@ const Menu = () => {
           </NavLink>
           <NavLink
             className={`${baseClasses} ${activeClassName(
-              '/favorites',
+              '/dreamstays',
               activeClasses,
               notActiveClasses
             )}`}
-            to='/favorites'
+            to='/dreamstays'
           >
             Dream Stays
           </NavLink>

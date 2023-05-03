@@ -11,7 +11,7 @@
 }
 
 .secondaryBtn {
-  @apply w-full h-12  rounded-lg text-primaryRed font-semibold border-2 border-primaryRed text-sm;
+  @apply w-full h-12  rounded-lg text-primaryRed font-bold border-2 border-primaryRed;
 }
 
 .primaryBtn {

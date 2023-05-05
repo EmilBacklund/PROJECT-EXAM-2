@@ -7,8 +7,8 @@ const HomePage = () => {
   return (
     <>
       <Main />
-      <SellingSection title="Affordable Escapes" />
-      <SellingSection title="Popular Destinations" />
+      <SellingSection key={1} title="Affordable Escapes" />
+      <SellingSection key={2} title="Popular Destinations" />
       <TrendingSection />
       <HostPromoteSection />
     </>

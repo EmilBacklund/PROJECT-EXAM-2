@@ -7,7 +7,7 @@
 }
 
 .input {
-  @apply h-12 w-full bg-white rounded indent-4;
+  @apply h-12 w-full bg-white rounded-md indent-4;
 }
 
 .secondaryBtn {

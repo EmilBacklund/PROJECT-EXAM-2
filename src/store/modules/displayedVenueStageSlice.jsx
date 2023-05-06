@@ -10,13 +10,14 @@ const displayedVenueStageSlice = createSlice({
       state.stage = action.payload;
     },
     incrementStage: (state) => {
-      state.stage + 1;
+      state.stage = state.stage + 1;
     },
     decrementStage: (state) => {
-      state.stage + 1;
+      state.stage = state.stage - 1;
     },
   },
 });
 
-export const { setStage } = displayedVenueStageSlice.actions;
+export const { setStage, incrementStage, decrementStage } =
+  displayedVenueStageSlice.actions;
 export default displayedVenueStageSlice.reducer;

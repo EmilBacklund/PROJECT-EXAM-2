@@ -9,6 +9,8 @@ const reducer = combineReducers({
   displayedVenueStage: displayedVenueStageSlice,
 });
 
+console.log('Reducer ', reducer);
+
 const index = configureStore({
   reducer,
 });

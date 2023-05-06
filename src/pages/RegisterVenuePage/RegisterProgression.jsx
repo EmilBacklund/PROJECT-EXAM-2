@@ -1,15 +1,28 @@
 import { CheckIcon } from '@heroicons/react/20/solid';
+import { useSelector } from 'react-redux';
 
-const steps = [
-  { name: 'Step 1', href: '#', status: 'complete' },
-  { name: 'Step 2', href: '#', status: 'complete' },
-  { name: 'Step 3', href: '#', status: 'current' },
-  { name: 'Step 4', href: '#', status: 'upcoming' },
-  { name: 'Step 5', href: '#', status: 'upcoming' },
-  { name: 'Step 6', href: '#', status: 'upcoming' },
+let stages = [
+  { stage: 1, href: '#' },
+  { stage: 2, href: '#' },
+  { stage: 3, href: '#' },
+  { stage: 4, href: '#' },
+  { stage: 5, href: '#' },
+  { stage: 6, href: '#' },
 ];
 
 function classNames(...classes) {
+  const currentStage = useSelector((state) => state.displayedVenueStage.stage);
+
+  stages = stages.map((stage) => {
+    if (stage.stage < currentStage) {
+      return { ...stage, status: 'complete' };
+    } else if (stage.stage === currentStage) {
+      return { ...stage, status: 'current' };
+    } else {
+      return { ...stage, status: 'upcoming' };
+    }
+  });
+
   return classes.filter(Boolean).join(' ');
 }
 
@@ -18,36 +31,38 @@ export default function RegisterProgression() {
     <nav aria-label="Progress">
       <ol
         role="list"
-        className="flex items-center sm:flex-col sm:justify-between sm:h-full"
+        className="flex items-center sm:flex-col justify-center sm:justify-between sm:h-full my-6"
       >
-        {steps.map((step, stepIdx) => (
+        {stages.map((stage, stageIdx) => (
           <li
-            key={step.name}
+            key={stage.stage}
             className={classNames(
-              stepIdx !== steps.length - 1 ? 'pr-8 sm:pr-20' : '',
+              stageIdx !== stages.length - 1
+                ? 'pr-4 sm:pr-20 smallScreen:pr-8'
+                : '',
               'relative'
             )}
           >
-            {step.status === 'complete' ? (
+            {stage.status === 'complete' ? (
               <>
                 <div
                   className="absolute inset-0 flex items-center"
                   aria-hidden="true"
                 >
-                  <div className="h-0.5 w-full bg-indigo-600" />
+                  <div className="h-0.5 w-full bg-[#0091AE]" />
                 </div>
                 <a
                   href="#"
-                  className="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-900"
+                  className="relative flex h-8 w-8 items-center justify-center rounded-full bg-[#0091AE] hover:bg-[#34A9C0]"
                 >
                   <CheckIcon
                     className="h-5 w-5 text-white"
                     aria-hidden="true"
                   />
-                  <span className="sr-only">{step.name}</span>
+                  <span className="sr-only">{stage.stage}</span>
                 </a>
               </>
-            ) : step.status === 'current' ? (
+            ) : stage.status === 'current' ? (
               <>
                 <div
                   className="absolute inset-0 flex items-center"
@@ -57,14 +72,14 @@ export default function RegisterProgression() {
                 </div>
                 <a
                   href="#"
-                  className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-                  aria-current="step"
+                  className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#0091AE] bg-white"
+                  aria-current="stage"
                 >
                   <span
-                    className="h-2.5 w-2.5 rounded-full bg-indigo-600"
+                    className="h-2.5 w-2.5 rounded-full bg-[#0091AE]"
                     aria-hidden="true"
                   />
-                  <span className="sr-only">{step.name}</span>
+                  <span className="sr-only">{stage.stage}</span>
                 </a>
               </>
             ) : (
@@ -83,7 +98,7 @@ export default function RegisterProgression() {
                     className="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300"
                     aria-hidden="true"
                   />
-                  <span className="sr-only">{step.name}</span>
+                  <span className="sr-only">{stage.stage}</span>
                 </a>
               </>
             )}

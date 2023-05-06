@@ -3,6 +3,7 @@ import DatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import MainFormComponent from './MainFormComponent';
+import CustomInput from '../../components/FormComponents/CustomInput';
 
 const Register = () => {
   const [birthDate, setBirthDate] = useState(new Date());
@@ -16,32 +17,72 @@ const Register = () => {
   return (
     <>
       <MainFormComponent>
-        <div className='md:bg-white md:px-6 md:py-9 flex flex-col gap-2 rounded-b'>
-          <div className='flex flex-col gap-2 md:flex-row'>
-            <input className='input input-shadow' type='text' placeholder='First Name' />
-            <input className='input input-shadow' type='text' placeholder='Last Name' />
-            <input className='input input-shadow' type='email' placeholder='Email' />
+        <div className="md:bg-white md:px-6 md:py-9 flex flex-col gap-2 rounded-b">
+          <div className="flex flex-col gap-2 md:flex-row">
+            <CustomInput
+              className="md:flex-1"
+              type="text"
+              name="firstName"
+              placeholder="First Name"
+              shadow="input-shadow"
+              marginTop=""
+              indent="indent-4"
+              height="h-12"
+              display="hidden"
+            />
+            <CustomInput
+              className="md:flex-1"
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              shadow="input-shadow"
+              marginTop=""
+              indent="indent-4"
+              height="h-12"
+              display="hidden"
+            />
+            <CustomInput
+              className="md:flex-1"
+              type="email"
+              name="email"
+              placeholder="Email"
+              shadow="input-shadow"
+              marginTop=""
+              indent="indent-4"
+              height="h-12"
+              display="hidden"
+            />
           </div>
-          <div className='flex flex-col gap-2 md:flex-row'>
-            <input className='input input-shadow' type='password' placeholder='Password' />
-            <div className='relative w-full'>
+          <div className="flex flex-col gap-2 md:flex-row">
+            <CustomInput
+              className="md:flex-1"
+              type="password"
+              name="password"
+              placeholder="Password"
+              shadow="input-shadow"
+              marginTop=""
+              indent="indent-4"
+              height="h-12"
+              display="hidden"
+            />
+            <div className="relative w-full">
               <DatePicker
-                className='input input-shadow'
+                className="input input-shadow"
                 value={birthDate}
                 onChange={setBirthDate}
-                format='y-MM-dd'
+                format="y-MM-dd"
                 minDate={minDate}
                 maxDate={maxDate}
-                placeholder='Birthday'
+                placeholder="Birthday"
                 onFocus={() => setShowDate(true)}
               />
               {!showDate && (
-                <div className='absolute inset-0 input leading-[48px] text-[#8e8e8e] pointer-events-none'>
+                <div className="absolute inset-0 input leading-[48px] text-[#8e8e8e] pointer-events-none">
                   Birthday
                 </div>
               )}
             </div>
-            <button className='primaryBtn'>Register</button>
+            <button className="primaryBtn">Register</button>
           </div>
         </div>
       </MainFormComponent>

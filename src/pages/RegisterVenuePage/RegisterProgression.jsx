@@ -16,17 +16,17 @@ export default function RegisterProgression() {
     { stage: 6, href: '#' },
   ];
 
-  function classNames(...classes) {
-    stages = stages.map((stage) => {
-      if (stage.stage < currentStage) {
-        return { ...stage, status: 'complete' };
-      } else if (stage.stage === currentStage) {
-        return { ...stage, status: 'current' };
-      } else {
-        return { ...stage, status: 'upcoming' };
-      }
-    });
+  stages = stages.map((stage) => {
+    if (stage.stage < currentStage) {
+      return { ...stage, status: 'complete' };
+    } else if (stage.stage === currentStage) {
+      return { ...stage, status: 'current' };
+    } else {
+      return { ...stage, status: 'upcoming' };
+    }
+  });
 
+  function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
   }
 

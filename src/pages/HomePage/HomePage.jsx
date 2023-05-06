@@ -1,5 +1,5 @@
 import Main from './Main';
-import SellingSection from './sellingSection';
+import SellingSection from './SellingSection';
 import TrendingSection from './TrendingSection';
 import HostPromoteSection from './HostPromoteSection';
 

@@ -1,7 +1,7 @@
-const PrimaryBtn = ({ width, name }) => {
+const PrimaryBtn = ({ width, name, flex1 }) => {
   return (
     <button
-      className={`${width} h-12 bg-secondaryOrange hover:bg-[#EF6623] rounded-lg text-white font-semibold text-base transition`}
+      className={`${width} ${flex1} h-12 bg-secondaryOrange hover:bg-[#EF6623] rounded-lg text-white font-semibold text-base transition`}
     >
       {name}
     </button>

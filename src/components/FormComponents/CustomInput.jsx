@@ -9,9 +9,10 @@ const CustomInput = ({
   height = 'h-auto',
   indent = 'indent-1.5',
   required = ' *',
+  flex1,
 }) => {
   return (
-    <div>
+    <div className={`${flex1}`}>
       <label
         htmlFor={name}
         className={`${display} block text-sm font-medium leading-6 text-gray-900 `}
@@ -26,7 +27,7 @@ const CustomInput = ({
           id={name}
           placeholder={placeholder}
           className={`
-          ${height} ${indent} ${shadow}
+          ${height} ${indent} ${shadow} 
           block w-full rounded-md border-0 py-1.5 text-gray-900 
           ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 
           focus:ring-inset focus:ring-secondaryOrange sm:text-sm sm:leading-6

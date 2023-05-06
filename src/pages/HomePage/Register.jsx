@@ -4,6 +4,7 @@ import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import MainFormComponent from './MainFormComponent';
 import CustomInput from '../../components/FormComponents/CustomInput';
+import { PrimaryBtn } from '../../components/StyledButtons';
 
 const Register = () => {
   const [birthDate, setBirthDate] = useState(new Date());
@@ -20,7 +21,7 @@ const Register = () => {
         <div className="md:bg-white md:px-6 md:py-9 flex flex-col gap-2 rounded-b">
           <div className="flex flex-col gap-2 md:flex-row">
             <CustomInput
-              className="md:flex-1"
+              flex1="md:flex-1"
               type="text"
               name="firstName"
               placeholder="First Name"
@@ -31,7 +32,7 @@ const Register = () => {
               display="hidden"
             />
             <CustomInput
-              className="md:flex-1"
+              flex1="md:flex-1"
               type="text"
               name="lastName"
               placeholder="Last Name"
@@ -42,7 +43,7 @@ const Register = () => {
               display="hidden"
             />
             <CustomInput
-              className="md:flex-1"
+              flex1="md:flex-1"
               type="email"
               name="email"
               placeholder="Email"
@@ -55,7 +56,7 @@ const Register = () => {
           </div>
           <div className="flex flex-col gap-2 md:flex-row">
             <CustomInput
-              className="md:flex-1"
+              flex1="md:flex-1"
               type="password"
               name="password"
               placeholder="Password"
@@ -65,7 +66,7 @@ const Register = () => {
               height="h-12"
               display="hidden"
             />
-            <div className="relative w-full">
+            <div className="relative w-full flex-1">
               <DatePicker
                 className="input input-shadow"
                 value={birthDate}
@@ -82,7 +83,7 @@ const Register = () => {
                 </div>
               )}
             </div>
-            <button className="primaryBtn">Register</button>
+            <PrimaryBtn name="Register" width="w-full" flex1="md:flex-1" />
           </div>
         </div>
       </MainFormComponent>

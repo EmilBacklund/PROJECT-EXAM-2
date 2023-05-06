@@ -6,6 +6,7 @@ import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import '../../styles/datePickerStyles.css';
 import CustomInput from '../../components/FormComponents/CustomInput';
+import { PrimaryBtn } from '../../components/StyledButtons';
 
 const Booking = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -17,7 +18,7 @@ const Booking = () => {
         <div className="md:bg-white md:px-6 md:py-9 flex flex-col gap-2 rounded-b">
           <div className="flex flex-col gap-2 md:flex-row">
             <CustomInput
-              className="md:flex-1"
+              flex1="md:flex-1"
               type="text"
               name="location"
               placeholder="Location"
@@ -52,7 +53,7 @@ const Booking = () => {
           </div>
           <div className="flex flex-col gap-2 md:flex-row">
             <CustomInput
-              className="md:flex-1"
+              flex1="md:flex-1"
               type="text"
               name="guests"
               placeholder="Guests"
@@ -62,7 +63,7 @@ const Booking = () => {
               height="h-12"
               display="hidden"
             />
-            <button className="primaryBtn">SEARCH</button>
+            <PrimaryBtn width="w-full" name="SEARCH" flex1="md:flex-1" />
           </div>
         </div>
       </MainFormComponent>

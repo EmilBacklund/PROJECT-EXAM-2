@@ -1,32 +1,35 @@
 import { CheckIcon } from '@heroicons/react/20/solid';
 import { useSelector } from 'react-redux';
-
-let stages = [
-  { stage: 1, href: '#' },
-  { stage: 2, href: '#' },
-  { stage: 3, href: '#' },
-  { stage: 4, href: '#' },
-  { stage: 5, href: '#' },
-  { stage: 6, href: '#' },
-];
-
-function classNames(...classes) {
-  const currentStage = useSelector((state) => state.displayedVenueStage.stage);
-
-  stages = stages.map((stage) => {
-    if (stage.stage < currentStage) {
-      return { ...stage, status: 'complete' };
-    } else if (stage.stage === currentStage) {
-      return { ...stage, status: 'current' };
-    } else {
-      return { ...stage, status: 'upcoming' };
-    }
-  });
-
-  return classes.filter(Boolean).join(' ');
-}
+import { setStage } from '../../store/modules/displayedVenueStageSlice';
+import { useDispatch } from 'react-redux';
 
 export default function RegisterProgression() {
+  const dispatch = useDispatch();
+  const currentStage = useSelector((state) => state.displayedVenueStage.stage);
+
+  let stages = [
+    { stage: 1, href: '#' },
+    { stage: 2, href: '#' },
+    { stage: 3, href: '#' },
+    { stage: 4, href: '#' },
+    { stage: 5, href: '#' },
+    { stage: 6, href: '#' },
+  ];
+
+  function classNames(...classes) {
+    stages = stages.map((stage) => {
+      if (stage.stage < currentStage) {
+        return { ...stage, status: 'complete' };
+      } else if (stage.stage === currentStage) {
+        return { ...stage, status: 'current' };
+      } else {
+        return { ...stage, status: 'upcoming' };
+      }
+    });
+
+    return classes.filter(Boolean).join(' ');
+  }
+
   return (
     <nav aria-label="Progress">
       <ol

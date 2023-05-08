@@ -1,24 +1,24 @@
 import StageTemplate from './StageTemplate';
 import CustomInput from '../../components/FormComponents/CustomInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateStage1Data } from '../../store/modules/displayedVenueStageSlice';
+import { updateStageData } from '../../store/modules/displayedVenueStageSlice';
+
+export const handleValueChange = (dispatch, stageData, stage) => {
+  return (e) => {
+    const { name, value } = e.target;
+    const updatedData = {
+      ...stageData[`stage${stage}`],
+      [name]: value,
+    };
+    dispatch(updateStageData({ stage: stage, data: { ...updatedData } }));
+  };
+};
 
 const Stage1 = () => {
   const dispatch = useDispatch();
-  const stage1Data = useSelector(
-    (state) => state.displayedVenueStage.stage1Data
-  );
+  const stageData = useSelector((state) => state.displayedVenueStage.stageData);
 
-  console.log(stage1Data);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    const updatedData = {
-      ...stage1Data,
-      [name]: value,
-    };
-    dispatch(updateStage1Data(updatedData));
-  };
+  const handleChange = handleValueChange(dispatch, stageData, 1);
 
   return (
     <div>
@@ -28,29 +28,29 @@ const Stage1 = () => {
           onChange={handleChange}
           labelName="Square Meter (m2)"
           name="m2"
-          type="text"
-          value={stage1Data.m2}
+          type="number"
+          value={stageData.stage1.m2}
         />
         <CustomInput
           onChange={handleChange}
           labelName="Beds"
           name="beds"
           type="number"
-          value={stage1Data.beds}
+          value={stageData.stage1.beds}
         />
         <CustomInput
           onChange={handleChange}
           labelName="Bathrooms"
           name="bathrooms"
           type="number"
-          value={stage1Data.bathrooms}
+          value={stageData.stage1.bathrooms}
         />
         <CustomInput
           onChange={handleChange}
           labelName="Max guests"
           name="guests"
           type="number"
-          value={stage1Data.guests}
+          value={stageData.stage1.guests}
         />
       </div>
     </div>

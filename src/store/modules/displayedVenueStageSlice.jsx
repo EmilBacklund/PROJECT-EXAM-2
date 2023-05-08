@@ -4,9 +4,14 @@ const displayedVenueStageSlice = createSlice({
   name: 'displayedVenueStage',
   initialState: {
     stage: 1,
-    stage1Data: {},
-    stage2Data: {},
-    stage3Data: {},
+    stageData: {
+      stage1: {},
+      stage2: {},
+      stage3: {},
+      stage4: {},
+      stage5: {},
+      stage6: {},
+    },
   },
   reducers: {
     setStage: (state, action) => {
@@ -18,12 +23,13 @@ const displayedVenueStageSlice = createSlice({
     decrementStage: (state) => {
       state.stage = state.stage - 1;
     },
-    updateStage1Data: (state, action) => {
-      state.stage1Data = action.payload;
+    updateStageData: (state, action) => {
+      const { stage, data } = action.payload;
+      state.stageData[`stage${stage}`] = data;
     },
   },
 });
 
-export const { setStage, incrementStage, decrementStage, updateStage1Data } =
+export const { setStage, incrementStage, decrementStage, updateStageData } =
   displayedVenueStageSlice.actions;
 export default displayedVenueStageSlice.reducer;

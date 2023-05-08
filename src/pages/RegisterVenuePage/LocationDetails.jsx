@@ -4,24 +4,24 @@ import { handleValueChange } from './Stage1';
 import { useState, useEffect } from 'react';
 import { updateStageData } from '../../store/modules/displayedVenueStageSlice';
 
+export const handleMultipleValueChange = (dispatch, stageData, stage) => {
+  return (updates) => {
+    const updatedData = {
+      ...stageData[`stage${stage}`],
+    };
+
+    updates.forEach(({ name, value }) => {
+      updatedData[name] = value;
+    });
+
+    dispatch(updateStageData({ stage: stage, data: { ...updatedData } }));
+  };
+};
+
 const LocationDetails = ({ addressComponents }) => {
   const dispatch = useDispatch();
   const stageData = useSelector((state) => state.displayedVenueStage.stageData);
   console.log('stage3', stageData);
-
-  const handleMultipleValueChange = (dispatch, stageData, stage) => {
-    return (updates) => {
-      const updatedData = {
-        ...stageData[`stage${stage}`],
-      };
-
-      updates.forEach(({ name, value }) => {
-        updatedData[name] = value;
-      });
-
-      dispatch(updateStageData({ stage: stage, data: { ...updatedData } }));
-    };
-  };
 
   const handleChange = handleValueChange(dispatch, stageData, 3);
   const handleMultipleUpdates = handleMultipleValueChange(

@@ -1,4 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import headerImageSlice from './modules/headerImageSlice';
 import displayedHomepageViewSlice from './modules/displayedHomepageViewSlice';
 import displayedVenueStageSlice from './modules/displayedVenueStageSlice';
@@ -9,10 +11,17 @@ const reducer = combineReducers({
   displayedVenueStage: displayedVenueStageSlice,
 });
 
-console.log('Reducer ', reducer);
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['displayedVenueStage'], // Only persist displayedVenueStage slice
+};
+
+const persistedReducer = persistReducer(persistConfig, reducer);
 
 const index = configureStore({
-  reducer,
+  reducer: persistedReducer,
 });
 
+export const persistor = persistStore(index);
 export default index;

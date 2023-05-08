@@ -1,6 +1,5 @@
 import { CheckIcon } from '@heroicons/react/20/solid';
 import { useSelector } from 'react-redux';
-import { setStage } from '../../store/modules/displayedVenueStageSlice';
 import { useDispatch } from 'react-redux';
 
 export default function RegisterProgression() {

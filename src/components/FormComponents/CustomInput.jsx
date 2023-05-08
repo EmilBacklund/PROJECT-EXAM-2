@@ -11,6 +11,8 @@ const CustomInput = ({
   required = ' *',
   flex1,
   position,
+  value,
+  onChange,
 }) => {
   return (
     <div className={`${flex1}`}>
@@ -24,8 +26,10 @@ const CustomInput = ({
       <div className={marginTop}>
         <input
           type={type}
+          onChange={onChange}
           name={name}
           id={name}
+          value={value}
           placeholder={placeholder}
           className={`
           ${height} ${indent} ${shadow} ${position}

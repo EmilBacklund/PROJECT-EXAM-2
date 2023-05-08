@@ -15,7 +15,10 @@ import {
 const RegisterVenue = () => {
   const currentStage = useSelector((state) => state.displayedVenueStage.stage);
   const dispatch = useDispatch();
-  console.log(currentStage);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
 
   const renderStage = () => {
     switch (currentStage) {
@@ -41,7 +44,9 @@ const RegisterVenue = () => {
       <div>
         <div className="sm:flex sm:justify-center">
           <RegisterProgression />
-          <form className="mb-6">{renderStage()}</form>
+          <form onSubmit={handleSubmit} className="mb-6">
+            {renderStage()}
+          </form>
         </div>
       </div>
       <div

@@ -1,5 +1,5 @@
 import StageTemplate from './StageTemplate';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import usePlacesAutocomplete, {
   getGeocode,
@@ -7,6 +7,8 @@ import usePlacesAutocomplete, {
 } from 'use-places-autocomplete';
 import Suggestions from './Suggestions';
 import LocationDetails from './LocationDetails';
+import { useSelector, useDispatch } from 'react-redux';
+import { handleMultipleValueChange } from './LocationDetails';
 
 const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API;
 const libraries = ['places'];
@@ -27,6 +29,16 @@ function Map() {
   const [selected, setSelected] = useState(null);
   const [zoom, setZoom] = useState(1);
   const [addressComponents, setAddressComponents] = useState(null);
+  const stageData = useSelector((state) => state.displayedVenueStage.stageData);
+  const dispatch = useDispatch();
+  const handleMultipleUpdates = handleMultipleValueChange(
+    dispatch,
+    stageData,
+    3
+  );
+
+  console.log('addressComponents', addressComponents);
+  console.log('stage3', stageData.stage3);
 
   return (
     <div>
@@ -48,6 +60,8 @@ function Map() {
           setCenter={setCenter}
           setSelected={setSelected}
           setAddressComponents={setAddressComponents}
+          stageData={stageData}
+          handleMultipleUpdates={handleMultipleUpdates}
         />
       </div>
     </div>
@@ -59,6 +73,8 @@ const PlacesAutoComplete = ({
   setCenter,
   setZoom,
   setAddressComponents,
+  stageData,
+  handleMultipleUpdates,
 }) => {
   const {
     ready,
@@ -67,6 +83,7 @@ const PlacesAutoComplete = ({
     suggestions: { status, data },
     clearSuggestions,
   } = usePlacesAutocomplete();
+  const [initialSearchPerformed, setInitialSearchPerformed] = useState(false);
 
   console.log(data);
 
@@ -78,7 +95,7 @@ const PlacesAutoComplete = ({
     const { lat, lng } = await getLatLng(results[0]);
     setSelected({ lat, lng });
     setCenter({ lat, lng });
-    console.log(results);
+    console.log('results: ', results);
 
     const locationType = results[0].types[0];
 
@@ -109,7 +126,53 @@ const PlacesAutoComplete = ({
     }
 
     setAddressComponents(results[0].address_components);
+
+    handleMultipleUpdates([
+      {
+        name: 'lat',
+        value: lat,
+      },
+      {
+        name: 'lng',
+        value: lng,
+      },
+      {
+        name: 'addressComponents',
+        value: results[0].address_components,
+      },
+      {
+        name: 'place_id',
+        value: results[0].place_id,
+      },
+    ]);
   };
+
+  useEffect(() => {
+    if (!initialSearchPerformed && stageData.stage3.place_id) {
+      const fetchPlaceDetails = async (place_id) => {
+        const request = {
+          placeId: place_id,
+          fields: ['geometry', 'address_components', 'formatted_address'],
+        };
+        const service = new window.google.maps.places.PlacesService(
+          document.createElement('div')
+        );
+        service.getDetails(request, (place, status) => {
+          if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+            handleSelect(place.formatted_address);
+          }
+        });
+      };
+
+      fetchPlaceDetails(stageData.stage3.place_id);
+      setInitialSearchPerformed(true);
+    }
+  }, [
+    stageData.stage3.place_id,
+    handleSelect,
+    initialSearchPerformed,
+    handleMultipleUpdates,
+  ]);
 
   return (
     <div className="absolute top-0 w-full max-w-lg left-1/2 -translate-x-1/2">

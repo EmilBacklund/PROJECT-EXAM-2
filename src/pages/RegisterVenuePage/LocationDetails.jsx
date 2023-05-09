@@ -1,33 +1,32 @@
 import CustomInput from '../../components/FormComponents/CustomInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleValueChange } from './Stage1';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { updateStageData } from '../../store/modules/displayedVenueStageSlice';
+
+export const handleMultipleValueChange = (dispatch, stageData, stage) => {
+  return (updates) => {
+    const updatedData = {
+      ...stageData[`stage${stage}`],
+    };
+
+    updates.forEach(({ name, value }) => {
+      updatedData[name] = value;
+    });
+
+    dispatch(updateStageData({ stage: stage, data: { ...updatedData } }));
+  };
+};
 
 const LocationDetails = ({ addressComponents }) => {
   const dispatch = useDispatch();
   const stageData = useSelector((state) => state.displayedVenueStage.stageData);
   console.log('stage3', stageData);
 
-  const handleMultipleValueChange = (dispatch, stageData, stage) => {
-    return (updates) => {
-      const updatedData = {
-        ...stageData[`stage${stage}`],
-      };
-
-      updates.forEach(({ name, value }) => {
-        updatedData[name] = value;
-      });
-
-      dispatch(updateStageData({ stage: stage, data: { ...updatedData } }));
-    };
-  };
-
   const handleChange = handleValueChange(dispatch, stageData, 3);
-  const handleMultipleUpdates = handleMultipleValueChange(
-    dispatch,
-    stageData,
-    3
+  const handleMultipleUpdates = useCallback(
+    handleMultipleValueChange(dispatch, stageData, 3),
+    [dispatch, stageData]
   );
 
   const getComponentValue = (...types) => {

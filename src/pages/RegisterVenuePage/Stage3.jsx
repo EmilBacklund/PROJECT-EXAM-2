@@ -8,7 +8,6 @@ import usePlacesAutocomplete, {
 import Suggestions from './Suggestions';
 import LocationDetails from './LocationDetails';
 import { useSelector, useDispatch } from 'react-redux';
-import { handleValueChange } from './Stage1';
 import { handleMultipleValueChange } from './LocationDetails';
 
 const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API;
@@ -38,8 +37,6 @@ function Map() {
     3
   );
 
-  const handleChange = handleValueChange(dispatch, stageData, 3);
-
   console.log('addressComponents', addressComponents);
   console.log('stage3', stageData.stage3);
 
@@ -63,7 +60,6 @@ function Map() {
           setCenter={setCenter}
           setSelected={setSelected}
           setAddressComponents={setAddressComponents}
-          handleChange={handleChange}
           stageData={stageData}
           handleMultipleUpdates={handleMultipleUpdates}
         />
@@ -77,7 +73,6 @@ const PlacesAutoComplete = ({
   setCenter,
   setZoom,
   setAddressComponents,
-  handleChange,
   stageData,
   handleMultipleUpdates,
 }) => {
@@ -131,12 +126,6 @@ const PlacesAutoComplete = ({
     }
 
     setAddressComponents(results[0].address_components);
-    handleChange({
-      target: {
-        name: 'addressComponents',
-        value: results[0].address_components,
-      },
-    });
 
     handleMultipleUpdates([
       {
@@ -147,26 +136,42 @@ const PlacesAutoComplete = ({
         name: 'lng',
         value: lng,
       },
+      {
+        name: 'addressComponents',
+        value: results[0].address_components,
+      },
+      {
+        name: 'place_id',
+        value: results[0].place_id,
+      },
     ]);
   };
 
   useEffect(() => {
-    if (!initialSearchPerformed && stageData.stage3.addressComponents) {
-      const address = stageData.stage3.addressComponents.find(
-        (component) =>
-          component.types.includes('street_address') ||
-          component.types.includes('route')
-      ).long_name;
+    if (!initialSearchPerformed && stageData.stage3.place_id) {
+      const fetchPlaceDetails = async (place_id) => {
+        const request = {
+          placeId: place_id,
+          fields: ['geometry', 'address_components', 'formatted_address'],
+        };
+        const service = new window.google.maps.places.PlacesService(
+          document.createElement('div')
+        );
+        service.getDetails(request, (place, status) => {
+          if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+            handleSelect(place.formatted_address);
+          }
+        });
+      };
 
-      if (address) {
-        handleSelect(address);
-        setInitialSearchPerformed(true);
-      }
+      fetchPlaceDetails(stageData.stage3.place_id);
+      setInitialSearchPerformed(true);
     }
   }, [
-    stageData.stage3.addressComponents,
+    stageData.stage3.place_id,
     handleSelect,
     initialSearchPerformed,
+    handleMultipleUpdates,
   ]);
 
   return (

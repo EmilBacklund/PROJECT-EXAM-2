@@ -1,11 +1,32 @@
 import StageTemplate from './StageTemplate';
 import useAmenities from '../../hooks/useAmenities';
-import amenityImages from '../../utils/amenityImages';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateStageData } from '../../store/modules/displayedVenueStageSlice';
+import AmenityButton from './AmenityButton';
 
 const Stage4 = () => {
   const { amenities, loading, error } = useAmenities();
+  const stage4Data = useSelector(
+    (state) => state.displayedVenueStage.stageData.stage4
+  );
+  const dispatch = useDispatch();
 
-  console.log(amenityImages);
+  console.log(stage4Data);
+
+  const handleAmenityClick = (amenity) => {
+    const updatedAmenities = { ...stage4Data };
+    if (updatedAmenities[amenity.amenity]) {
+      delete updatedAmenities[amenity.amenity];
+    } else {
+      updatedAmenities[amenity.amenity] = {
+        id: amenity.id,
+        amenity: amenity.amenity,
+      };
+    }
+    dispatch(updateStageData({ stage: 4, data: updatedAmenities }));
+  };
+
+  const isActive = (amenity) => stage4Data.hasOwnProperty(amenity);
 
   return (
     <div>
@@ -17,17 +38,13 @@ const Stage4 = () => {
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 mt-6">
         {amenities &&
           amenities.map((amenity, index) => (
-            <button
-              className="bg-white flex flex-col items-center justify-center gap-3 p-4 rounded-2xl border transition duration-300 hover:border-secondaryOrange hover:ring-2 hover:ring-secondaryOrange"
+            <AmenityButton
               key={index}
-            >
-              <img
-                className="w-7"
-                src={amenityImages[amenity.amenity]}
-                alt={amenity.amenity}
-              />
-              <p className="font-semibold text-lg">{amenity.amenity}</p>
-            </button>
+              amenity={amenity}
+              index={index}
+              isActive={isActive(amenity.amenity)}
+              handleAmenityClick={handleAmenityClick}
+            />
           ))}
       </div>
     </div>

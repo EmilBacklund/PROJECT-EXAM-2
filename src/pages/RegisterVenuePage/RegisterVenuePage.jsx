@@ -40,7 +40,7 @@ const RegisterVenue = () => {
   };
 
   return (
-    <div className="section-container gap-6 flex flex-col justify-between min-h-[calc(100vh-83.18px)] md:min-h-[calc(100vh-111.99px)]">
+    <div className="section-container gap-6 flex flex-col justify-between min-h-[calc(100vh-179.18px)] md:min-h-[calc(100vh-111.99px)]">
       <div>
         <div className="sm:flex sm:justify-center">
           <RegisterProgression />

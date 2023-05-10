@@ -1,11 +1,67 @@
 import StageTemplate from './StageTemplate';
-import CustomInput from '../../components/FormComponents/CustomInput';
+import { FaPlus, FaMinus  } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateStageData } from '../../store/modules/displayedVenueStageSlice';
+
 
 const Stage5 = () => {
+  const minPrice = 100;
+  const maxPrice = 110000;
+  const step = 50;
+  const stageData = useSelector(
+    (state) => state.displayedVenueStage.stageData
+  );
+  const dispatch = useDispatch();
+
+  
+
+  const initialValue = stageData.stage5.price ? stageData.stage5.price : 8500;
+  const [price, setPrice] = useState(initialValue);
+
+ 
+
+  const handleIncrement = () => {
+    setPrice((prevPrice) => Math.min(prevPrice + step, maxPrice));
+  };
+
+  const handleDecrement = () => {
+    setPrice((prevPrice) => Math.max(prevPrice - step, minPrice));
+  };
+
+  const handleRangeChange = (event) => {
+    setPrice(parseInt(event.target.value, 10));
+  };
+
+  useEffect(() => {
+    dispatch(updateStageData({ stage: 5, data: {price: price }}))
+  console.log(stageData);
+  }, [price])
+  
   return (
     <div>
       <StageTemplate stageNumber={5} stageTitle={'Price'} />
-      <div className="flex flex-col gap-4"></div>
+      <div className="flex flex-col gap-4">
+      <div>
+        <p className='text-2xl font-medium mb-2'>Set price for your venue</p>
+        <p>It's possible to change the price at anytime</p>
+      </div>
+        <div className='flex items-center justify-center gap-4'>
+          <button onClick={handleDecrement} className='flex-0 group w-10 h-10 grid place-items-center cursor-pointer  border border-gray-500 hover:border-textBlack rounded-full transition-all'>
+            <FaMinus className='text-gray-500 group-hover:text-textBlack transition-all'/>
+          </button>
+          <input value={price} type="number" className='flex-1 py-2 px-2 font-medium text-4xl text-center font-josefinsSans w-full rounded-md border border-holidazeGrey'  />
+          <button onClick={handleIncrement} className='flex-0 group w-10 h-10 grid place-items-center cursor-pointer  border border-gray-500 hover:border-textBlack rounded-full transition-all'>
+            <FaPlus className='text-gray-500 group-hover:text-textBlack transition-all'/>
+          </button>
+        </div>
+        <p className='text-center'>per night</p>
+        <input min={minPrice} max={maxPrice} value={price} onChange={handleRangeChange} className='cursor-pointer' type='range'/>
+        <div className='flex justify-between font-medium text-sm'>
+          <p>Min 100 kr</p>
+          <p>Max 110 000 kr</p>
+        </div>
+      </div>
     </div>
   );
 };

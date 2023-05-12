@@ -182,7 +182,7 @@ const AddImageModal = ({
                         )}
                       </AnimatePresence>
                       {stageData[clickedButton] && (
-                        <div className=' aspect-video flex justify-center w-full mt-4'>
+                        <div className='aspect-video flex justify-center w-full mt-4'>
                           <img
                             className='h-full w-full object-cover '
                             src={

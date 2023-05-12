@@ -30,6 +30,10 @@ const displayedVenueStageSlice = createSlice({
   },
 });
 
-export const { setStage, incrementStage, decrementStage, updateStageData } =
-  displayedVenueStageSlice.actions;
+export const {
+  setStage,
+  incrementStage,
+  decrementStage,
+  updateStageData,
+} = displayedVenueStageSlice.actions;
 export default displayedVenueStageSlice.reducer;

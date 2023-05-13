@@ -37,7 +37,7 @@ const AddImageModal = ({
     }
   }, [stageData, clickedButton, showMessage]);
 
-  // console.log('imageUrl: ', imageUrl);
+  console.log('imageUrl: ', imageUrl);
   // console.log(
   //   'stageData[clickedButton]: ',
   //   stageData[clickedButton]
@@ -55,30 +55,10 @@ const AddImageModal = ({
     }
   }, [stageData, clickedButton, imageUrl]);
 
-  const saveImageToStore = () => {
-    let imageDescriptionToUpdate = imageDescription;
-    if (stageData[clickedButton]?.img === null) {
-      imageDescriptionToUpdate = '';
-    }
-    dispatch(
-      updateStageData({
-        stage: 6,
-        data: {
-          ...stageData,
-          [clickedButton]: {
-            img: imageUrl || null,
-            description: imageDescriptionToUpdate,
-          },
-        },
-      })
-    );
-    console.log(stageData);
-    setShowMessage(true);
-  };
-
   useEffect(() => {
-    if (open && stageData && stageData[clickedButton]) {
+    if (open && stageData && stageData[clickedButton].img) {
       setImageUrl(stageData[clickedButton].img);
+      console.log('This happened');
       setImageDescription(
         stageData[clickedButton].description
       );
@@ -87,6 +67,23 @@ const AddImageModal = ({
       setImageDescription('');
     }
   }, [open, stageData, clickedButton]);
+
+  const saveImageToStore = () => {
+    dispatch(
+      updateStageData({
+        stage: 6,
+        data: {
+          ...stageData,
+          [clickedButton]: {
+            img: imageUrl || null,
+            description: imageDescription,
+          },
+        },
+      })
+    );
+    console.log(stageData);
+    setShowMessage(true);
+  };
 
   useEffect(() => {
     if (
@@ -133,7 +130,11 @@ const AddImageModal = ({
   return (
     <>
       {open && (
-        <Transition.Root show={open} as={Fragment}>
+        <Transition.Root
+          show={open}
+          as={Fragment}
+          key={clickedButton}
+        >
           <Dialog
             as='div'
             className='relative z-10'
@@ -235,7 +236,10 @@ const AddImageModal = ({
                           required=''
                           labelName=''
                           colonSymbol=''
-                          value={imageUrl}
+                          placeholder='Paste image URL here'
+                          value={
+                            stageData[clickedButton].img
+                          }
                         />
                         <div className='mt-2'>
                           <p className='text-sm text-gray-500'>

@@ -37,7 +37,7 @@ const AddImageModal = ({
     }
   }, [stageData, clickedButton, showMessage]);
 
-  console.log('imageUrl: ', imageUrl);
+  // console.log('imageUrl: ', imageUrl);
   // console.log(
   //   'stageData[clickedButton]: ',
   //   stageData[clickedButton]
@@ -58,7 +58,6 @@ const AddImageModal = ({
   useEffect(() => {
     if (open && stageData && stageData[clickedButton].img) {
       setImageUrl(stageData[clickedButton].img);
-      console.log('This happened');
       setImageDescription(
         stageData[clickedButton].description
       );

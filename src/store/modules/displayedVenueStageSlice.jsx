@@ -10,7 +10,44 @@ const displayedVenueStageSlice = createSlice({
       stage3: {},
       stage4: {},
       stage5: {},
-      stage6: {},
+      stage6: {
+        coverPhoto: {
+          img: null,
+          description: '',
+        },
+        photo1: {
+          img: null,
+          description: '',
+        },
+        photo2: {
+          img: null,
+          description: '',
+        },
+        photo3: {
+          img: null,
+          description: '',
+        },
+        photo4: {
+          img: null,
+          description: '',
+        },
+        photo5: {
+          img: null,
+          description: '',
+        },
+        photo6: {
+          img: null,
+          description: '',
+        },
+        photo7: {
+          img: null,
+          description: '',
+        },
+        photo8: {
+          img: null,
+          description: '',
+        },
+      },
     },
   },
   reducers: {
@@ -30,6 +67,10 @@ const displayedVenueStageSlice = createSlice({
   },
 });
 
-export const { setStage, incrementStage, decrementStage, updateStageData } =
-  displayedVenueStageSlice.actions;
+export const {
+  setStage,
+  incrementStage,
+  decrementStage,
+  updateStageData,
+} = displayedVenueStageSlice.actions;
 export default displayedVenueStageSlice.reducer;

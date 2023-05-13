@@ -16,7 +16,9 @@ export const handleValueChange = (dispatch, stageData, stage) => {
 
 const Stage1 = () => {
   const dispatch = useDispatch();
-  const stageData = useSelector((state) => state.displayedVenueStage.stageData);
+  const stageData = useSelector(
+    (state) => state.displayedVenueStage.stageData
+  ) || { stage1: { m2: '', beds: '', bathrooms: '', guests: '' } };
 
   const handleChange = handleValueChange(dispatch, stageData, 1);
 

@@ -13,6 +13,7 @@ const CustomInput = ({
   position,
   value,
   onChange,
+  colonSymbol = ":"
 }) => {
   return (
     <div className={`${flex1}`}>
@@ -21,7 +22,8 @@ const CustomInput = ({
         className={`${display} block text-sm font-medium leading-6 text-gray-900 `}
       >
         {labelName}
-        {required}:
+        {required}
+        {colonSymbol}
       </label>
       <div className={marginTop}>
         <input

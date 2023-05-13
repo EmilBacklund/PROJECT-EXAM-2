@@ -5,7 +5,10 @@ import { handleValueChange } from './Stage1';
 
 const Stage2 = () => {
   const dispatch = useDispatch();
-  const stageData = useSelector((state) => state.displayedVenueStage.stageData);
+  const stageData = useSelector(
+    (state) => state.displayedVenueStage.stageData
+  ) || { stage2: { title: '', description: '' } };
+  console.log('stage2 data', stageData);
 
   const handleChange = handleValueChange(dispatch, stageData, 2);
 
@@ -18,7 +21,7 @@ const Stage2 = () => {
           labelName="Title"
           name="title"
           type="text"
-          value={stageData.stage2.title}
+          value={stageData.stage2.title ? stageData.stage2.title : ''}
         />
         <label
           htmlFor="description"
@@ -33,7 +36,9 @@ const Stage2 = () => {
           ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 
           focus:ring-inset focus:ring-secondaryOrange sm:text-sm sm:leading-6"
           rows="2"
-          value={stageData.stage2.description}
+          value={
+            stageData.stage2.description ? stageData.stage2.description : ''
+          }
         />
       </div>
     </div>

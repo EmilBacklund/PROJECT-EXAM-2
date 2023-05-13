@@ -11,7 +11,7 @@ const Stage6 = () => {
     (state) => state.displayedVenueStage.stageData.stage6
   );
 
-  console.log(stageData.coverPhoto);
+  // console.log(stageData.coverPhoto);
 
   const handleButtonClick = (button) => {
     setClickedButton(button);
@@ -38,31 +38,31 @@ const Stage6 = () => {
               {' '}
               <FaPlusCircle className='mx-auto h-12 w-12 text-secondaryOrange ' />
               <span className='mt-2 block text-sm font-semibold text-gray-900'>
-                {stageData.coverPhoto !== null && (
+                {stageData.coverPhoto.img !== null && (
                   <p>
                     The URL to your image is probably broken
                   </p>
                 )}
-                {stageData.coverPhoto == null && (
+                {stageData.coverPhoto.img == null && (
                   <p>Add cover photo</p>
                 )}
               </span>
             </>
-            {stageData.coverPhoto !== null &&
-              stageData.coverPhoto &&
-              stageData.coverPhoto && (
+            {stageData.coverPhoto.img !== null &&
+              stageData.coverPhoto.img &&
+              stageData.coverPhoto.img && (
                 <img
                   className='absolute top-0 left-0 w-full h-full object-cover '
                   src={
-                    stageData.coverPhoto !== null &&
-                    stageData.coverPhoto &&
-                    stageData.coverPhoto
+                    stageData.coverPhoto.img !== null &&
+                    stageData.coverPhoto.img &&
+                    stageData.coverPhoto.img
                   }
                   alt=''
                 />
               )}
-            {stageData.coverPhoto !== null &&
-              stageData.coverPhoto && (
+            {stageData.coverPhoto.img !== null &&
+              stageData.coverPhoto.img && (
                 <button className='absolute group-hover:bg-[#e85159] bg-primaryRed text-white z-10 top-3 right-5 px-4 py-1 rounded font-semibold transition-colors duration-300'>
                   Edit
                 </button>
@@ -81,30 +81,30 @@ const Stage6 = () => {
             >
               <FaPlusCircle className='mx-auto h-12 w-12 text-secondaryOrange' />
               <span className='mt-2 block text-sm font-semibold text-gray-900'>
-                {stageData.photo1 !== null && (
+                {stageData.photo1.img !== null && (
                   <p>
                     The URL to your image is probably broken
                   </p>
                 )}
-                {stageData.photo1 == null && (
+                {stageData.photo1.img == null && (
                   <p>Add image</p>
                 )}
               </span>
-              {stageData.photo1 !== null &&
-                stageData.photo1 &&
-                stageData.photo1 && (
+              {stageData.photo1.img !== null &&
+                stageData.photo1.img &&
+                stageData.photo1.img && (
                   <img
                     className='absolute top-0 left-0 w-full h-full object-cover '
                     src={
-                      stageData.photo1 !== null &&
-                      stageData.photo1 &&
-                      stageData.photo1
+                      stageData.photo1.img !== null &&
+                      stageData.photo1.img &&
+                      stageData.photo1.img
                     }
                     alt=''
                   />
                 )}
-              {stageData.photo1 !== null &&
-                stageData.photo1 && (
+              {stageData.photo1.img !== null &&
+                stageData.photo1.img && (
                   <button className='absolute group-hover:bg-[#e85159] bg-primaryRed text-white z-10 top-3 right-5 px-4 py-1 rounded font-semibold transition-colors duration-300'>
                     Edit
                   </button>
@@ -117,30 +117,30 @@ const Stage6 = () => {
             >
               <FaPlusCircle className='mx-auto h-12 w-12 text-secondaryOrange' />
               <span className='mt-2 block text-sm font-semibold text-gray-900'>
-                {stageData.photo2 !== null && (
+                {stageData.photo2.img !== null && (
                   <p>
                     The URL to your image is probably broken
                   </p>
                 )}
-                {stageData.photo2 == null && (
+                {stageData.photo2.img == null && (
                   <p>Add image</p>
                 )}
               </span>
-              {stageData.photo2 !== null &&
-                stageData.photo2 &&
-                stageData.photo2 && (
+              {stageData.photo2.img !== null &&
+                stageData.photo2.img &&
+                stageData.photo2.img && (
                   <img
                     className='absolute top-0 left-0 w-full h-full object-cover '
                     src={
-                      stageData.photo2 !== null &&
-                      stageData.photo2 &&
-                      stageData.photo2
+                      stageData.photo2.img !== null &&
+                      stageData.photo2.img &&
+                      stageData.photo2.img
                     }
                     alt=''
                   />
                 )}
-              {stageData.photo2 !== null &&
-                stageData.photo2 && (
+              {stageData.photo2.img !== null &&
+                stageData.photo2.img && (
                   <button className='absolute group-hover:bg-[#e85159] bg-primaryRed text-white z-10 top-3 right-5 px-4 py-1 rounded font-semibold transition-colors duration-300'>
                     Edit
                   </button>
@@ -157,30 +157,30 @@ const Stage6 = () => {
             >
               <FaPlusCircle className='mx-auto h-12 w-12 text-secondaryOrange' />
               <span className='mt-2 block text-sm font-semibold text-gray-900'>
-                {stageData.photo3 !== null && (
+                {stageData.photo3.img !== null && (
                   <p>
                     The URL to your image is probably broken
                   </p>
                 )}
-                {stageData.photo3 == null && (
+                {stageData.photo3.img == null && (
                   <p>Add image</p>
                 )}
               </span>
-              {stageData.photo3 !== null &&
-                stageData.photo3 &&
-                stageData.photo3 && (
+              {stageData.photo3.img !== null &&
+                stageData.photo3.img &&
+                stageData.photo3.img && (
                   <img
                     className='absolute top-0 left-0 w-full h-full object-cover '
                     src={
-                      stageData.photo3 !== null &&
-                      stageData.photo3 &&
-                      stageData.photo3
+                      stageData.photo3.img !== null &&
+                      stageData.photo3.img &&
+                      stageData.photo3.img
                     }
                     alt=''
                   />
                 )}
-              {stageData.photo3 !== null &&
-                stageData.photo3 && (
+              {stageData.photo3.img !== null &&
+                stageData.photo3.img && (
                   <button className='absolute group-hover:bg-[#e85159] bg-primaryRed text-white z-10 top-3 right-5 px-4 py-1 rounded font-semibold transition-colors duration-300'>
                     Edit
                   </button>
@@ -193,30 +193,30 @@ const Stage6 = () => {
             >
               <FaPlusCircle className='mx-auto h-12 w-12 text-secondaryOrange' />
               <span className='mt-2 block text-sm font-semibold text-gray-900'>
-                {stageData.photo4 !== null && (
+                {stageData.photo4.img !== null && (
                   <p>
                     The URL to your image is probably broken
                   </p>
                 )}
-                {stageData.photo4 == null && (
+                {stageData.photo4.img == null && (
                   <p>Add image</p>
                 )}
               </span>
-              {stageData.photo4 !== null &&
-                stageData.photo4 &&
-                stageData.photo4 && (
+              {stageData.photo4.img !== null &&
+                stageData.photo4.img &&
+                stageData.photo4.img && (
                   <img
                     className='absolute top-0 left-0 w-full h-full object-cover '
                     src={
-                      stageData.photo4 !== null &&
-                      stageData.photo4 &&
-                      stageData.photo4
+                      stageData.photo4.img !== null &&
+                      stageData.photo4.img &&
+                      stageData.photo4.img
                     }
                     alt=''
                   />
                 )}
-              {stageData.photo4 !== null &&
-                stageData.photo4 && (
+              {stageData.photo4.img !== null &&
+                stageData.photo4.img && (
                   <button className='absolute group-hover:bg-[#e85159] bg-primaryRed text-white z-10 top-3 right-5 px-4 py-1 rounded font-semibold transition-colors duration-300'>
                     Edit
                   </button>
@@ -233,30 +233,30 @@ const Stage6 = () => {
             >
               <FaPlusCircle className='mx-auto h-12 w-12 text-secondaryOrange' />
               <span className='mt-2 block text-sm font-semibold text-gray-900'>
-                {stageData.photo5 !== null && (
+                {stageData.photo5.img !== null && (
                   <p>
                     The URL to your image is probably broken
                   </p>
                 )}
-                {stageData.photo5 == null && (
+                {stageData.photo5.img == null && (
                   <p>Add image</p>
                 )}
               </span>
-              {stageData.photo5 !== null &&
-                stageData.photo5 &&
-                stageData.photo5 && (
+              {stageData.photo5.img !== null &&
+                stageData.photo5.img &&
+                stageData.photo5.img && (
                   <img
                     className='absolute top-0 left-0 w-full h-full object-cover '
                     src={
-                      stageData.photo5 !== null &&
-                      stageData.photo5 &&
-                      stageData.photo5
+                      stageData.photo5.img !== null &&
+                      stageData.photo5.img &&
+                      stageData.photo5.img
                     }
                     alt=''
                   />
                 )}
-              {stageData.photo5 !== null &&
-                stageData.photo5 && (
+              {stageData.photo5.img !== null &&
+                stageData.photo5.img && (
                   <button className='absolute group-hover:bg-[#e85159] bg-primaryRed text-white z-10 top-3 right-5 px-4 py-1 rounded font-semibold transition-colors duration-300'>
                     Edit
                   </button>
@@ -269,30 +269,30 @@ const Stage6 = () => {
             >
               <FaPlusCircle className='mx-auto h-12 w-12 text-secondaryOrange' />
               <span className='mt-2 block text-sm font-semibold text-gray-900'>
-                {stageData.photo6 !== null && (
+                {stageData.photo6.img !== null && (
                   <p>
                     The URL to your image is probably broken
                   </p>
                 )}
-                {stageData.photo6 == null && (
+                {stageData.photo6.img == null && (
                   <p>Add image</p>
                 )}
               </span>
-              {stageData.photo6 !== null &&
-                stageData.photo6 &&
-                stageData.photo6 && (
+              {stageData.photo6.img !== null &&
+                stageData.photo6.img &&
+                stageData.photo6.img && (
                   <img
                     className='absolute top-0 left-0 w-full h-full object-cover '
                     src={
-                      stageData.photo6 !== null &&
-                      stageData.photo6 &&
-                      stageData.photo6
+                      stageData.photo6.img !== null &&
+                      stageData.photo6.img &&
+                      stageData.photo6.img
                     }
                     alt=''
                   />
                 )}
-              {stageData.photo6 !== null &&
-                stageData.photo6 && (
+              {stageData.photo6.img !== null &&
+                stageData.photo6.img && (
                   <button className='absolute group-hover:bg-[#e85159] bg-primaryRed text-white z-10 top-3 right-5 px-4 py-1 rounded font-semibold transition-colors duration-300'>
                     Edit
                   </button>
@@ -309,30 +309,30 @@ const Stage6 = () => {
             >
               <FaPlusCircle className='mx-auto h-12 w-12 text-secondaryOrange' />
               <span className='mt-2 block text-sm font-semibold text-gray-900'>
-                {stageData.photo7 !== null && (
+                {stageData.photo7.img !== null && (
                   <p>
                     The URL to your image is probably broken
                   </p>
                 )}
-                {stageData.photo7 == null && (
+                {stageData.photo7.img == null && (
                   <p>Add image</p>
                 )}
               </span>
-              {stageData.photo7 !== null &&
-                stageData.photo7 &&
-                stageData.photo7 && (
+              {stageData.photo7.img !== null &&
+                stageData.photo7.img &&
+                stageData.photo7.img && (
                   <img
                     className='absolute top-0 left-0 w-full h-full object-cover '
                     src={
-                      stageData.photo7 !== null &&
-                      stageData.photo7 &&
-                      stageData.photo7
+                      stageData.photo7.img !== null &&
+                      stageData.photo7.img &&
+                      stageData.photo7.img
                     }
                     alt=''
                   />
                 )}
-              {stageData.photo7 !== null &&
-                stageData.photo7 && (
+              {stageData.photo7.img !== null &&
+                stageData.photo7.img && (
                   <button className='absolute group-hover:bg-[#e85159] bg-primaryRed text-white z-10 top-3 right-5 px-4 py-1 rounded font-semibold transition-colors duration-300'>
                     Edit
                   </button>
@@ -345,30 +345,30 @@ const Stage6 = () => {
             >
               <FaPlusCircle className='mx-auto h-12 w-12 text-secondaryOrange' />
               <span className='mt-2 block text-sm font-semibold text-gray-900'>
-                {stageData.photo8 !== null && (
+                {stageData.photo8.img !== null && (
                   <p>
                     The URL to your image is probably broken
                   </p>
                 )}
-                {stageData.photo8 == null && (
+                {stageData.photo8.img == null && (
                   <p>Add image</p>
                 )}
               </span>
-              {stageData.photo8 !== null &&
-                stageData.photo8 &&
-                stageData.photo8 && (
+              {stageData.photo8.img !== null &&
+                stageData.photo8.img &&
+                stageData.photo8.img && (
                   <img
                     className='absolute top-0 left-0 w-full h-full object-cover '
                     src={
-                      stageData.photo8 !== null &&
-                      stageData.photo8 &&
-                      stageData.photo8
+                      stageData.photo8.img !== null &&
+                      stageData.photo8.img &&
+                      stageData.photo8.img
                     }
                     alt=''
                   />
                 )}
-              {stageData.photo8 !== null &&
-                stageData.photo8 && (
+              {stageData.photo8.img !== null &&
+                stageData.photo8.img && (
                   <button className='absolute group-hover:bg-[#e85159] bg-primaryRed text-white z-10 top-3 right-5 px-4 py-1 rounded font-semibold transition-colors duration-300'>
                     Edit
                   </button>

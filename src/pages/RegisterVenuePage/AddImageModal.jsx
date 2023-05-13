@@ -11,9 +11,7 @@ import { FaTimes } from 'react-icons/fa';
 const AddImageModal = ({
   open,
   setOpen,
-  successMessage,
   clickedButton,
-  imageRemovedMessage,
 }) => {
   const [imageUrl, setImageUrl] = useState('');
   const dispatch = useDispatch();
@@ -23,34 +21,33 @@ const AddImageModal = ({
 
   const [isVisible, setIsVisible] = useState(false);
   const [isSameValue, setIsSameValue] = useState(false);
-  const [showSuccessMessage, setShowSuccessMessage] =
-    useState(false);
+  const [showMessage, setShowMessage] = useState(false);
   const [message, setMessage] = useState('');
+  const [imageDescription, setImageDescription] =
+    useState('');
 
   useEffect(() => {
     if (
-      (showSuccessMessage &&
-        stageData &&
-        stageData[clickedButton]) ||
-      (!imageUrl && !stageData[clickedButton])
+      (showMessage && stageData[clickedButton]?.img) ||
+      (!imageUrl && stageData[clickedButton]?.img)
     ) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
     }
-  }, [stageData, clickedButton, showSuccessMessage]);
+  }, [stageData, clickedButton, showMessage]);
 
-  console.log('imageUrl: ', imageUrl);
-  console.log(
-    'stageData[clickedButton]: ',
-    stageData[clickedButton]
-  );
+  // console.log('imageUrl: ', imageUrl);
+  // console.log(
+  //   'stageData[clickedButton]: ',
+  //   stageData[clickedButton]
+  // );
 
   useEffect(() => {
     if (
-      (stageData &&
-        stageData[clickedButton] === imageUrl) ||
-      (stageData[clickedButton] === null && imageUrl === '')
+      stageData[clickedButton]?.img === imageUrl ||
+      (stageData[clickedButton]?.img === null &&
+        imageUrl === '')
     ) {
       setIsSameValue(true);
     } else {
@@ -59,44 +56,79 @@ const AddImageModal = ({
   }, [stageData, clickedButton, imageUrl]);
 
   const saveImageToStore = () => {
+    let imageDescriptionToUpdate = imageDescription;
+    if (stageData[clickedButton]?.img === null) {
+      imageDescriptionToUpdate = '';
+    }
     dispatch(
       updateStageData({
         stage: 6,
         data: {
           ...stageData,
-          [clickedButton]: imageUrl || null,
+          [clickedButton]: {
+            img: imageUrl || null,
+            description: imageDescriptionToUpdate,
+          },
         },
       })
     );
-    setShowSuccessMessage(true);
+    console.log(stageData);
+    setShowMessage(true);
   };
 
   useEffect(() => {
     if (open && stageData && stageData[clickedButton]) {
-      setImageUrl(stageData[clickedButton]);
+      setImageUrl(stageData[clickedButton].img);
+      setImageDescription(
+        stageData[clickedButton].description
+      );
     } else if (open) {
       setImageUrl(undefined);
+      setImageDescription('');
     }
   }, [open, stageData, clickedButton]);
 
   useEffect(() => {
     if (
-      imageUrl === stageData[clickedButton] &&
-      successMessage
+      imageUrl === stageData[clickedButton]?.img &&
+      message &&
+      stageData[clickedButton]?.img !== null
     ) {
       setMessage('Hooray! 😄 Image upload complete!');
-    } else if (!imageUrl && !stageData[clickedButton]) {
+    } else if (
+      !imageUrl &&
+      !stageData[clickedButton]?.img
+    ) {
       setMessage('Image removed 🙂');
     } else {
-      setShowSuccessMessage(false);
+      setShowMessage(false);
     }
-  }, [
-    imageUrl,
-    isSameValue,
-    successMessage,
-    stageData,
-    clickedButton,
-  ]);
+  }, [imageUrl, isSameValue, stageData, clickedButton]);
+
+  function disableSaveButton() {
+    if (
+      stageData[clickedButton].description !==
+        imageDescription &&
+      imageUrl &&
+      imageUrl.length > 0
+    ) {
+      return false;
+    }
+    if (imageUrl === undefined || isSameValue) {
+      return true;
+    } else return false;
+  }
+
+  function disableTextfield() {
+    if (
+      stageData[clickedButton]?.img === null &&
+      !imageUrl
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   return (
     <>
@@ -107,7 +139,7 @@ const AddImageModal = ({
             className='relative z-10'
             onClose={() => {
               setOpen(false);
-              setShowSuccessMessage(false);
+              setShowMessage(false);
             }}
           >
             <Transition.Child
@@ -136,7 +168,7 @@ const AddImageModal = ({
                   <Dialog.Panel className='relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6'>
                     <div>
                       <AnimatePresence>
-                        {showSuccessMessage && (
+                        {showMessage && (
                           <motion.div
                             className='relative'
                             initial={{ height: 0 }}
@@ -159,9 +191,7 @@ const AddImageModal = ({
                               <FaTimes
                                 onClick={() => {
                                   setOpen(false);
-                                  setShowSuccessMessage(
-                                    false
-                                  );
+                                  setShowMessage(false);
                                 }}
                                 className='absolute right-0 w-6 h-6 cursor-pointer text-textBlack hover:text-gray-700 transition-colors'
                               />
@@ -181,13 +211,15 @@ const AddImageModal = ({
                           </motion.div>
                         )}
                       </AnimatePresence>
-                      {stageData[clickedButton] && (
+                      {stageData[clickedButton]?.img !==
+                        null && (
                         <div className='aspect-video flex justify-center w-full mt-4'>
                           <img
                             className='h-full w-full object-cover '
                             src={
-                              stageData[clickedButton] &&
                               stageData[clickedButton]
+                                .img &&
+                              stageData[clickedButton].img
                             }
                             alt='If your image URL is valid, the image is shown here'
                           />
@@ -215,6 +247,13 @@ const AddImageModal = ({
                         </div>
                         <textarea
                           placeholder='What does your photo show?'
+                          value={imageDescription}
+                          disabled={disableTextfield()}
+                          onChange={(e) =>
+                            setImageDescription(
+                              e.target.value
+                            )
+                          }
                           className='mt-2 border w-full rounded-md py-1.5 px-1.5 text-gray-900 ring-1 ring-inset ring-gray-300  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-secondaryOrange sm:text-sm sm:leading-6'
                         />
                       </div>
@@ -225,22 +264,18 @@ const AddImageModal = ({
                         className='inline-flex w-full justify-center rounded-md bg-[#0091AE] px-3 py-2 text-sm  text-white font-semibold shadow-sm hover:bg-[#34A9C0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0091AE] transition-all duration-300'
                         onClick={() => {
                           setOpen(false);
-                          setShowSuccessMessage(false);
+                          setShowMessage(false);
                         }}
                       >
                         Go back
                       </button>
                       <button
                         onClick={() => saveImageToStore()}
-                        disabled={
-                          imageUrl === undefined ||
-                          isSameValue
-                        }
+                        disabled={disableSaveButton()}
                         className={`inline-flex w-full text-textBlack justify-center rounded-md px-3 py-2 text-sm  shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#88D8B0] font-bold transition-all duration-300 bg-[#88D8B0] ${
-                          imageUrl !== undefined &&
-                          !isSameValue
-                            ? ' hover:bg-[#9bf6c9]'
-                            : 'opacity-30'
+                          disableSaveButton()
+                            ? 'opacity-30'
+                            : 'hover:bg-[#9bf6c9]'
                         }`}
                       >
                         Save

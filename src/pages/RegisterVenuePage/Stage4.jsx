@@ -11,17 +11,15 @@ const Stage4 = () => {
   );
   const dispatch = useDispatch();
 
-  console.log(stage4Data);
+  console.log('stage4Data: ', stage4Data);
 
   const handleAmenityClick = (amenity) => {
-    const updatedAmenities = { ...stage4Data };
-    if (updatedAmenities[amenity.amenity]) {
-      delete updatedAmenities[amenity.amenity];
+    let updatedAmenities = [...stage4Data];
+    const index = updatedAmenities.indexOf(amenity.amenity);
+    if (index > -1) {
+      updatedAmenities.splice(index, 1);
     } else {
-      updatedAmenities[amenity.amenity] = {
-        id: amenity.id,
-        amenity: amenity.amenity,
-      };
+      updatedAmenities.push(amenity.amenity);
     }
     dispatch(
       updateStageData({ stage: 4, data: updatedAmenities })
@@ -29,7 +27,7 @@ const Stage4 = () => {
   };
 
   const isActive = (amenity) =>
-    stage4Data.hasOwnProperty(amenity);
+    stage4Data.includes(amenity);
 
   return (
     <div>

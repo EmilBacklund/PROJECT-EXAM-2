@@ -1,9 +1,8 @@
 import { CheckIcon } from '@heroicons/react/20/solid';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setStage } from '../../store/modules/displayedVenueStageSlice';
 
 export default function RegisterProgression() {
-  const dispatch = useDispatch();
   const currentStage = useSelector(
     (state) => state.displayedVenueStage.stage
   );
@@ -11,15 +10,35 @@ export default function RegisterProgression() {
     (state) => state.displayedVenueStage.stageData
   );
 
+  const dispatch = useDispatch();
+
   console.log(stageData);
 
   let stages = [
-    { stage: 1, href: '#' },
-    { stage: 2, href: '#' },
-    { stage: 3, href: '#' },
-    { stage: 4, href: '#' },
-    { stage: 5, href: '#' },
-    { stage: 6, href: '#' },
+    {
+      stage: 1,
+      href: '/registerVenue/essential-information',
+    },
+    {
+      stage: 2,
+      href: '/registerVenue/title-and-description',
+    },
+    {
+      stage: 3,
+      href: '/registerVenue/location',
+    },
+    {
+      stage: 4,
+      href: '/registerVenue/amenities',
+    },
+    {
+      stage: 5,
+      href: '/registerVenue/pricing',
+    },
+    {
+      stage: 6,
+      href: '/registerVenue/images',
+    },
   ];
 
   stages = stages.map((stage) => {
@@ -45,6 +64,7 @@ export default function RegisterProgression() {
         {stages.map((stage, stageIdx) => (
           <li
             key={stage.stage}
+            onClick={() => dispatch(setStage(stageIdx + 1))}
             className={classNames(
               stageIdx !== stages.length - 1
                 ? 'pr-4 sm:pr-0 smallScreen:pr-8'
@@ -67,8 +87,8 @@ export default function RegisterProgression() {
                   />
                 </div>
                 <a
-                  href='#'
-                  className='relative flex h-8 w-8 items-center justify-center rounded-full bg-[#0091AE] hover:bg-[#34A9C0] sm:z-10'
+                  href={stage.href}
+                  className='relative cursor-pointer flex h-8 w-8 items-center justify-center rounded-full bg-[#0091AE] hover:bg-[#34A9C0] sm:z-10'
                 >
                   <CheckIcon
                     className='h-5 w-5 text-white '
@@ -94,7 +114,7 @@ export default function RegisterProgression() {
                   />
                 </div>
                 <a
-                  href='#'
+                  href={stage.href}
                   className='relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#0091AE] bg-white'
                   aria-current='stage'
                 >
@@ -122,7 +142,7 @@ export default function RegisterProgression() {
                   />
                 </div>
                 <a
-                  href='#'
+                  href={stage.href}
                   className='group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-white hover:border-gray-400'
                 >
                   <span

@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const displayedVenueStageSlice = createSlice({
   name: 'displayedVenueStage',
   initialState: {
-    stage: 1,
+    stage: 0,
     stageData: {
       stage1: {},
       stage2: {},

@@ -7,6 +7,7 @@ import {
 } from '../../store/modules/displayedVenueStageSlice';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Stage0 from './Stage0';
+import { useEffect } from 'react';
 
 const RegisterVenue = () => {
   const navigate = useNavigate();
@@ -47,6 +48,16 @@ const RegisterVenue = () => {
       );
     }
   };
+
+  useEffect(() => {
+    if (currentStage !== 0) {
+      navigate(
+        `/registerVenue/${stageToPath[currentStage]}`
+      );
+    } else {
+      navigate(`/registerVenue`);
+    }
+  }, [navigate]);
 
   const renderButtonName = () => {
     switch (currentStage) {

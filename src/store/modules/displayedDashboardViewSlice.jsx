@@ -8,7 +8,6 @@ const displayedDashboardViewSlice = createSlice({
       'Managing Venues': '/images/dashboard/managing-venues.svg',
       'Pending Reviews': '/images/dashboard/pending-reviews.svg',
       'Upcoming Stays': '/images/dashboard/upcoming-stays.svg',
-      'Received Reviews': '/images/dashboard/received-reviews.svg',
     },
     selectedView: 'Confirmed Guests',
   },

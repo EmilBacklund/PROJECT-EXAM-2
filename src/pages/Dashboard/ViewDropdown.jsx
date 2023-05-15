@@ -15,12 +15,13 @@ function ViewDropdown() {
   );
 
   const viewKeys = Object.keys(views);
+  const selectedViewImageUrl = views[selectedView];
 
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          <img src="" />
+        <Menu.Button className="inline-flex w-full justify-center h-12 items-center mt-4  gap-x-1.5 md:gap-x-4 rounded-md text-xl md:text-[32px]  ring-inset ring-gray-300 ">
+          <img className="w-8 md:w-auto" src={selectedViewImageUrl} />
           <h1>{selectedView}</h1>
           <img src="/images/dashboard/dropdown.svg" alt="options" />
         </Menu.Button>

@@ -45,6 +45,10 @@
   transition: box-shadow 0.25s ease;
 }
 
+.dashboardBtnGradient {
+  background: linear-gradient(180deg, #FD7E40 0%, #FD7E40 0.01%, #EB737A 100%);
+}
+
 .inactiveShadowBtn:hover {
   box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.7);
 }

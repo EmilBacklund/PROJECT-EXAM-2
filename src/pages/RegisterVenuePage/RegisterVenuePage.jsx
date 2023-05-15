@@ -8,12 +8,11 @@ import {
 import { Outlet, useNavigate } from 'react-router-dom';
 import Stage0 from './Stage0';
 import { useEffect } from 'react';
+import postVenue from '../../api/postVenueApi';
 
 const RegisterVenue = () => {
   const navigate = useNavigate();
-  const currentStage = useSelector(
-    (state) => state.displayedVenueStage.stage
-  );
+  const currentStage = useSelector((state) => state.displayedVenueStage.stage);
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
@@ -33,9 +32,7 @@ const RegisterVenue = () => {
 
   const increment = () => {
     dispatch(incrementStage());
-    navigate(
-      `/registerVenue/${stageToPath[currentStage + 1]}`
-    );
+    navigate(`/registerVenue/${stageToPath[currentStage + 1]}`);
   };
 
   const decrement = () => {
@@ -43,17 +40,13 @@ const RegisterVenue = () => {
     if (currentStage - 1 === 0) {
       navigate(`/registerVenue`);
     } else {
-      navigate(
-        `/registerVenue/${stageToPath[currentStage - 1]}`
-      );
+      navigate(`/registerVenue/${stageToPath[currentStage - 1]}`);
     }
   };
 
   useEffect(() => {
     if (currentStage !== 0) {
-      navigate(
-        `/registerVenue/${stageToPath[currentStage]}`
-      );
+      navigate(`/registerVenue/${stageToPath[currentStage]}`);
     } else {
       navigate(`/registerVenue`);
     }
@@ -71,28 +64,23 @@ const RegisterVenue = () => {
   };
 
   return (
-    <div className='relative section-container gap-6 flex flex-col justify-between min-h-[calc(100vh-179.18px)] md:min-h-[calc(100vh-111.99px)]'>
+    <div className="relative section-container gap-6 flex flex-col justify-between min-h-[calc(100vh-179.18px)] md:min-h-[calc(100vh-111.99px)]">
       {currentStage === 0 && <Stage0 />}
       <div>
-        <div className='sm:flex sm:justify-center sm:gap-20 sm:mt-10'>
+        <div className="sm:flex sm:justify-center sm:gap-20 sm:mt-10">
           {currentStage > 0 && (
-            <div className='sm:mt-20 '>
+            <div className="sm:mt-20 ">
               <RegisterProgression />
             </div>
           )}
-          <form
-            className='sm:flex-1 max-w-3xl'
-            onSubmit={handleSubmit}
-          >
+          <form className="sm:flex-1 max-w-3xl" onSubmit={handleSubmit}>
             <Outlet />
           </form>
         </div>
       </div>
       <div
         className={`${
-          currentStage !== 0
-            ? 'justify-between'
-            : 'justify-end'
+          currentStage !== 0 ? 'justify-between' : 'justify-end'
         } flex  mb-6`}
       >
         {currentStage !== 0 && (
@@ -100,22 +88,21 @@ const RegisterVenue = () => {
             onClick={() => {
               dispatch(decrement());
             }}
-            className='underline text-textBlack font-semibold rounded-md px-8 hover:bg-gray-200'
+            className="underline text-textBlack font-semibold rounded-md px-8 hover:bg-gray-200"
           >
             Back
           </button>
         )}
 
         <SecondaryBtn
-          width='px-8'
+          width="px-8"
           name={renderButtonName()}
           onClick={
             currentStage <= 5
               ? () => {
                   dispatch(increment());
                 }
-              : null
-            //!Instead of null, make a POST request here when API is up
+              : () => postVenue()
           }
         />
       </div>

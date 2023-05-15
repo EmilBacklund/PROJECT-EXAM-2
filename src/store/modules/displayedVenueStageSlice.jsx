@@ -3,12 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 const displayedVenueStageSlice = createSlice({
   name: 'displayedVenueStage',
   initialState: {
-    stage: 1,
+    stage: 0,
     stageData: {
       stage1: {},
       stage2: {},
       stage3: {},
-      stage4: {},
+      stage4: [],
       stage5: {},
       stage6: {
         coverPhoto: {

@@ -11,31 +11,37 @@ const Stage4 = () => {
   );
   const dispatch = useDispatch();
 
-  console.log(stage4Data);
+  console.log('stage4Data: ', stage4Data);
 
   const handleAmenityClick = (amenity) => {
-    const updatedAmenities = { ...stage4Data };
-    if (updatedAmenities[amenity.amenity]) {
-      delete updatedAmenities[amenity.amenity];
+    let updatedAmenities = [...stage4Data];
+    const index = updatedAmenities.indexOf(amenity.amenity);
+    if (index > -1) {
+      updatedAmenities.splice(index, 1);
     } else {
-      updatedAmenities[amenity.amenity] = {
-        id: amenity.id,
-        amenity: amenity.amenity,
-      };
+      updatedAmenities.push(amenity.amenity);
     }
-    dispatch(updateStageData({ stage: 4, data: updatedAmenities }));
+    dispatch(
+      updateStageData({ stage: 4, data: updatedAmenities })
+    );
   };
 
-  const isActive = (amenity) => stage4Data.hasOwnProperty(amenity);
+  const isActive = (amenity) =>
+    stage4Data.includes(amenity);
 
   return (
     <div>
-      <StageTemplate stageNumber={4} stageTitle={'Amenities'} />
-      <div className="flex flex-col gap-4"></div>
-      <h3 className="font-bold text-2xl">What has your place to offer?</h3>
+      <StageTemplate
+        stageNumber={4}
+        stageTitle={'Amenities'}
+      />
+      <div className='flex flex-col gap-4'></div>
+      <h3 className='font-bold text-2xl'>
+        What has your place to offer?
+      </h3>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 mt-6">
+      <div className='grid grid-cols-2 gap-4 md:grid-cols-3 mt-6'>
         {amenities &&
           amenities.map((amenity, index) => (
             <AmenityButton

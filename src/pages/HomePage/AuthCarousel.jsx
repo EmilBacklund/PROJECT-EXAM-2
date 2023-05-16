@@ -1,14 +1,17 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedView } from '../../store/modules/displayedHomepageViewSlice';
 import { motion, AnimatePresence } from 'framer-motion';
 import classNames from 'classnames';
 
 const AuthCarousel = () => {
   const dispatch = useDispatch();
-  const [currentIndex, setCurrentIndex] = useState(1);
   const [isDragTriggered, setIsDragTriggered] = useState(false);
   const views = useMemo(() => ['Login', 'Booking', 'Register'], []);
+  const carouselIndex = useSelector(
+    (state) => state.carouselIndex.currentIndex
+  );
+  const [currentIndex, setCurrentIndex] = useState(carouselIndex);
 
   const goPrev = useCallback(() => {
     setCurrentIndex((currentIndex - 1 + views.length) % views.length);
@@ -24,9 +27,14 @@ const AuthCarousel = () => {
     setIsDragTriggered(false);
   }, [dispatch, currentIndex, isDragTriggered, views]);
 
+  useEffect(() => {
+    setCurrentIndex(carouselIndex);
+  }, [carouselIndex]);
+
   const handleClick = (view, index) => {
     setIsDragTriggered(false);
     dispatch(setSelectedView(view));
+    console.log(currentIndex);
 
     if (index === 0) {
       goPrev();
@@ -51,8 +59,8 @@ const AuthCarousel = () => {
   return (
     <AnimatePresence>
       <motion.div
-        className='flex md:gap-20 gap-5 items-center justify-center relative select-none px-2 '
-        drag='x'
+        className="flex md:gap-20 gap-5 items-center justify-center relative select-none px-2 "
+        drag="x"
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.03}
         onDragEnd={(e, { offset, velocity }) => {
@@ -67,7 +75,7 @@ const AuthCarousel = () => {
           }
         }}
       >
-        <div className='w-full absolute h-full z-10 gradient-opacity pointer-events-none'></div>
+        <div className="w-full absolute h-full z-10 gradient-opacity pointer-events-none"></div>
 
         {orderedViews.map((view, index) => (
           <motion.div
@@ -78,9 +86,12 @@ const AuthCarousel = () => {
               y: { duration: durations[index] },
               scale: { type: 'spring', stiffness: 400, damping: 50 },
             }}
-            className={classNames('text-xs sm:text-base md:text-lg cursor-pointer text-center', {
-              'font-semibold': index === 1,
-            })}
+            className={classNames(
+              'text-xs sm:text-base md:text-lg cursor-pointer text-center',
+              {
+                'font-semibold': index === 1,
+              }
+            )}
             onClick={() => {
               handleClick(view, index);
             }}

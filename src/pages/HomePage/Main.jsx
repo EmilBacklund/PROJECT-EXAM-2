@@ -17,19 +17,29 @@ const Main = () => {
   const { selectedView } = useSelector((state) => state.displayedHomepageView);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isLoading, setIsLoading] = useState(true);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+
+  const handleRegisterSuccess = (registeredEmail, registeredPassword) => {
+    return new Promise((resolve) => {
+      setEmail(registeredEmail);
+      setPassword(registeredPassword);
+      resolve();
+    });
+  };
 
   const toggleView = useMemo(() => {
     switch (selectedView) {
       case 'Booking':
         return <Booking />;
       case 'Register':
-        return <Register />;
+        return <Register onRegisterSuccess={handleRegisterSuccess} />;
       case 'Login':
-        return <Login />;
+        return <Login email={email} password={password} />;
       default:
         console.error('Something went wrong');
     }
-  }, [selectedView]);
+  }, [selectedView, email, password]);
 
   const storedMobileImage = localStorage.getItem('mobileImage');
   const storedDesktopImage = localStorage.getItem('desktopImage');

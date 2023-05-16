@@ -4,11 +4,13 @@ import storage from 'redux-persist/lib/storage';
 import headerImageSlice from './modules/headerImageSlice';
 import displayedHomepageViewSlice from './modules/displayedHomepageViewSlice';
 import displayedVenueStageSlice from './modules/displayedVenueStageSlice';
+import displayedDashboardViewSlice from './modules/displayedDashboardViewSlice';
 
 const reducer = combineReducers({
   headerImage: headerImageSlice,
   displayedHomepageView: displayedHomepageViewSlice,
   displayedVenueStage: displayedVenueStageSlice,
+  displayedDashboardView: displayedDashboardViewSlice,
 });
 
 const persistConfig = {

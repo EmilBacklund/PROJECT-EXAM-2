@@ -1,9 +1,9 @@
-import StageTemplate from "./StageTemplate";
-import { FaPlus, FaMinus } from "react-icons/fa";
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { updateStageData } from "../../store/modules/displayedVenueStageSlice";
-import { motion } from "framer-motion";
+import StageTemplate from './StageTemplate';
+import { FaPlus, FaMinus } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateStageData } from '../../store/modules/displayedVenueStageSlice';
+import { motion } from 'framer-motion';
 
 const Stage5 = () => {
   const minPrice = 100;
@@ -30,18 +30,17 @@ const Stage5 = () => {
 
   useEffect(() => {
     dispatch(updateStageData({ stage: 5, data: { price: price } }));
-    console.log(stageData);
   }, [price]);
 
   const isDecrementDisabled = price <= minPrice;
   const isIncrementDisabled = price >= maxPrice;
 
   const [minusScale, setMinusScale] = useState(1);
-const [plusScale, setPlusScale] = useState(1);
+  const [plusScale, setPlusScale] = useState(1);
 
   return (
     <div>
-      <StageTemplate stageNumber={5} stageTitle={"Price"} />
+      <StageTemplate stageNumber={5} stageTitle={'Price'} />
       <div className="flex flex-col gap-4">
         <div>
           <p className="text-2xl font-medium mb-2">Set price for your venue</p>
@@ -52,21 +51,21 @@ const [plusScale, setPlusScale] = useState(1);
             disabled={isDecrementDisabled}
             onClick={handleDecrement}
             onMouseDown={() => setMinusScale(0.7)}
-  onMouseUp={() => setMinusScale(1)}
-  onMouseLeave={() => setMinusScale(1)}
+            onMouseUp={() => setMinusScale(1)}
+            onMouseLeave={() => setMinusScale(1)}
             className={`flex-0 group w-10 h-10 grid place-items-center   border   rounded-full transition-all ${
               isDecrementDisabled
-                ? "border-gray-300"
-                : "cursor-pointer border-gray-500 hover:border-textBlack"
+                ? 'border-gray-300'
+                : 'cursor-pointer border-gray-500 hover:border-textBlack'
             }`}
           >
             <motion.div whileTap={{ scale: 0.7 }}>
               <FaMinus
-              style={{ transform: `scale(${minusScale})` }}
+                style={{ transform: `scale(${minusScale})` }}
                 className={`  transition-all ${
                   isDecrementDisabled
-                    ? "text-gray-300"
-                    : "text-gray-500 group-hover:text-textBlack"
+                    ? 'text-gray-300'
+                    : 'text-gray-500 group-hover:text-textBlack'
                 }`}
               />
             </motion.div>
@@ -85,16 +84,16 @@ const [plusScale, setPlusScale] = useState(1);
             onMouseLeave={() => setPlusScale(1)}
             className={`flex-0 group w-10 h-10 grid place-items-center   border   rounded-full transition-all ${
               isIncrementDisabled
-                ? "border-gray-300"
-                : "cursor-pointer border-gray-500 hover:border-textBlack"
+                ? 'border-gray-300'
+                : 'cursor-pointer border-gray-500 hover:border-textBlack'
             }`}
           >
             <FaPlus
-            style={{ transform: `scale(${plusScale})` }}
+              style={{ transform: `scale(${plusScale})` }}
               className={`  transition-all ${
                 isIncrementDisabled
-                  ? "text-gray-300"
-                  : "text-gray-500 group-hover:text-textBlack"
+                  ? 'text-gray-300'
+                  : 'text-gray-500 group-hover:text-textBlack'
               }`}
             />
           </button>

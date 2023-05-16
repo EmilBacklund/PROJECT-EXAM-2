@@ -104,7 +104,7 @@ const Main = () => {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div className="relative h-0 overflow-hidden min-h-[600px] ">
+        <div className="relative h-0 min-h-[600px] ">
           <div className="absolute inset-0 max-h-[760px]">
             {windowWidth > 768 && imageDesktop ? (
               <img

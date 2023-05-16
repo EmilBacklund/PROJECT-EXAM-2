@@ -7,13 +7,50 @@ import {
 } from '../../store/modules/displayedVenueStageSlice';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Stage0 from './Stage0';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import postVenue from '../../api/postVenueApi';
+import GeneralMessage from './GeneralMessage';
 
 const RegisterVenue = () => {
   const navigate = useNavigate();
   const currentStage = useSelector((state) => state.displayedVenueStage.stage);
+  const stageData = useSelector((state) => state.displayedVenueStage.stageData);
+  const { allStagesAreValid } = useSelector(
+    (state) => state.displayedVenueStage
+  );
   const dispatch = useDispatch();
+  const [error, setError] = useState(null);
+
+  let postData = {};
+
+  if (stageData && allStagesAreValid) {
+    postData = {
+      squareMeter: stageData.stage1.m2,
+      beds: stageData.stage1.beds,
+      bathrooms: stageData.stage1.bathrooms,
+      guests: stageData.stage1.guests,
+      title: stageData.stage2.title,
+      description: stageData.stage2.description,
+      street: stageData.stage3.street,
+      city: stageData.stage3.city,
+      country: stageData.stage3.country,
+      zip: stageData.stage3.zipCode,
+      lat: stageData.stage3.lat,
+      lng: stageData.stage3.lng,
+      placeId: stageData.stage3.place_id,
+      state: stageData.stage3.state,
+      amenities: stageData.stage4,
+      price: stageData.stage5.price,
+      media: Object.values(stageData.stage6)
+        .filter((photo) => photo.img)
+        .map((photo) => ({
+          image: photo.img,
+          description: photo.description,
+        })),
+    };
+  }
+
+  console.log('postData: ', postData);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,8 +64,6 @@ const RegisterVenue = () => {
     5: 'pricing',
     6: 'images',
   };
-
-  console.log(currentStage);
 
   const increment = () => {
     dispatch(incrementStage());
@@ -78,6 +113,7 @@ const RegisterVenue = () => {
           </form>
         </div>
       </div>
+      {error && <GeneralMessage errors={error} />}
       <div
         className={`${
           currentStage !== 0 ? 'justify-between' : 'justify-end'
@@ -102,7 +138,18 @@ const RegisterVenue = () => {
               ? () => {
                   dispatch(increment());
                 }
-              : () => postVenue()
+              : () => {
+                  postVenue(postData)
+                    .then((data) => {
+                      console.log('Post succeeded:', data);
+                      // Handle success (e.g., navigate to a different page)
+                    })
+                    .catch((error) => {
+                      console.error('Post failed:', error);
+                      setError(error);
+                      // Handle error (e.g., show a message to the user)
+                    });
+                }
           }
         />
       </div>

@@ -5,11 +5,18 @@ import { updateStageData } from '../../store/modules/displayedVenueStageSlice';
 
 export const handleValueChange = (dispatch, stageData, stage) => {
   return (e) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
+    let parsedValue = value;
+
+    if (type === 'number') {
+      parsedValue = Number(value);
+    }
+
     const updatedData = {
       ...stageData[`stage${stage}`],
-      [name]: value,
+      [name]: parsedValue,
     };
+
     dispatch(updateStageData({ stage: stage, data: { ...updatedData } }));
   };
 };

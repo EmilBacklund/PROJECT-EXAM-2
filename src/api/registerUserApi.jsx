@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-const postVenue = (data) => {
+const registerUser = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.post(
-        'http://localhost:8080/get/venue/register/1',
+        'http://localhost:8080/get/user/register',
         data
       );
-      console.log('Response data from Venue post', response.data);
+      console.log('Response data from User post', response.data);
       resolve(response.data);
     } catch (error) {
       console.error('Error:', error.response.status);
@@ -16,4 +16,4 @@ const postVenue = (data) => {
   });
 };
 
-export default postVenue;
+export default registerUser;

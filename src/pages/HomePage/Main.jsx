@@ -17,8 +17,8 @@ const Main = () => {
   const { selectedView } = useSelector((state) => state.displayedHomepageView);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isLoading, setIsLoading] = useState(true);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleRegisterSuccess = (registeredEmail, registeredPassword) => {
     return new Promise((resolve) => {

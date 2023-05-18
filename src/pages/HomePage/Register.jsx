@@ -17,7 +17,6 @@ const Register = ({ onRegisterSuccess }) => {
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [order, setOrder] = useState(1);
   const dispatch = useDispatch();
 
   const minDate = new Date();
@@ -38,18 +37,10 @@ const Register = ({ onRegisterSuccess }) => {
 
     try {
       const response = await reusableAxiosComponent(user, 'register', 'POST');
-      console.log(response);
 
-      if (order === 1) {
-        dispatch(setSelectedView('Login'));
-        setOrder(2);
-      } else if (order === 2) {
-        dispatch(setCarouselIndex(0));
-        setOrder(3);
-      } else if (order === 3) {
-        await onRegisterSuccess(email, password);
-        setOrder(1);
-      }
+      dispatch(setSelectedView('Login'));
+      dispatch(setCarouselIndex(0));
+      await onRegisterSuccess(email, password);
     } catch (error) {
       console.error(error);
     }

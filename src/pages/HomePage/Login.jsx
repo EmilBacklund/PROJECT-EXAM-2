@@ -3,22 +3,41 @@ import CustomInput from '../../components/FormComponents/CustomInput';
 import { PrimaryBtn } from '../../components/StyledButtons';
 import reusableAxiosComponent from '../../api/reusableAxiosComponent';
 import { useState } from 'react';
+import { setItem, getItem } from '../../utils/storage';
+import { setSelectedView } from '../../store/modules/displayedHomepageViewSlice';
+import { useDispatch } from 'react-redux';
+import { setAuthentication } from '../../store/modules/authenticationSlice';
 
 const Login = ({ email, password }) => {
   const [localEmail, setLocalEmail] = useState(email);
   const [localPassword, setLocalPassword] = useState(password);
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const user = {
-      localEmail,
-      localPassword,
+      email: localEmail,
+      password: localPassword,
     };
 
     try {
-      const response = await reusableAxiosComponent(user, 'login', 'POST');
+      const response = await reusableAxiosComponent(
+        user,
+        'authenticate',
+        'POST'
+      );
       console.log(response);
+
+      setItem('token', response.token);
+      setItem('user', {
+        id: response.user.id,
+        birthDay: response.user.birthDay,
+        name: response.user.name,
+      });
+
+      dispatch(setSelectedView('Booking'));
+      dispatch(setAuthentication(true));
     } catch (error) {
       console.error(error);
     }

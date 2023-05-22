@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedView } from '../../store/modules/displayedHomepageViewSlice';
+import { setCarouselIndex } from '../../store/modules/carouselIndexSlice';
 import { motion, AnimatePresence } from 'framer-motion';
 import classNames from 'classnames';
 
@@ -28,12 +29,17 @@ const AuthCarousel = () => {
   }, [dispatch, currentIndex, isDragTriggered, views]);
 
   useEffect(() => {
+    dispatch(setCarouselIndex(currentIndex));
+  }, [currentIndex, dispatch]);
+
+  useEffect(() => {
     setCurrentIndex(carouselIndex);
   }, [carouselIndex]);
 
   const handleClick = (view, index) => {
     setIsDragTriggered(false);
     dispatch(setSelectedView(view));
+    dispatch(setCarouselIndex(index));
     console.log(currentIndex);
 
     if (index === 0) {
@@ -80,7 +86,6 @@ const AuthCarousel = () => {
         {orderedViews.map((view, index) => (
           <motion.div
             key={view}
-            initial={{ y: '-200px' }}
             animate={{ y: 0, scale: index === 1 ? 1.3 : 1 }}
             transition={{
               y: { duration: durations[index] },

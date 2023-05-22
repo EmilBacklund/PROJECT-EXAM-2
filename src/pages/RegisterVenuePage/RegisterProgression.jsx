@@ -13,33 +13,39 @@ export default function RegisterProgression() {
   const dispatch = useDispatch();
 
   const isValid = (stage) => {
-    switch (stage) {
-      case 1:
-        const { m2, beds, bathrooms, guests } = stageData.stage1;
-        return m2 && beds && bathrooms && guests;
-      case 2:
-        const { title, description } = stageData.stage2;
-        return title && description;
-      case 3:
-        const { street, city, country, zipCode, lat, lng, place_id } =
-          stageData.stage3;
-        return street && city && country && zipCode && lat && lng && place_id;
-      case 4:
-        return true;
-      case 5:
-        const { price } = stageData.stage5;
-        return price;
-      case 6:
-        const photos = Object.values(stageData.stage6);
+    console.log('StageData: ', stageData);
+    if (!stageData) {
+      return false;
+    }
+    if (stageData) {
+      switch (stage) {
+        case 1:
+          const { m2, beds, bathrooms, guests } = stageData.stage1;
+          return m2 && beds && bathrooms && guests;
+        case 2:
+          const { title, description } = stageData.stage2;
+          return title && description;
+        case 3:
+          const { street, city, country, zipCode, lat, lng, place_id } =
+            stageData.stage3;
+          return street && city && country && zipCode && lat && lng && place_id;
+        case 4:
+          return true;
+        case 5:
+          const { price } = stageData.stage5;
+          return price;
+        case 6:
+          const photos = Object.values(stageData.stage6);
 
-        const firstPhotoExists = photos[0]?.img;
+          const firstPhotoExists = photos[0]?.img;
 
-        const atLeastFourMorePhotos =
-          photos.slice(1).filter((photo) => photo.img).length >= 4;
+          const atLeastFourMorePhotos =
+            photos.slice(1).filter((photo) => photo.img).length >= 4;
 
-        return firstPhotoExists && atLeastFourMorePhotos;
-      default:
-        return false;
+          return firstPhotoExists && atLeastFourMorePhotos;
+        default:
+          return false;
+      }
     }
   };
 

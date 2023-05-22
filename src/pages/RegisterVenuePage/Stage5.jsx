@@ -12,7 +12,7 @@ const Stage5 = () => {
   const stageData = useSelector((state) => state.displayedVenueStage.stageData);
   const dispatch = useDispatch();
 
-  const initialValue = stageData.stage5.price ? stageData.stage5.price : 8500;
+  const initialValue = stageData?.stage5?.price ? stageData.stage5.price : 8500;
   const [price, setPrice] = useState(initialValue);
 
   const handleIncrement = () => {

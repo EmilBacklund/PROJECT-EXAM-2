@@ -5,15 +5,19 @@ import 'react-calendar/dist/Calendar.css';
 import MainFormComponent from './MainFormComponent';
 import CustomInput from '../../components/FormComponents/CustomInput';
 import { PrimaryBtn } from '../../components/StyledButtons';
-import registerUser from '../../api/registerUserApi';
+import reusableAxiosComponent from '../../api/reusableAxiosComponent';
+import { useDispatch } from 'react-redux';
+import { setSelectedView } from '../../store/modules/displayedHomepageViewSlice';
+import { setCarouselIndex } from '../../store/modules/carouselIndexSlice';
 
-const Register = () => {
+const Register = ({ onRegisterSuccess }) => {
   const [birthDate, setBirthDate] = useState(new Date());
   const [showDate, setShowDate] = useState(false);
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 120); // Set the minimum date to 120 years ago
@@ -32,8 +36,11 @@ const Register = () => {
     };
 
     try {
-      const response = await registerUser(user);
-      console.log(response);
+      const response = await reusableAxiosComponent(user, 'register', 'POST');
+
+      dispatch(setSelectedView('Login'));
+      dispatch(setCarouselIndex(0));
+      await onRegisterSuccess(email, password);
     } catch (error) {
       console.error(error);
     }

@@ -5,12 +5,16 @@ import headerImageSlice from './modules/headerImageSlice';
 import displayedHomepageViewSlice from './modules/displayedHomepageViewSlice';
 import displayedVenueStageSlice from './modules/displayedVenueStageSlice';
 import displayedDashboardViewSlice from './modules/displayedDashboardViewSlice';
+import carouselIndexSlice from './modules/carouselIndexSlice';
+import authenticationSlice from './modules/authenticationSlice';
 
 const reducer = combineReducers({
   headerImage: headerImageSlice,
   displayedHomepageView: displayedHomepageViewSlice,
   displayedVenueStage: displayedVenueStageSlice,
   displayedDashboardView: displayedDashboardViewSlice,
+  carouselIndex: carouselIndexSlice,
+  authentication: authenticationSlice,
 });
 
 const persistConfig = {

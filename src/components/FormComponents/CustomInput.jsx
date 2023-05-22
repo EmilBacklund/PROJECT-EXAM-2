@@ -12,7 +12,7 @@ const CustomInput = ({
   flex1,
   position,
   value,
-  onChange,
+  onChange = () => {},
   colonSymbol = ':',
   paddingLeft,
 }) => {

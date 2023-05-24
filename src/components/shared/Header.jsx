@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useLocation, NavLink } from 'react-router-dom';
+import { useLocation, NavLink, redirect } from 'react-router-dom';
 import AuthCarousel from '../../pages/HomePage/AuthCarousel';
 import Menu from '../Menu';
 import { getItem } from '../../utils/storage';
@@ -12,9 +12,6 @@ const Header = () => {
   const isHomepage = location.pathname === '/';
   const menuRef = useRef();
   const isAuthenticated = useSelector(selectIsAuthenticated);
-
-  console.log('isAuthenticated: ', isAuthenticated);
-
   // This variable will be checked through Redux Store later
 
   const handleClickOutside = (event) => {
@@ -36,6 +33,13 @@ const Header = () => {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      localStorage.clear();
+      redirect('/');
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);

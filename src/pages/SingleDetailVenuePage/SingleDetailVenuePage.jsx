@@ -10,6 +10,8 @@ import Calendar from 'react-calendar';
 import '../../styles/singleVenueCalendar.css';
 import useWindowWidth from '../../hooks/useWindowWidth';
 import amenityImages from '../../utils/amenityImages';
+import AddToFavorite from '../../components/shared/AddToFavorite';
+import RemoveFromFavorite from '../../components/shared/RemoveFromFavorite';
 
 const SingleDetailVenuePage = () => {
   const { id } = useParams();
@@ -22,10 +24,26 @@ const SingleDetailVenuePage = () => {
   const windowWidth = useWindowWidth();
   const [isPickingStartDate, setIsPickingStartDate] = useState(true);
   const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API;
+  const [open, setOpen] = useState(false);
+  const [removeAsFavorite, setRemoveAsFavorite] = useState(false);
 
   const isMobileView = windowWidth <= 768;
 
-  console.log(amenityImages);
+  useEffect(() => {
+    const existingFavorites =
+      JSON.parse(localStorage.getItem('Favorites')) || [];
+    const existingCollections =
+      JSON.parse(localStorage.getItem('collections')) || [];
+
+    const isVenueInFavorites = existingFavorites.some(
+      (favorite) => favorite.id === venueData?.id
+    );
+    const isVenueInCollections = existingCollections.some((collection) =>
+      collection.venues.some((venue) => venue.id === venueData?.id)
+    );
+
+    setIsFavorite(isVenueInFavorites || isVenueInCollections);
+  }, [venueData]);
 
   const street = venueData?.location.street?.replace(/ /g, '+') || '';
   const city = venueData?.location.city?.replace(/ /g, '+') || '';
@@ -110,16 +128,25 @@ const SingleDetailVenuePage = () => {
               <h2 className="mb-2">{venueData.title}</h2>
               {!isFavorite && (
                 <FaRegHeart
-                  onClick={() => setIsFavorite(true)}
+                  onClick={() => setOpen(true)}
                   className="text-primaryRed w-8 h-8 cursor-pointer"
                 />
               )}
               {isFavorite && (
                 <FaHeart
-                  onClick={() => setIsFavorite(false)}
+                  onClick={() => setRemoveAsFavorite(true)}
                   className="text-primaryRed w-8 h-8 cursor-pointer"
                 />
               )}
+              <AddToFavorite
+                venueData={venueData}
+                open={open}
+                setOpen={setOpen}
+              />
+              <RemoveFromFavorite
+                open={removeAsFavorite}
+                setOpen={setRemoveAsFavorite}
+              />
             </div>
             <div className="h-0.5 w-full bg-primaryRed mb-4 sm:mb-10"></div>
             <div className="section-container">

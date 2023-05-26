@@ -142,10 +142,14 @@ const SingleDetailVenuePage = () => {
                 venueData={venueData}
                 open={open}
                 setOpen={setOpen}
+                setIsFavorite={setIsFavorite}
               />
               <RemoveFromFavorite
                 open={removeAsFavorite}
                 setOpen={setRemoveAsFavorite}
+                setAddToFavoriteOpen={setOpen}
+                id={venueData.id}
+                setIsFavorite={setIsFavorite}
               />
             </div>
             <div className="h-0.5 w-full bg-primaryRed mb-4 sm:mb-10"></div>

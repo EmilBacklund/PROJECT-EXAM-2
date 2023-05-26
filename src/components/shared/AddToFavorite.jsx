@@ -6,7 +6,7 @@ import { StarIcon } from '@heroicons/react/20/solid';
 import { useState, useEffect } from 'react';
 import CreateCollectionModal from '../CreateCollectionModal';
 
-function AddToFavorite({ open, setOpen, venueData }) {
+function AddToFavorite({ open, setOpen, venueData, setIsFavorite }) {
   const [selected, setSelected] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [collections, setCollections] = useState([]);
@@ -47,6 +47,7 @@ function AddToFavorite({ open, setOpen, venueData }) {
         const updatedFavorites = [...existingFavorites, venue];
         localStorage.setItem('Favorites', JSON.stringify(updatedFavorites));
         setOpen(false);
+        setIsFavorite(true);
       } else if (doesVenueExist) {
         setMessage('This venue is already in your favorites!');
       }
@@ -71,6 +72,7 @@ function AddToFavorite({ open, setOpen, venueData }) {
             JSON.stringify(existingCollections)
           );
           setOpen(false);
+          setIsFavorite(true);
         } else if (doesVenueExist) {
           setMessage('This venue is already in this collection!');
         }

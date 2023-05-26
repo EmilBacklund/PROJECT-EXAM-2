@@ -5,6 +5,7 @@ const displayedVenueStageSlice = createSlice({
   initialState: {
     stage: 0,
     allStagesAreValid: false,
+    submitAttempted: false,
     stageData: {
       stage1: {},
       stage2: {},
@@ -68,6 +69,9 @@ const displayedVenueStageSlice = createSlice({
     setAllStagesAreValid: (state, action) => {
       state.allStagesAreValid = action.payload;
     },
+    submitAttempted: (state, action) => {
+      state.submitAttempted = action.payload;
+    },
   },
 });
 
@@ -77,5 +81,6 @@ export const {
   decrementStage,
   updateStageData,
   setAllStagesAreValid,
+  submitAttempted,
 } = displayedVenueStageSlice.actions;
 export default displayedVenueStageSlice.reducer;

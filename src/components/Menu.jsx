@@ -1,13 +1,15 @@
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { getItem, logOut } from '../utils/storage';
+import useAuth from '../hooks/useAuth';
 import { useDispatch } from 'react-redux';
 import { setSelectedView } from '../store/modules/displayedHomepageViewSlice';
 import { setCarouselIndex } from '../store/modules/carouselIndexSlice';
 import { useSelector } from 'react-redux';
+import reusableAxiosComponent from '../api/reusableAxiosComponent';
 
 const Menu = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const { logOut } = useAuth();
   let navigate = useNavigate();
   const isAuthenticated = useSelector(
     (state) => state.authentication.isAuthenticated
@@ -153,7 +155,7 @@ const Menu = () => {
           <div className="border-t border-gray-200  pt-4">
             <NavLink
               className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
-              to=""
+              to="/"
               onClick={
                 isAuthenticated
                   ? () => {

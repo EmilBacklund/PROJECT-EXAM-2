@@ -5,10 +5,14 @@ import {
   setAllStagesAreValid,
 } from '../../store/modules/displayedVenueStageSlice';
 import { FaTimes } from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
 
 export default function RegisterProgression() {
   const currentStage = useSelector((state) => state.displayedVenueStage.stage);
   const stageData = useSelector((state) => state.displayedVenueStage.stageData);
+  const submitAttempted = useSelector(
+    (state) => state.displayedVenueStage.submitAttempted
+  );
 
   const dispatch = useDispatch();
 
@@ -97,7 +101,11 @@ export default function RegisterProgression() {
         status: isValid(stage.stage) ? 'complete' : 'incomplete',
       };
     } else if (stage.stage === currentStage) {
-      return { ...stage, status: 'current' };
+      return {
+        ...stage,
+        status:
+          submitAttempted && !isValid(stage.stage) ? 'incomplete' : 'current',
+      };
     } else {
       return { ...stage, status: 'upcoming' };
     }
@@ -136,8 +144,8 @@ export default function RegisterProgression() {
                     }`}
                   />
                 </div>
-                <a
-                  href={stage.href}
+                <NavLink
+                  to={stage.href}
                   className="relative cursor-pointer flex h-8 w-8 items-center justify-center rounded-full bg-[#0091AE] hover:bg-[#34A9C0] sm:z-10"
                 >
                   <CheckIcon
@@ -145,7 +153,7 @@ export default function RegisterProgression() {
                     aria-hidden="true"
                   />
                   <span className="sr-only">{stage.stage}</span>
-                </a>
+                </NavLink>
               </>
             ) : stage.status === 'current' ? (
               <>
@@ -159,8 +167,8 @@ export default function RegisterProgression() {
                     }`}
                   />
                 </div>
-                <a
-                  href={stage.href}
+                <NavLink
+                  to={stage.href}
                   className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#0091AE] bg-white"
                   aria-current="stage"
                 >
@@ -169,7 +177,7 @@ export default function RegisterProgression() {
                     aria-hidden="true"
                   />
                   <span className="sr-only">{stage.stage}</span>
-                </a>
+                </NavLink>
               </>
             ) : stage.status === 'incomplete' ? (
               <>
@@ -183,13 +191,13 @@ export default function RegisterProgression() {
                     }`}
                   />
                 </div>
-                <a
-                  href={stage.href}
+                <NavLink
+                  to={stage.href}
                   className="relative cursor-pointer flex h-8 w-8 items-center justify-center rounded-full bg-primaryRed hover:bg-[#ea676e] sm:z-10"
                 >
                   <FaTimes className="h-5 w-5 text-white " aria-hidden="true" />
                   <span className="sr-only">{stage.stage}</span>
-                </a>
+                </NavLink>
               </>
             ) : (
               <>
@@ -203,8 +211,8 @@ export default function RegisterProgression() {
                     }`}
                   />
                 </div>
-                <a
-                  href={stage.href}
+                <NavLink
+                  to={stage.href}
                   className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-white hover:border-gray-400"
                 >
                   <span
@@ -212,7 +220,7 @@ export default function RegisterProgression() {
                     aria-hidden="true"
                   />
                   <span className="sr-only">{stage.stage}</span>
-                </a>
+                </NavLink>
               </>
             )}
           </li>

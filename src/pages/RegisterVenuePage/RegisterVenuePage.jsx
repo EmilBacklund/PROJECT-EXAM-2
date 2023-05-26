@@ -4,6 +4,7 @@ import { SecondaryBtn } from '../../components/StyledButtons';
 import {
   incrementStage,
   decrementStage,
+  submitAttempted,
 } from '../../store/modules/displayedVenueStageSlice';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Stage0 from './Stage0';
@@ -140,13 +141,16 @@ const RegisterVenue = () => {
                 }
               : () => {
                   postVenue(postData)
-                    .then((data) => {
-                      console.log('Post succeeded:', data);
+                    .then((venueId) => {
+                      console.log('Post succeeded:', venueId);
+                      dispatch(submitAttempted(false));
+                      navigate(`/venue/${venueId}`);
                       // Handle success (e.g., navigate to a different page)
                     })
                     .catch((error) => {
                       console.error('Post failed:', error);
                       setError(error);
+                      dispatch(submitAttempted(true));
                       // Handle error (e.g., show a message to the user)
                     });
                 }

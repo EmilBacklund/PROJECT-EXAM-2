@@ -7,6 +7,7 @@ import displayedVenueStageSlice from './modules/displayedVenueStageSlice';
 import displayedDashboardViewSlice from './modules/displayedDashboardViewSlice';
 import carouselIndexSlice from './modules/carouselIndexSlice';
 import authenticationSlice from './modules/authenticationSlice';
+import loaderSlice from './modules/loaderSlice';
 
 const reducer = combineReducers({
   headerImage: headerImageSlice,
@@ -15,12 +16,13 @@ const reducer = combineReducers({
   displayedDashboardView: displayedDashboardViewSlice,
   carouselIndex: carouselIndexSlice,
   authentication: authenticationSlice,
+  loader: loaderSlice,
 });
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['displayedVenueStage'], // Only persist displayedVenueStage slice
+  whitelist: ['displayedVenueStage', 'authentication'], // Only persist displayedVenueStage slice
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

@@ -10,6 +10,7 @@ import Stage3 from '../pages/RegisterVenuePage/Stage3';
 import Stage4 from '../pages/RegisterVenuePage/Stage4';
 import Stage5 from '../pages/RegisterVenuePage/Stage5';
 import Stage6 from '../pages/RegisterVenuePage/Stage6';
+import SingleDetailVenuePage from '../pages/SingleDetailVenuePage/SingleDetailVenuePage';
 
 function Router() {
   return (
@@ -20,6 +21,7 @@ function Router() {
         <Route path="/dreamstays" element={<DreamStaysPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/favorites" element={<DreamStaysPage />} />
+        <Route path="/venue/:id" element={<SingleDetailVenuePage />} />
         <Route path="/registerVenue" element={<RegisterVenuePage />}>
           <Route path="essential-information" element={<Stage1 />} />
           <Route path="title-and-description" element={<Stage2 />} />

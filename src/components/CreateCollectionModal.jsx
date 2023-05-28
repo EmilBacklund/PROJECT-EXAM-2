@@ -1,23 +1,23 @@
-import { Fragment, useRef, useState } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import CustomInput from './FormComponents/CustomInput';
+import { Fragment, useRef, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import CustomInput from "./FormComponents/CustomInput";
 
 function CreateCollectionModal({ open, setOpen }) {
   const cancelButtonRef = useRef(null);
-  const [value, setValue] = useState('');
-  const [message, setMessage] = useState('');
+  const [value, setValue] = useState("");
+  const [message, setMessage] = useState("");
 
   function saveCollection() {
-    let collections = JSON.parse(localStorage.getItem('collections')) || [];
+    let collections = JSON.parse(localStorage.getItem("collections")) || [];
 
     if (collections.some((collection) => collection.name === value)) {
-      setMessage('A collection with this name already exists!');
+      setMessage("A collection with this name already exists!");
     } else {
       collections.push({ name: value, venues: [] });
-      localStorage.setItem('collections', JSON.stringify(collections));
+      localStorage.setItem("collections", JSON.stringify(collections));
       setOpen(false);
-      setValue('');
-      setMessage('');
+      setValue("");
+      setMessage("");
     }
   }
 
@@ -54,7 +54,7 @@ function CreateCollectionModal({ open, setOpen }) {
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
                 <div>
-                  <p className="text-center text-red-600 font-semibold">
+                  <p className="text-center font-semibold text-red-600">
                     {message}
                   </p>
                   <div className="text-center ">
@@ -71,7 +71,7 @@ function CreateCollectionModal({ open, setOpen }) {
                       colonSymbol=""
                       onChange={(e) => {
                         setValue(e.target.value);
-                        setMessage('');
+                        setMessage("");
                       }}
                     />
                   </div>
@@ -79,13 +79,13 @@ function CreateCollectionModal({ open, setOpen }) {
                 <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                   <button
                     type="button"
-                    disabled={value === ''}
+                    disabled={value === ""}
                     className={`inline-flex w-full justify-center rounded-md  px-3 py-2 text-sm font-semibold 
                     text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2  
                     sm:col-start-2 ${
-                      value === '' || message !== ''
-                        ? 'bg-gray-300 cursor-not-allowed'
-                        : 'bg-secondaryOrange focus-visible:outline-[#EF6623] hover:bg-[#EF6623]'
+                      value === "" || message !== ""
+                        ? "cursor-not-allowed bg-gray-300"
+                        : "bg-secondaryOrange hover:bg-[#EF6623] focus-visible:outline-[#EF6623]"
                     }}`}
                     onClick={saveCollection}
                   >

@@ -1,7 +1,7 @@
 const StageTemplate = ({ stageNumber, stageTitle }) => {
   return (
-    <div className="flex items-center gap-2 justify-center mb-6">
-      <div className="w-10 h-10 border-2 font-medium text-lg font-josefinsSans rounded-full text-center leading-10 border-primaryRed text-primaryRed">
+    <div className="mb-6 flex items-center justify-center gap-2">
+      <div className="h-10 w-10 rounded-full border-2 border-primaryRed text-center font-josefinsSans text-lg font-medium leading-10 text-primaryRed">
         {stageNumber}
       </div>
       <h2>{stageTitle}</h2>

@@ -1,10 +1,10 @@
-import { Fragment } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
-import { FaPlusCircle } from 'react-icons/fa';
-import { StarIcon } from '@heroicons/react/20/solid';
-import { useState, useEffect } from 'react';
-import CreateCollectionModal from '../CreateCollectionModal';
+import { Fragment } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { FaPlusCircle } from "react-icons/fa";
+import { StarIcon } from "@heroicons/react/20/solid";
+import { useState, useEffect } from "react";
+import CreateCollectionModal from "../CreateCollectionModal";
 
 function AddToFavorite({ open, setOpen, venueData, setIsFavorite }) {
   const [selected, setSelected] = useState(null);
@@ -13,21 +13,21 @@ function AddToFavorite({ open, setOpen, venueData, setIsFavorite }) {
   const id = venueData.id;
   const image = venueData.media[0].image;
   const title = venueData.title;
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
-  console.log('venueData from AddToFavorite component: ', venueData);
-  console.log('id from AddToFavorite component: ', id);
-  console.log('image from AddToFavorite component: ', image);
+  console.log("venueData from AddToFavorite component: ", venueData);
+  console.log("id from AddToFavorite component: ", id);
+  console.log("image from AddToFavorite component: ", image);
 
   useEffect(() => {
     let loadedCollections =
-      JSON.parse(localStorage.getItem('collections')) || [];
+      JSON.parse(localStorage.getItem("collections")) || [];
     setCollections(loadedCollections);
   }, [showModal]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    setMessage('');
+    setMessage("");
 
     const venue = {
       id: id,
@@ -35,9 +35,9 @@ function AddToFavorite({ open, setOpen, venueData, setIsFavorite }) {
       title: title,
     };
 
-    if (selected === 'Favorite') {
+    if (selected === "Favorite") {
       const existingFavorites =
-        JSON.parse(localStorage.getItem('Favorites')) || [];
+        JSON.parse(localStorage.getItem("Favorites")) || [];
 
       const doesVenueExist = existingFavorites.some(
         (favorite) => favorite.id === id
@@ -45,17 +45,17 @@ function AddToFavorite({ open, setOpen, venueData, setIsFavorite }) {
 
       if (!doesVenueExist) {
         const updatedFavorites = [...existingFavorites, venue];
-        localStorage.setItem('Favorites', JSON.stringify(updatedFavorites));
+        localStorage.setItem("Favorites", JSON.stringify(updatedFavorites));
         setOpen(false);
         setIsFavorite(true);
       } else if (doesVenueExist) {
-        setMessage('This venue is already in your favorites!');
+        setMessage("This venue is already in your favorites!");
       }
-    } else if (selected === 'New Collection') {
+    } else if (selected === "New Collection") {
       setShowModal(true);
     } else {
       const existingCollections =
-        JSON.parse(localStorage.getItem('collections')) || [];
+        JSON.parse(localStorage.getItem("collections")) || [];
       const selectedCollection = existingCollections.find(
         (collection) => collection.name === selected
       );
@@ -68,13 +68,13 @@ function AddToFavorite({ open, setOpen, venueData, setIsFavorite }) {
         if (!doesVenueExist) {
           selectedCollection.venues.push(venue);
           localStorage.setItem(
-            'collections',
+            "collections",
             JSON.stringify(existingCollections)
           );
           setOpen(false);
           setIsFavorite(true);
         } else if (doesVenueExist) {
-          setMessage('This venue is already in this collection!');
+          setMessage("This venue is already in this collection!");
         }
       }
     }
@@ -135,15 +135,15 @@ function AddToFavorite({ open, setOpen, venueData, setIsFavorite }) {
                           </p>
                           <button
                             type="button"
-                            className={`mb-4 aspect-video md:flex-1 relative block w-full rounded-lg 
+                            className={`relative mb-4 block aspect-video w-full max-w-[453px] rounded-lg 
                           border-2 border-dashed border-gray-300 p-12 text-center 
                           hover:border-gray-400  
-                           focus:ring-offset-2 max-w-[453px] ${
-                             selected === 'Favorite' &&
-                             'ring-secondaryOrange ring-offset-2 ring-2 outline-none'
+                           focus:ring-offset-2 md:flex-1 ${
+                             selected === "Favorite" &&
+                             "outline-none ring-2 ring-secondaryOrange ring-offset-2"
                            }}`}
                             onClick={() => {
-                              setSelected('Favorite');
+                              setSelected("Favorite");
                             }}
                           >
                             <StarIcon className="mx-auto h-12 w-12 text-secondaryOrange" />
@@ -153,15 +153,15 @@ function AddToFavorite({ open, setOpen, venueData, setIsFavorite }) {
                           </button>
                           <button
                             type="button"
-                            className={`mb-4
-                          aspect-video md:flex-1 relative block w-full rounded-lg border-2 
+                            className={`relative
+                          mb-4 block aspect-video w-full max-w-[453px] rounded-lg border-2 
                           border-dashed border-gray-300 p-12 text-center hover:border-gray-400 
-                          max-w-[453px] ${
-                            selected === 'New Collection' &&
-                            'ring-secondaryOrange ring-offset-2 ring-2 outline-none'
+                          md:flex-1 ${
+                            selected === "New Collection" &&
+                            "outline-none ring-2 ring-secondaryOrange ring-offset-2"
                           }`}
                             onClick={() => {
-                              setSelected('New Collection');
+                              setSelected("New Collection");
                             }}
                           >
                             <FaPlusCircle className="mx-auto h-12 w-12 text-secondaryOrange" />
@@ -183,7 +183,7 @@ function AddToFavorite({ open, setOpen, venueData, setIsFavorite }) {
                                 className={`rounded-lg border-2 border-dashed border-gray-300 p-4 font-semibold 
                                 hover:border-gray-400 ${
                                   selected === collection.name &&
-                                  'ring-secondaryOrange ring-offset-2 ring-2 outline-none'
+                                  "outline-none ring-2 ring-secondaryOrange ring-offset-2"
                                 }`}
                                 onClick={() => {
                                   setSelected(collection.name);
@@ -217,11 +217,11 @@ function AddToFavorite({ open, setOpen, venueData, setIsFavorite }) {
                         focus-visible:outline-offset-2  
                         ${
                           selected === null
-                            ? 'bg-gray-300 cursor-not-allowed'
-                            : 'bg-secondaryOrange focus-visible:outline-[#EF6623] hover:bg-[#EF6623]'
+                            ? "cursor-not-allowed bg-gray-300"
+                            : "bg-secondaryOrange hover:bg-[#EF6623] focus-visible:outline-[#EF6623]"
                         }`}
                         >
-                          {selected === 'New Collection' ? 'Create' : 'Add'}
+                          {selected === "New Collection" ? "Create" : "Add"}
                         </button>
                       </div>
                     </div>

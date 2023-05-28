@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from "framer-motion";
 
 const MainFormComponent = ({ children, onSubmit }) => {
   const fadeInOutVariants = {
@@ -7,7 +7,7 @@ const MainFormComponent = ({ children, onSubmit }) => {
       opacity: 1,
       transition: {
         duration: 0.35,
-        ease: 'easeInOut',
+        ease: "easeInOut",
       },
     },
     out: {
@@ -15,17 +15,17 @@ const MainFormComponent = ({ children, onSubmit }) => {
       opacity: 0.7,
       transition: {
         duration: 0.35,
-        ease: 'easeInOut',
+        ease: "easeInOut",
       },
     },
   };
 
   return (
-    <div className="absolute left-0 top-0 md:left-1/2 md:-translate-x-1/2 section-container w-full md:w-11/12 z-10 h-full ">
+    <div className="section-container absolute left-0 top-0 z-10 h-full w-full md:left-1/2 md:w-11/12 md:-translate-x-1/2 ">
       <div className="relative h-full w-full ">
         <form
           onSubmit={onSubmit}
-          className="absolute w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 "
+          className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 "
         >
           <AnimatePresence>
             <motion.div
@@ -35,9 +35,9 @@ const MainFormComponent = ({ children, onSubmit }) => {
               exit="out"
               variants={fadeInOutVariants}
             >
-              <div className="md:w-full bg-black md:bg-opacity-30 bg-opacity-40 text-white">
-                <div className="max-w-4xl mx-auto py-2 md:py-10 px-2 sm:px-4 md:0">
-                  <h1 className="text-2xl md:text-4xl font-semibold mb-2">
+              <div className="bg-black bg-opacity-40 text-white md:w-full md:bg-opacity-30">
+                <div className="md:0 mx-auto max-w-4xl px-2 py-2 sm:px-4 md:py-10">
+                  <h1 className="mb-2 text-2xl font-semibold md:text-4xl">
                     Find Your Perfect Stay!
                   </h1>
                   <p className="text-sm md:text-base">

@@ -1,6 +1,6 @@
-import { FaPlusCircle, FaHandPointRight, FaTrashAlt } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
-import CreateCollectionModal from '../../components/CreateCollectionModal';
+import { FaPlusCircle, FaHandPointRight, FaTrashAlt } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import CreateCollectionModal from "../../components/CreateCollectionModal";
 
 const DreamStaysPage = () => {
   const [favorites, setFavorites] = useState([]);
@@ -8,8 +8,8 @@ const DreamStaysPage = () => {
   const [showCreateCollectionModal, setCreateCollectionModal] = useState(false);
 
   useEffect(() => {
-    const localFavorites = localStorage.getItem('Favorites');
-    const localCollections = localStorage.getItem('collections');
+    const localFavorites = localStorage.getItem("Favorites");
+    const localCollections = localStorage.getItem("collections");
 
     if (localFavorites) {
       setFavorites(JSON.parse(localFavorites));
@@ -20,8 +20,8 @@ const DreamStaysPage = () => {
     }
   }, [showCreateCollectionModal]);
 
-  console.log('favorites: ', favorites);
-  console.log('collections: ', collections);
+  console.log("favorites: ", favorites);
+  console.log("collections: ", collections);
 
   return (
     <main className="section-container">
@@ -30,18 +30,20 @@ const DreamStaysPage = () => {
         setOpen={setCreateCollectionModal}
       />
       <h2 className="mt-4 md:mt-10">Dream Collection</h2>
-      <div className="grid grid-cols-1 gap-2 profileSmallScreen:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-4">
+      <div className="grid grid-cols-1 gap-2 profileSmallScreen:grid-cols-2 md:grid-cols-3 md:gap-4 lg:grid-cols-4">
         <button
           type="button"
           onClick={() => setCreateCollectionModal(true)}
-          className=" md:flex-1 relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-8 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-secondaryOrange focus:ring-offset-2 max-w-[453px]"
+          className={`relative block w-full max-w-[453px] rounded-lg border-2 border-dashed border-gray-300  text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-secondaryOrange focus:ring-offset-2 md:flex-1 ${
+            collections.length ? "p-8" : "aspect-video p-12"
+          }`}
         >
           <FaPlusCircle className="mx-auto h-12 w-12 text-secondaryOrange" />
           <span className="mt-2 block text-sm font-semibold text-gray-900">
             Create a new Collection
           </span>
         </button>
-        {!collections && (
+        {!collections.length && (
           <p className="max-w-[453px] md:flex-1">
             Organize your Dream Stays with Dream Collections. Group
             accommodations by destination, trip theme, or any category you
@@ -54,16 +56,16 @@ const DreamStaysPage = () => {
             <button
               key={index}
               type="button"
-              className=" md:flex-1 relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-8 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-secondaryOrange focus:ring-offset-2 max-w-[453px]"
+              className=" relative block w-full max-w-[453px] rounded-lg border-2 border-dashed border-gray-300 p-8 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-secondaryOrange focus:ring-offset-2 md:flex-1"
             >
               <span className="mt-2 block text-sm font-semibold text-gray-900">
                 {collection.name}
               </span>
-              <FaTrashAlt className="absolute text-primaryRed w-6 h-6 right-4 top-4 hover:scale-105 hover:text-red-500 transition" />
+              <FaTrashAlt className="absolute right-4 top-4 h-6 w-6 text-primaryRed transition hover:scale-105 hover:text-red-500" />
             </button>
           ))}
       </div>
-      <div className="flex flex-col gap-10 items-center max-w-[453px] md:flex-row md:max-w-[925px] md:justify-between md:items-end">
+      <div className="flex max-w-[453px] flex-col items-center gap-10 md:max-w-[925px] md:flex-row md:items-end md:justify-between">
         <div className="max-w-[453px] md:flex-1">
           <h2 className="mt-4 md:mt-10">Dream Stays</h2>
           <p>
@@ -71,10 +73,10 @@ const DreamStaysPage = () => {
             you wish. Browse, compare, and plan your ideal vacation with our
             handpicked selections.
           </p>
-          <button className="group secondaryBtn mt-4 uppercase flex justify-center items-center gap-2 hover:text-background hover:bg-primaryRed transition-all duration-300">
+          <button className="secondaryBtn group mt-4 flex items-center justify-center gap-2 uppercase transition-all duration-300 hover:bg-primaryRed hover:text-background">
             <span>Find Accommodation's</span>
             <span>
-              <FaHandPointRight className="w-0 opacity-0 group-hover:w-6 group-hover:h-6 group-hover:opacity-100 transition-all duration-300 animate-bounce-right" />
+              <FaHandPointRight className="w-0 animate-bounce-right opacity-0 transition-all duration-300 group-hover:h-6 group-hover:w-6 group-hover:opacity-100" />
             </span>
           </button>
         </div>

@@ -1,17 +1,17 @@
-import StageTemplate from './StageTemplate';
-import { useState, useMemo, useEffect } from 'react';
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import StageTemplate from "./StageTemplate";
+import { useState, useMemo, useEffect } from "react";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
-} from 'use-places-autocomplete';
-import Suggestions from './Suggestions';
-import LocationDetails from './LocationDetails';
-import { useSelector, useDispatch } from 'react-redux';
-import { handleMultipleValueChange } from './LocationDetails';
+} from "use-places-autocomplete";
+import Suggestions from "./Suggestions";
+import LocationDetails from "./LocationDetails";
+import { useSelector, useDispatch } from "react-redux";
+import { handleMultipleValueChange } from "./LocationDetails";
 
 const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API;
-const libraries = ['places'];
+const libraries = ["places"];
 
 function Stage3() {
   const { isLoaded } = useLoadScript({
@@ -37,16 +37,16 @@ function Map() {
     3
   );
 
-  console.log('addressComponents', addressComponents);
-  console.log('stage3', stageData.stage3);
+  console.log("addressComponents", addressComponents);
+  console.log("stage3", stageData.stage3);
 
   return (
     <div>
-      <StageTemplate stageNumber={3} stageTitle={'Location'} />
+      <StageTemplate stageNumber={3} stageTitle={"Location"} />
       {addressComponents && (
         <LocationDetails addressComponents={addressComponents} />
       )}
-      <div className="w-full relative h-[400px]">
+      <div className="relative h-[400px] w-full">
         <GoogleMap
           zoom={zoom}
           center={center}
@@ -95,30 +95,30 @@ const PlacesAutoComplete = ({
     const { lat, lng } = await getLatLng(results[0]);
     setSelected({ lat, lng });
     setCenter({ lat, lng });
-    console.log('results: ', results);
+    console.log("results: ", results);
 
     const locationType = results[0].types[0];
 
     switch (locationType) {
-      case 'street_address':
+      case "street_address":
         setZoom(17);
         break;
-      case 'route':
+      case "route":
         setZoom(15);
         break;
-      case 'locality':
+      case "locality":
         setZoom(12);
         break;
-      case 'sublocality_level_1':
+      case "sublocality_level_1":
         setZoom(11);
         break;
-      case 'administrative_area_level_2':
+      case "administrative_area_level_2":
         setZoom(10);
         break;
-      case 'administrative_area_level_1':
+      case "administrative_area_level_1":
         setZoom(8);
         break;
-      case 'country':
+      case "country":
         setZoom(5);
         break;
       default:
@@ -129,19 +129,19 @@ const PlacesAutoComplete = ({
 
     handleMultipleUpdates([
       {
-        name: 'lat',
+        name: "lat",
         value: lat,
       },
       {
-        name: 'lng',
+        name: "lng",
         value: lng,
       },
       {
-        name: 'addressComponents',
+        name: "addressComponents",
         value: results[0].address_components,
       },
       {
-        name: 'place_id',
+        name: "place_id",
         value: results[0].place_id,
       },
     ]);
@@ -152,10 +152,10 @@ const PlacesAutoComplete = ({
       const fetchPlaceDetails = async (place_id) => {
         const request = {
           placeId: place_id,
-          fields: ['geometry', 'address_components', 'formatted_address'],
+          fields: ["geometry", "address_components", "formatted_address"],
         };
         const service = new window.google.maps.places.PlacesService(
-          document.createElement('div')
+          document.createElement("div")
         );
         service.getDetails(request, (place, status) => {
           if (status === window.google.maps.places.PlacesServiceStatus.OK) {
@@ -175,7 +175,7 @@ const PlacesAutoComplete = ({
   ]);
 
   return (
-    <div className="absolute top-0 w-full max-w-lg left-1/2 -translate-x-1/2">
+    <div className="absolute left-1/2 top-0 w-full max-w-lg -translate-x-1/2">
       <Suggestions
         places={data}
         ready={ready}

@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import MainFormComponent from './MainFormComponent';
-import DatePicker from 'react-date-picker';
-import RangeCalendar from './RangeCalendar';
-import 'react-date-picker/dist/DatePicker.css';
-import 'react-calendar/dist/Calendar.css';
-import '../../styles/datePickerStyles.css';
-import CustomInput from '../../components/FormComponents/CustomInput';
-import { PrimaryBtn } from '../../components/StyledButtons';
+import { useState } from "react";
+import MainFormComponent from "./MainFormComponent";
+import DatePicker from "react-date-picker";
+import RangeCalendar from "./RangeCalendar";
+import "react-date-picker/dist/DatePicker.css";
+import "react-calendar/dist/Calendar.css";
+import "../../styles/datePickerStyles.css";
+import CustomInput from "../../components/FormComponents/CustomInput";
+import { PrimaryBtn } from "../../components/StyledButtons";
 
 const Booking = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -15,7 +15,7 @@ const Booking = () => {
   return (
     <>
       <MainFormComponent>
-        <div className="md:bg-white md:px-6 md:py-9 flex flex-col gap-2 rounded-b">
+        <div className="flex flex-col gap-2 rounded-b md:bg-white md:px-6 md:py-9">
           <div className="flex flex-col gap-2 md:flex-row">
             <CustomInput
               flex1="md:flex-1"

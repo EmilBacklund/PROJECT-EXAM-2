@@ -1,7 +1,7 @@
-import Main from './Main';
-import SellingSection from './SellingSection';
-import TrendingSection from './TrendingSection';
-import HostPromoteSection from './HostPromoteSection';
+import Main from "./Main";
+import SellingSection from "./SellingSection";
+import TrendingSection from "./TrendingSection";
+import HostPromoteSection from "./HostPromoteSection";
 
 const HomePage = () => {
   return (

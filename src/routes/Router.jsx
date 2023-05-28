@@ -1,23 +1,28 @@
-import { Route, Routes } from 'react-router-dom';
-import HomePage from '../pages/HomePage/HomePage';
-import ProfilePage from '../pages/ProfilePage/ProfilePage';
-import DreamStaysPage from '../pages/FavoritePage/DreamStaysPage';
-import RegisterVenuePage from '../pages/RegisterVenuePage/RegisterVenuePage';
-import Dashboard from '../pages/Dashboard/DashboardPage';
-import Stage1 from '../pages/RegisterVenuePage/Stage1';
-import Stage2 from '../pages/RegisterVenuePage/Stage2';
-import Stage3 from '../pages/RegisterVenuePage/Stage3';
-import Stage4 from '../pages/RegisterVenuePage/Stage4';
-import Stage5 from '../pages/RegisterVenuePage/Stage5';
-import Stage6 from '../pages/RegisterVenuePage/Stage6';
-import SingleDetailVenuePage from '../pages/SingleDetailVenuePage/SingleDetailVenuePage';
+import { Route, Routes } from "react-router-dom";
+import HomePage from "../pages/HomePage/HomePage";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
+import DreamStaysPage from "../pages/FavoritePage/DreamStaysPage";
+import RegisterVenuePage from "../pages/RegisterVenuePage/RegisterVenuePage";
+import Dashboard from "../pages/Dashboard/DashboardPage";
+import Stage1 from "../pages/RegisterVenuePage/Stage1";
+import Stage2 from "../pages/RegisterVenuePage/Stage2";
+import Stage3 from "../pages/RegisterVenuePage/Stage3";
+import Stage4 from "../pages/RegisterVenuePage/Stage4";
+import Stage5 from "../pages/RegisterVenuePage/Stage5";
+import Stage6 from "../pages/RegisterVenuePage/Stage6";
+import SingleDetailVenuePage from "../pages/SingleDetailVenuePage/SingleDetailVenuePage";
+import ContactPage from "../pages/ContactPage/ContactPage";
+import UpdateProfilePage from "../pages/ProfilePage/UpdateProfilePage";
 
 function Router() {
   return (
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/profile/:userId" element={<ProfilePage />}>
+          <Route path="edit" element={<UpdateProfilePage />} />
+        </Route>
         <Route path="/dreamstays" element={<DreamStaysPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/favorites" element={<DreamStaysPage />} />

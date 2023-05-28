@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import useEmblaCarousel from 'embla-carousel-react';
-import { PrevButton, DotButton, NextButton } from './MobileCarouselArrowDots';
+import React, { useState, useEffect, useCallback } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import { PrevButton, DotButton, NextButton } from "./MobileCarouselArrowDots";
 
 const MobileCarousel = ({ slides, options }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
@@ -33,8 +33,8 @@ const MobileCarousel = ({ slides, options }) => {
     if (!emblaApi) return;
     onSelect();
     setScrollSnaps(emblaApi.scrollSnapList());
-    emblaApi.on('select', onSelect);
-    emblaApi.on('reInit', onSelect);
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
   }, [emblaApi, setScrollSnaps, onSelect]);
 
   return (
@@ -44,13 +44,13 @@ const MobileCarousel = ({ slides, options }) => {
           <div className="flex aspect-video">
             {slides.map((slide, index) => (
               <div
-                className="flex-grow-0 flex-shrink-0 w-full h-full"
+                className="h-full w-full flex-shrink-0 flex-grow-0"
                 key={index}
               >
                 <img
-                  className="object-cover h-full w-full"
-                  src={slide.image ? slide.image : ''}
-                  alt={slide.description ? slide.description : ''}
+                  className="h-full w-full object-cover"
+                  src={slide.image ? slide.image : ""}
+                  alt={slide.description ? slide.description : ""}
                 />
               </div>
             ))}
@@ -61,7 +61,7 @@ const MobileCarousel = ({ slides, options }) => {
         <NextButton onClick={scrollNext} enabled={nextBtnEnabled} />
       </div>
 
-      <div className="z-10 absolute bottom-0 left-0 right-0 flex justify-center items-center">
+      <div className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center">
         {scrollSnaps.map((_, index) => (
           <DotButton
             key={index}

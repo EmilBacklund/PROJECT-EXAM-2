@@ -1,6 +1,6 @@
-import { Fragment, useRef } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { Fragment, useRef } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 function RemoveFromFavorite({
   id,
@@ -12,16 +12,16 @@ function RemoveFromFavorite({
   const cancelButtonRef = useRef(null);
 
   const handleRemove = () => {
-    let favorites = JSON.parse(localStorage.getItem('Favorites')) || [];
-    let collections = JSON.parse(localStorage.getItem('collections')) || [];
+    let favorites = JSON.parse(localStorage.getItem("Favorites")) || [];
+    let collections = JSON.parse(localStorage.getItem("collections")) || [];
 
     favorites = favorites.filter((favorite) => favorite.id !== id);
-    localStorage.setItem('Favorites', JSON.stringify(favorites));
+    localStorage.setItem("Favorites", JSON.stringify(favorites));
 
     collections.forEach((collection) => {
       collection.venues = collection.venues.filter((venue) => venue.id !== id);
     });
-    localStorage.setItem('collections', JSON.stringify(collections));
+    localStorage.setItem("collections", JSON.stringify(collections));
 
     setOpen(false);
     setIsFavorite(false);
@@ -93,7 +93,7 @@ function RemoveFromFavorite({
                     </button>
                     <button
                       type="button"
-                      className="mt-3 sm:ml-3 inline-flex w-full justify-center rounded-md bg-secondaryOrange px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-[#EF6623] sm:mt-0 sm:w-auto"
+                      className="mt-3 inline-flex w-full justify-center rounded-md bg-secondaryOrange px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-[#EF6623] sm:ml-3 sm:mt-0 sm:w-auto"
                       onClick={() => {
                         setOpen(false);
                         setAddToFavoriteOpen(true);

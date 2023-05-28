@@ -1,9 +1,9 @@
-import StageTemplate from './StageTemplate';
-import { FaPlus, FaMinus } from 'react-icons/fa';
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateStageData } from '../../store/modules/displayedVenueStageSlice';
-import { motion } from 'framer-motion';
+import StageTemplate from "./StageTemplate";
+import { FaPlus, FaMinus } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateStageData } from "../../store/modules/displayedVenueStageSlice";
+import { motion } from "framer-motion";
 
 const Stage5 = () => {
   const minPrice = 100;
@@ -40,10 +40,10 @@ const Stage5 = () => {
 
   return (
     <div>
-      <StageTemplate stageNumber={5} stageTitle={'Price'} />
+      <StageTemplate stageNumber={5} stageTitle={"Price"} />
       <div className="flex flex-col gap-4">
         <div>
-          <p className="text-2xl font-medium mb-2">Set price for your venue</p>
+          <p className="mb-2 text-2xl font-medium">Set price for your venue</p>
           <p>It's possible to change the price at anytime</p>
         </div>
         <div className="flex items-center justify-center gap-4">
@@ -53,10 +53,10 @@ const Stage5 = () => {
             onMouseDown={() => setMinusScale(0.7)}
             onMouseUp={() => setMinusScale(1)}
             onMouseLeave={() => setMinusScale(1)}
-            className={`flex-0 group w-10 h-10 grid place-items-center   border   rounded-full transition-all ${
+            className={`flex-0 group grid h-10 w-10 place-items-center   rounded-full   border transition-all ${
               isDecrementDisabled
-                ? 'border-gray-300'
-                : 'cursor-pointer border-gray-500 hover:border-textBlack'
+                ? "border-gray-300"
+                : "cursor-pointer border-gray-500 hover:border-textBlack"
             }`}
           >
             <motion.div whileTap={{ scale: 0.7 }}>
@@ -64,8 +64,8 @@ const Stage5 = () => {
                 style={{ transform: `scale(${minusScale})` }}
                 className={`  transition-all ${
                   isDecrementDisabled
-                    ? 'text-gray-300'
-                    : 'text-gray-500 group-hover:text-textBlack'
+                    ? "text-gray-300"
+                    : "text-gray-500 group-hover:text-textBlack"
                 }`}
               />
             </motion.div>
@@ -74,7 +74,7 @@ const Stage5 = () => {
             onChange={handleRangeChange}
             value={price}
             type="number"
-            className="flex-1 py-2 px-2 font-medium text-4xl text-center font-josefinsSans w-full rounded-md border border-holidazeGrey"
+            className="w-full flex-1 rounded-md border border-holidazeGrey px-2 py-2 text-center font-josefinsSans text-4xl font-medium"
           />
           <button
             disabled={isIncrementDisabled}
@@ -82,18 +82,18 @@ const Stage5 = () => {
             onMouseDown={() => setPlusScale(0.7)}
             onMouseUp={() => setPlusScale(1)}
             onMouseLeave={() => setPlusScale(1)}
-            className={`flex-0 group w-10 h-10 grid place-items-center   border   rounded-full transition-all ${
+            className={`flex-0 group grid h-10 w-10 place-items-center   rounded-full   border transition-all ${
               isIncrementDisabled
-                ? 'border-gray-300'
-                : 'cursor-pointer border-gray-500 hover:border-textBlack'
+                ? "border-gray-300"
+                : "cursor-pointer border-gray-500 hover:border-textBlack"
             }`}
           >
             <FaPlus
               style={{ transform: `scale(${plusScale})` }}
               className={`  transition-all ${
                 isIncrementDisabled
-                  ? 'text-gray-300'
-                  : 'text-gray-500 group-hover:text-textBlack'
+                  ? "text-gray-300"
+                  : "text-gray-500 group-hover:text-textBlack"
               }`}
             />
           </button>
@@ -107,7 +107,7 @@ const Stage5 = () => {
           className="cursor-pointer"
           type="range"
         />
-        <div className="flex justify-between font-medium text-sm">
+        <div className="flex justify-between text-sm font-medium">
           <p>Min 100 kr</p>
           <p>Max 110 000 kr</p>
         </div>

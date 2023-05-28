@@ -1,13 +1,14 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import headerImageSlice from './modules/headerImageSlice';
-import displayedHomepageViewSlice from './modules/displayedHomepageViewSlice';
-import displayedVenueStageSlice from './modules/displayedVenueStageSlice';
-import displayedDashboardViewSlice from './modules/displayedDashboardViewSlice';
-import carouselIndexSlice from './modules/carouselIndexSlice';
-import authenticationSlice from './modules/authenticationSlice';
-import loaderSlice from './modules/loaderSlice';
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import headerImageSlice from "./modules/headerImageSlice";
+import displayedHomepageViewSlice from "./modules/displayedHomepageViewSlice";
+import displayedVenueStageSlice from "./modules/displayedVenueStageSlice";
+import displayedDashboardViewSlice from "./modules/displayedDashboardViewSlice";
+import carouselIndexSlice from "./modules/carouselIndexSlice";
+import authenticationSlice from "./modules/authenticationSlice";
+import loaderSlice from "./modules/loaderSlice";
+import userMenuInfoSlice from "./modules/userMenuInfoSlice";
 
 const reducer = combineReducers({
   headerImage: headerImageSlice,
@@ -17,12 +18,13 @@ const reducer = combineReducers({
   carouselIndex: carouselIndexSlice,
   authentication: authenticationSlice,
   loader: loaderSlice,
+  userMenuInfo: userMenuInfoSlice,
 });
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
-  whitelist: ['displayedVenueStage', 'authentication'], // Only persist displayedVenueStage slice
+  whitelist: ["displayedVenueStage", "authentication"], // Only persist displayedVenueStage slice
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

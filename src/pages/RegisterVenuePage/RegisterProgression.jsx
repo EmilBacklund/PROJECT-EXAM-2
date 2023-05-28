@@ -1,11 +1,11 @@
-import { CheckIcon } from '@heroicons/react/20/solid';
-import { useSelector, useDispatch } from 'react-redux';
+import { CheckIcon } from "@heroicons/react/20/solid";
+import { useSelector, useDispatch } from "react-redux";
 import {
   setStage,
   setAllStagesAreValid,
-} from '../../store/modules/displayedVenueStageSlice';
-import { FaTimes } from 'react-icons/fa';
-import { NavLink } from 'react-router-dom';
+} from "../../store/modules/displayedVenueStageSlice";
+import { FaTimes } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 
 export default function RegisterProgression() {
   const currentStage = useSelector((state) => state.displayedVenueStage.stage);
@@ -17,7 +17,7 @@ export default function RegisterProgression() {
   const dispatch = useDispatch();
 
   const isValid = (stage) => {
-    console.log('StageData: ', stageData);
+    console.log("StageData: ", stageData);
     if (!stageData) {
       return false;
     }
@@ -58,39 +58,39 @@ export default function RegisterProgression() {
     for (let i = 1; i <= 6; i++) {
       if (!isValid(i)) {
         valid = false;
-        console.log('stagezzzzz ', i, ' is not valid');
+        console.log("stagezzzzz ", i, " is not valid");
         break;
       }
     }
     return dispatch(setAllStagesAreValid(valid));
   };
 
-  console.log('Are all stages valid? ', areAllStagesValid().payload);
+  console.log("Are all stages valid? ", areAllStagesValid().payload);
 
   let stages = [
     {
       stage: 1,
-      href: '/registerVenue/essential-information',
+      href: "/registerVenue/essential-information",
     },
     {
       stage: 2,
-      href: '/registerVenue/title-and-description',
+      href: "/registerVenue/title-and-description",
     },
     {
       stage: 3,
-      href: '/registerVenue/location',
+      href: "/registerVenue/location",
     },
     {
       stage: 4,
-      href: '/registerVenue/amenities',
+      href: "/registerVenue/amenities",
     },
     {
       stage: 5,
-      href: '/registerVenue/pricing',
+      href: "/registerVenue/pricing",
     },
     {
       stage: 6,
-      href: '/registerVenue/images',
+      href: "/registerVenue/images",
     },
   ];
 
@@ -98,28 +98,28 @@ export default function RegisterProgression() {
     if (stage.stage < currentStage) {
       return {
         ...stage,
-        status: isValid(stage.stage) ? 'complete' : 'incomplete',
+        status: isValid(stage.stage) ? "complete" : "incomplete",
       };
     } else if (stage.stage === currentStage) {
       return {
         ...stage,
         status:
-          submitAttempted && !isValid(stage.stage) ? 'incomplete' : 'current',
+          submitAttempted && !isValid(stage.stage) ? "incomplete" : "current",
       };
     } else {
-      return { ...stage, status: 'upcoming' };
+      return { ...stage, status: "upcoming" };
     }
   });
 
   function classNames(...classes) {
-    return classes.filter(Boolean).join(' ');
+    return classes.filter(Boolean).join(" ");
   }
 
   return (
     <nav aria-label="Progress">
       <ol
         role="list"
-        className="flex items-center sm:flex-col justify-center sm:justify-between sm:h-full my-6 sm:gap-10"
+        className="my-6 flex items-center justify-center sm:h-full sm:flex-col sm:justify-between sm:gap-10"
       >
         {stages.map((stage, stageIdx) => (
           <li
@@ -127,26 +127,26 @@ export default function RegisterProgression() {
             onClick={() => dispatch(setStage(stageIdx + 1))}
             className={classNames(
               stageIdx !== stages.length - 1
-                ? 'pr-4 sm:pr-0 smallScreen:pr-8'
-                : '',
-              'relative'
+                ? "pr-4 smallScreen:pr-8 sm:pr-0"
+                : "",
+              "relative"
             )}
           >
-            {stage.status === 'complete' ? (
+            {stage.status === "complete" ? (
               <>
                 <div
-                  className="absolute inset-0 sm:inset-auto sm:bottom-0 sm:left-1/2 sm:-translate-x-1/2 flex items-center sm:justify-center"
+                  className="absolute inset-0 flex items-center sm:inset-auto sm:bottom-0 sm:left-1/2 sm:-translate-x-1/2 sm:justify-center"
                   aria-hidden="true"
                 >
                   <div
-                    className={`h-0.5 w-full bg-[#0091AE] sm:w-0.5 sm:-z-10 ${
-                      stageIdx === 0 ? 'sm:h-auto' : 'sm:h-[100px]'
+                    className={`h-0.5 w-full bg-[#0091AE] sm:-z-10 sm:w-0.5 ${
+                      stageIdx === 0 ? "sm:h-auto" : "sm:h-[100px]"
                     }`}
                   />
                 </div>
                 <NavLink
                   to={stage.href}
-                  className="relative cursor-pointer flex h-8 w-8 items-center justify-center rounded-full bg-[#0091AE] hover:bg-[#34A9C0] sm:z-10"
+                  className="relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-[#0091AE] hover:bg-[#34A9C0] sm:z-10"
                 >
                   <CheckIcon
                     className="h-5 w-5 text-white "
@@ -155,15 +155,15 @@ export default function RegisterProgression() {
                   <span className="sr-only">{stage.stage}</span>
                 </NavLink>
               </>
-            ) : stage.status === 'current' ? (
+            ) : stage.status === "current" ? (
               <>
                 <div
                   className="absolute inset-0 flex items-center sm:inset-auto sm:bottom-0 sm:left-1/2 sm:-translate-x-1/2"
                   aria-hidden="true"
                 >
                   <div
-                    className={`h-0.5 w-full bg-gray-200 sm:h-[100px] sm:w-0.5 sm:-z-10 ${
-                      stageIdx === 0 ? 'sm:h-auto' : 'sm:h-[100px]'
+                    className={`h-0.5 w-full bg-gray-200 sm:-z-10 sm:h-[100px] sm:w-0.5 ${
+                      stageIdx === 0 ? "sm:h-auto" : "sm:h-[100px]"
                     }`}
                   />
                 </div>
@@ -179,21 +179,21 @@ export default function RegisterProgression() {
                   <span className="sr-only">{stage.stage}</span>
                 </NavLink>
               </>
-            ) : stage.status === 'incomplete' ? (
+            ) : stage.status === "incomplete" ? (
               <>
                 <div
-                  className="absolute inset-0 sm:inset-auto sm:bottom-0 sm:left-1/2 sm:-translate-x-1/2 flex items-center sm:justify-center"
+                  className="absolute inset-0 flex items-center sm:inset-auto sm:bottom-0 sm:left-1/2 sm:-translate-x-1/2 sm:justify-center"
                   aria-hidden="true"
                 >
                   <div
-                    className={`h-0.5 w-full bg-[#0091AE] sm:w-0.5 sm:-z-10 ${
-                      stageIdx === 0 ? 'sm:h-auto' : 'sm:h-[100px]'
+                    className={`h-0.5 w-full bg-[#0091AE] sm:-z-10 sm:w-0.5 ${
+                      stageIdx === 0 ? "sm:h-auto" : "sm:h-[100px]"
                     }`}
                   />
                 </div>
                 <NavLink
                   to={stage.href}
-                  className="relative cursor-pointer flex h-8 w-8 items-center justify-center rounded-full bg-primaryRed hover:bg-[#ea676e] sm:z-10"
+                  className="relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-primaryRed hover:bg-[#ea676e] sm:z-10"
                 >
                   <FaTimes className="h-5 w-5 text-white " aria-hidden="true" />
                   <span className="sr-only">{stage.stage}</span>
@@ -202,12 +202,12 @@ export default function RegisterProgression() {
             ) : (
               <>
                 <div
-                  className="absolute inset-0 flex items-center sm:inset-auto sm:bottom-0 sm:left-1/2 sm:-translate-x-1/2 sm:-z-10"
+                  className="absolute inset-0 flex items-center sm:inset-auto sm:bottom-0 sm:left-1/2 sm:-z-10 sm:-translate-x-1/2"
                   aria-hidden="true"
                 >
                   <div
-                    className={`h-0.5 w-full bg-gray-200 sm:h-[100px] sm:w-0.5 sm:-z-10 ${
-                      stageIdx === 0 ? 'sm:h-auto' : 'sm:h-[100px]'
+                    className={`h-0.5 w-full bg-gray-200 sm:-z-10 sm:h-[100px] sm:w-0.5 ${
+                      stageIdx === 0 ? "sm:h-auto" : "sm:h-[100px]"
                     }`}
                   />
                 </div>

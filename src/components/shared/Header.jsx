@@ -1,15 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
-import { useLocation, NavLink, redirect } from 'react-router-dom';
-import AuthCarousel from '../../pages/HomePage/AuthCarousel';
-import Menu from '../Menu';
-import { getItem } from '../../utils/storage';
-import { useSelector } from 'react-redux';
-import { selectIsAuthenticated } from '../../store/modules/authenticationSlice';
+import { useState, useEffect, useRef } from "react";
+import { useLocation, NavLink, redirect } from "react-router-dom";
+import AuthCarousel from "../../pages/HomePage/AuthCarousel";
+import Menu from "../Menu";
+import { getItem } from "../../utils/storage";
+import { useSelector } from "react-redux";
+import { selectIsAuthenticated } from "../../store/modules/authenticationSlice";
 
 const Header = () => {
   const [menuActive, setMenuActive] = useState(false);
   const location = useLocation();
-  const isHomepage = location.pathname === '/';
+  const isHomepage = location.pathname === "/";
   const menuRef = useRef();
   const isAuthenticated = useSelector(selectIsAuthenticated);
   // This variable will be checked through Redux Store later
@@ -22,34 +22,34 @@ const Header = () => {
 
   useEffect(() => {
     const handleStorageChange = (e) => {
-      if (e.key === 'token') {
-        setIsAuthenticated(!!getItem('token'));
+      if (e.key === "token") {
+        setIsAuthenticated(!!getItem("token"));
       }
     };
 
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener("storage", handleStorageChange);
 
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
 
   useEffect(() => {
     if (!isAuthenticated) {
       localStorage.clear();
-      redirect('/');
+      redirect("/");
     }
   }, [isAuthenticated]);
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   return (
-    <header className="content-container py-4 flex items-center justify-between shadow">
+    <header className="content-container flex items-center justify-between py-4 shadow">
       <div className="w-10 md:w-auto">
         <NavLink className="w-10 md:w-full" to="/">
           <img
@@ -64,20 +64,20 @@ const Header = () => {
       <nav className="sm:relative" ref={menuRef}>
         <div
           onClick={() => setMenuActive(!menuActive)}
-          className="h-4 flex flex-col justify-between cursor-pointer "
+          className="flex h-4 cursor-pointer flex-col justify-between "
         >
           <div
-            className={`w-8 h-1 bg-textBlack custom-transition${
-              menuActive ? ' rotate-45 translate-y-1.5' : ''
+            className={`h-1 w-8 bg-textBlack custom-transition${
+              menuActive ? " translate-y-1.5 rotate-45" : ""
             }`}
           ></div>
           <div
-            className={`w-8 h-1 bg-textBlack custom-transition${
-              menuActive ? ' -rotate-45 -translate-y-1.5' : ''
+            className={`h-1 w-8 bg-textBlack custom-transition${
+              menuActive ? " -translate-y-1.5 -rotate-45" : ""
             }`}
           ></div>
         </div>
-        {menuActive && <Menu />}
+        {menuActive && <Menu setMenuActive={setMenuActive} />}
       </nav>
     </header>
   );

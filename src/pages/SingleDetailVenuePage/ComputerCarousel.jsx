@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import Lightbox from 'yet-another-react-lightbox';
-import 'yet-another-react-lightbox/styles.css';
-import Captions from 'yet-another-react-lightbox/plugins/captions';
-import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
-import Slideshow from 'yet-another-react-lightbox/plugins/slideshow';
-import Zoom from 'yet-another-react-lightbox/plugins/zoom';
-import 'yet-another-react-lightbox/plugins/captions.css';
+import { useState } from "react";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import Captions from "yet-another-react-lightbox/plugins/captions";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import "yet-another-react-lightbox/plugins/captions.css";
 
 const ComputerCarousel = ({ venueData }) => {
   const validImages = venueData.media.filter((item) => item.image !== null);
@@ -15,56 +15,56 @@ const ComputerCarousel = ({ venueData }) => {
 
   return (
     <>
-      <div className="hidden w-full gap-5 lg:flex max-h-[512px] aspect-video h-full    ">
+      <div className="hidden aspect-video h-full max-h-[512px] w-full gap-5 lg:flex    ">
         <div
           onClick={() => setOpen(true)}
-          className=" flex-1 h-full w-full cursor-pointer  hover:scale-[1.015] transition duration-200"
+          className=" h-full w-full flex-1 cursor-pointer  transition duration-200 hover:scale-[1.015]"
         >
           <img
-            className="object-cover h-full w-full rounded-tl-[40px] rounded-bl-2xl"
+            className="h-full w-full rounded-bl-2xl rounded-tl-[40px] object-cover"
             src={firstFourImages[0]?.image}
             alt=""
           />
         </div>
-        <div className="flex flex-col flex-1 gap-5 h-full">
+        <div className="flex h-full flex-1 flex-col gap-5">
           <div
             onClick={() => setOpen(true)}
-            className="flex flex-1 h-1/2 w-full cursor-pointer hover:scale-[1.015] transition duration-200"
+            className="flex h-1/2 w-full flex-1 cursor-pointer transition duration-200 hover:scale-[1.015]"
           >
             <img
-              className="w-full object-cover rounded-tr-2xl"
+              className="w-full rounded-tr-2xl object-cover"
               src={firstFourImages[1]?.image}
               alt=""
             />
           </div>
-          <div className="flex gap-5 flex-1 h-1/2">
+          <div className="flex h-[calc(50%-20px)] flex-1 gap-5">
             <div
               onClick={() => setOpen(true)}
-              className="h-full cursor-pointer hover:scale-[1.015] transition duration-200"
+              className="h-full w-full cursor-pointer transition duration-200 hover:scale-[1.015]"
             >
               <img
-                className="w-full h-full object-cover "
+                className="h-full w-full object-cover "
                 src={firstFourImages[2]?.image}
                 alt=""
               />
             </div>
             <div
               onClick={() => setOpen(true)}
-              className="h-full cursor-pointer hover:scale-[1.015] transition duration-200 relative"
+              className="relative h-full w-full cursor-pointer transition duration-200 hover:scale-[1.015]"
             >
               <img
-                className="w-full h-full object-cover rounded-br-[40px]"
+                className="h-full w-full rounded-br-[40px] object-cover"
                 src={firstFourImages[3]?.image}
                 alt=""
               />
               {remainingImages > 0 && (
-                <div className="absolute inset-0 bg-black bg-opacity-50 rounded-br-[40px]">
-                  <div className="w-full h-full relative ">
-                    <p className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 font-semibold text-white text-4xl">
+                <div className="absolute inset-0 rounded-br-[40px] bg-black bg-opacity-50">
+                  <div className="relative h-full w-full ">
+                    <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-semibold text-white">
                       +
                       <span className="font-josefinsSans">
                         {remainingImages}
-                      </span>{' '}
+                      </span>{" "}
                     </p>
                   </div>
                 </div>

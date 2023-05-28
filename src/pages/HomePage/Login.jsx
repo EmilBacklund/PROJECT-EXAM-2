@@ -1,18 +1,23 @@
-import MainFormComponent from './MainFormComponent';
-import CustomInput from '../../components/FormComponents/CustomInput';
-import { PrimaryBtn } from '../../components/StyledButtons';
-import reusableAxiosComponent from '../../api/reusableAxiosComponent';
-import { useState } from 'react';
-import { setItem, getItem } from '../../utils/storage';
-import { setSelectedView } from '../../store/modules/displayedHomepageViewSlice';
-import { useDispatch } from 'react-redux';
-import { setAuthentication } from '../../store/modules/authenticationSlice';
+import MainFormComponent from "./MainFormComponent";
+import CustomInput from "../../components/FormComponents/CustomInput";
+import { PrimaryBtn } from "../../components/StyledButtons";
+import reusableAxiosComponent from "../../api/reusableAxiosComponent";
+import { useState, useEffect } from "react";
+import { setItem, getItem } from "../../utils/storage";
+import { setSelectedView } from "../../store/modules/displayedHomepageViewSlice";
+import { useDispatch } from "react-redux";
+import { setAuthentication } from "../../store/modules/authenticationSlice";
 
 const Login = ({ email, password }) => {
   const [localEmail, setLocalEmail] = useState(email);
   const [localPassword, setLocalPassword] = useState(password);
   const dispatch = useDispatch();
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    setLocalEmail(email);
+    setLocalPassword(password);
+  }, [email, password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,20 +30,20 @@ const Login = ({ email, password }) => {
     try {
       const response = await reusableAxiosComponent(
         user,
-        'authenticate',
-        'POST'
+        "authenticate",
+        "POST"
       );
-      console.log('response: ', response);
+      console.log("response: ", response);
       setError(false);
 
-      setItem('token', response.token);
-      setItem('user', {
+      setItem("token", response.token);
+      setItem("user", {
         id: response.user.id,
         birthDay: response.user.birthDay,
         name: response.user.name,
       });
 
-      dispatch(setSelectedView('Booking'));
+      dispatch(setSelectedView("Booking"));
       dispatch(setAuthentication(true));
     } catch (error) {
       console.error(error);
@@ -47,7 +52,7 @@ const Login = ({ email, password }) => {
   };
   return (
     <MainFormComponent onSubmit={handleSubmit}>
-      <div className="md:bg-white md:px-6 md:py-9  rounded-b">
+      <div className="rounded-b md:bg-white md:px-6  md:py-9">
         <div className="flex flex-col gap-2 md:flex-row">
           <CustomInput
             flex1="md:flex-1"
@@ -78,7 +83,7 @@ const Login = ({ email, password }) => {
           <PrimaryBtn name="LOGIN" width="w-full" flex1="md:flex-1" />
         </div>
         {error && (
-          <p className="mt-2 text-primaryRed font-bold text-sm">
+          <p className="mt-2 text-sm font-bold text-primaryRed">
             Check if your password or email is correct and try again
           </p>
         )}

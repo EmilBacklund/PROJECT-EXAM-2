@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
-import { Combobox } from '@headlessui/react';
+import { useState } from "react";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { Combobox } from "@headlessui/react";
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 const Suggestions = ({ places, setValue, value, ready, handleSelect }) => {
@@ -18,9 +18,9 @@ const Suggestions = ({ places, setValue, value, ready, handleSelect }) => {
         handleSelect(val);
       }}
     >
-      <div className="relative mt-6 mx-6">
+      <div className="relative mx-6 mt-6">
         <Combobox.Input
-          className="w-full rounded-2xl h-12 border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-secondaryOrange sm:text-sm sm:leading-6"
+          className="h-12 w-full rounded-2xl border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-secondaryOrange sm:text-sm sm:leading-6"
           value={value}
           disabled={!ready}
           onChange={(e) => setValue(e.target.value)}
@@ -41,8 +41,8 @@ const Suggestions = ({ places, setValue, value, ready, handleSelect }) => {
               value={place.description}
               className={({ active }) =>
                 classNames(
-                  'relative cursor-default select-none py-2 pl-3 pr-9',
-                  active ? 'bg-secondaryOrange text-white' : 'text-gray-900'
+                  "relative cursor-default select-none py-2 pl-3 pr-9",
+                  active ? "bg-secondaryOrange text-white" : "text-gray-900"
                 )
               }
             >
@@ -50,8 +50,8 @@ const Suggestions = ({ places, setValue, value, ready, handleSelect }) => {
                 <>
                   <span
                     className={classNames(
-                      'block truncate',
-                      selected && 'font-semibold'
+                      "block truncate",
+                      selected && "font-semibold"
                     )}
                   >
                     {place.description}
@@ -60,8 +60,8 @@ const Suggestions = ({ places, setValue, value, ready, handleSelect }) => {
                   {selected && (
                     <span
                       className={classNames(
-                        'absolute inset-y-0 right-0 flex items-center pr-4',
-                        active ? 'text-white' : 'text-secondaryOrange'
+                        "absolute inset-y-0 right-0 flex items-center pr-4",
+                        active ? "text-white" : "text-secondaryOrange"
                       )}
                     >
                       <CheckIcon className="h-5 w-5" aria-hidden="true" />

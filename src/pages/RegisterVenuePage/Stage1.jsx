@@ -1,14 +1,14 @@
-import StageTemplate from './StageTemplate';
-import CustomInput from '../../components/FormComponents/CustomInput';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateStageData } from '../../store/modules/displayedVenueStageSlice';
+import StageTemplate from "./StageTemplate";
+import CustomInput from "../../components/FormComponents/CustomInput";
+import { useDispatch, useSelector } from "react-redux";
+import { updateStageData } from "../../store/modules/displayedVenueStageSlice";
 
 export const handleValueChange = (dispatch, stageData, stage) => {
   return (e) => {
     const { name, value, type } = e.target;
     let parsedValue = value;
 
-    if (type === 'number') {
+    if (type === "number") {
       parsedValue = Number(value);
     }
 
@@ -25,13 +25,13 @@ const Stage1 = () => {
   const dispatch = useDispatch();
   const stageData = useSelector(
     (state) => state.displayedVenueStage.stageData
-  ) || { stage1: { m2: '', beds: '', bathrooms: '', guests: '' } };
+  ) || { stage1: { m2: "", beds: "", bathrooms: "", guests: "" } };
 
   const handleChange = handleValueChange(dispatch, stageData, 1);
 
   return (
     <div>
-      <StageTemplate stageNumber={1} stageTitle={'Essential Information'} />
+      <StageTemplate stageNumber={1} stageTitle={"Essential Information"} />
       <div className="flex flex-col gap-4">
         <CustomInput
           onChange={handleChange}

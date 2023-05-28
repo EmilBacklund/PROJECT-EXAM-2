@@ -1,8 +1,8 @@
-import StageTemplate from './StageTemplate';
-import useAmenities from '../../hooks/useAmenities';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateStageData } from '../../store/modules/displayedVenueStageSlice';
-import AmenityButton from './AmenityButton';
+import StageTemplate from "./StageTemplate";
+import useAmenities from "../../hooks/useAmenities";
+import { useSelector, useDispatch } from "react-redux";
+import { updateStageData } from "../../store/modules/displayedVenueStageSlice";
+import AmenityButton from "./AmenityButton";
 
 const Stage4 = () => {
   const { amenities, loading, error } = useAmenities();
@@ -27,12 +27,12 @@ const Stage4 = () => {
 
   return (
     <div>
-      <StageTemplate stageNumber={4} stageTitle={'Amenities'} />
+      <StageTemplate stageNumber={4} stageTitle={"Amenities"} />
       <div className="flex flex-col gap-4"></div>
-      <h3 className="font-bold text-2xl">What has your place to offer?</h3>
+      <h3 className="text-2xl font-bold">What has your place to offer?</h3>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 mt-6">
+      <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3">
         {amenities &&
           amenities.map((amenity, index) => (
             <AmenityButton

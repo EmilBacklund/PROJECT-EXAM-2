@@ -1,14 +1,14 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedView } from '../../store/modules/displayedHomepageViewSlice';
-import { setCarouselIndex } from '../../store/modules/carouselIndexSlice';
-import { motion, AnimatePresence } from 'framer-motion';
-import classNames from 'classnames';
+import { useState, useCallback, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedView } from "../../store/modules/displayedHomepageViewSlice";
+import { setCarouselIndex } from "../../store/modules/carouselIndexSlice";
+import { motion, AnimatePresence } from "framer-motion";
+import classNames from "classnames";
 
 const AuthCarousel = () => {
   const dispatch = useDispatch();
   const [isDragTriggered, setIsDragTriggered] = useState(false);
-  const views = useMemo(() => ['Login', 'Booking', 'Register'], []);
+  const views = useMemo(() => ["Login", "Booking", "Register"], []);
   const carouselIndex = useSelector(
     (state) => state.carouselIndex.currentIndex
   );
@@ -65,7 +65,7 @@ const AuthCarousel = () => {
   return (
     <AnimatePresence>
       <motion.div
-        className="flex md:gap-20 gap-5 items-center justify-center relative select-none px-2 "
+        className="relative flex select-none items-center justify-center gap-5 px-2 md:gap-20 "
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.03}
@@ -81,7 +81,7 @@ const AuthCarousel = () => {
           }
         }}
       >
-        <div className="w-full absolute h-full z-10 gradient-opacity pointer-events-none"></div>
+        <div className="gradient-opacity pointer-events-none absolute z-10 h-full w-full"></div>
 
         {orderedViews.map((view, index) => (
           <motion.div
@@ -89,12 +89,12 @@ const AuthCarousel = () => {
             animate={{ y: 0, scale: index === 1 ? 1.3 : 1 }}
             transition={{
               y: { duration: durations[index] },
-              scale: { type: 'spring', stiffness: 400, damping: 50 },
+              scale: { type: "spring", stiffness: 400, damping: 50 },
             }}
             className={classNames(
-              'text-xs sm:text-base md:text-lg cursor-pointer text-center',
+              "cursor-pointer text-center text-xs sm:text-base md:text-lg",
               {
-                'font-semibold': index === 1,
+                "font-semibold": index === 1,
               }
             )}
             onClick={() => {

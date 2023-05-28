@@ -1,16 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux';
-import RegisterProgression from './RegisterProgression';
-import { SecondaryBtn } from '../../components/StyledButtons';
+import { useDispatch, useSelector } from "react-redux";
+import RegisterProgression from "./RegisterProgression";
+import { SecondaryBtn } from "../../components/StyledButtons";
 import {
   incrementStage,
   decrementStage,
   submitAttempted,
-} from '../../store/modules/displayedVenueStageSlice';
-import { Outlet, useNavigate } from 'react-router-dom';
-import Stage0 from './Stage0';
-import { useEffect, useState } from 'react';
-import postVenue from '../../api/postVenueApi';
-import GeneralMessage from './GeneralMessage';
+} from "../../store/modules/displayedVenueStageSlice";
+import { Outlet, useNavigate } from "react-router-dom";
+import Stage0 from "./Stage0";
+import { useEffect, useState } from "react";
+import postVenue from "../../api/postVenueApi";
+import GeneralMessage from "./GeneralMessage";
 
 const RegisterVenue = () => {
   const navigate = useNavigate();
@@ -51,19 +51,19 @@ const RegisterVenue = () => {
     };
   }
 
-  console.log('postData: ', postData);
+  console.log("postData: ", postData);
 
   const handleSubmit = (event) => {
     event.preventDefault();
   };
 
   const stageToPath = {
-    1: 'essential-information',
-    2: 'title-and-description',
-    3: 'location',
-    4: 'amenities',
-    5: 'pricing',
-    6: 'images',
+    1: "essential-information",
+    2: "title-and-description",
+    3: "location",
+    4: "amenities",
+    5: "pricing",
+    6: "images",
   };
 
   const increment = () => {
@@ -91,25 +91,25 @@ const RegisterVenue = () => {
   const renderButtonName = () => {
     switch (currentStage) {
       case 0:
-        return 'Begin';
+        return "Begin";
       case 6:
-        return 'Submit';
+        return "Submit";
       default:
-        return 'Next';
+        return "Next";
     }
   };
 
   return (
-    <div className="relative section-container gap-6 flex flex-col justify-between min-h-[calc(100vh-179.18px)] md:min-h-[calc(100vh-111.99px)]">
+    <div className="section-container relative flex min-h-[calc(100vh-179.18px)] flex-col justify-between gap-6 md:min-h-[calc(100vh-111.99px)]">
       {currentStage === 0 && <Stage0 />}
       <div>
-        <div className="sm:flex sm:justify-center sm:gap-20 sm:mt-10">
+        <div className="sm:mt-10 sm:flex sm:justify-center sm:gap-20">
           {currentStage > 0 && (
             <div className="sm:mt-20 ">
               <RegisterProgression />
             </div>
           )}
-          <form className="sm:flex-1 max-w-3xl" onSubmit={handleSubmit}>
+          <form className="max-w-3xl sm:flex-1" onSubmit={handleSubmit}>
             <Outlet />
           </form>
         </div>
@@ -117,15 +117,15 @@ const RegisterVenue = () => {
       {error && <GeneralMessage errors={error} />}
       <div
         className={`${
-          currentStage !== 0 ? 'justify-between' : 'justify-end'
-        } flex  mb-6`}
+          currentStage !== 0 ? "justify-between" : "justify-end"
+        } mb-6  flex`}
       >
         {currentStage !== 0 && (
           <button
             onClick={() => {
               dispatch(decrement());
             }}
-            className="underline text-textBlack font-semibold rounded-md px-8 hover:bg-gray-200"
+            className="rounded-md px-8 font-semibold text-textBlack underline hover:bg-gray-200"
           >
             Back
           </button>
@@ -142,13 +142,13 @@ const RegisterVenue = () => {
               : () => {
                   postVenue(postData)
                     .then((venueId) => {
-                      console.log('Post succeeded:', venueId);
+                      console.log("Post succeeded:", venueId);
                       dispatch(submitAttempted(false));
                       navigate(`/venue/${venueId}`);
                       // Handle success (e.g., navigate to a different page)
                     })
                     .catch((error) => {
-                      console.error('Post failed:', error);
+                      console.error("Post failed:", error);
                       setError(error);
                       dispatch(submitAttempted(true));
                       // Handle error (e.g., show a message to the user)

@@ -1,6 +1,7 @@
-const PrimaryBtn = ({ width, name, flex1 }) => {
+const PrimaryBtn = ({ width, name, flex1, onClick }) => {
   return (
     <button
+      onClick={onClick}
       className={`${width} ${flex1} h-12 rounded-lg bg-secondaryOrange text-base font-semibold text-white transition hover:bg-[#EF6623]`}
     >
       {name}

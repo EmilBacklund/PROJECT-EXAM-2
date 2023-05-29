@@ -4,6 +4,9 @@ import { Dialog, Transition } from "@headlessui/react";
 import CustomInput from "../../components/FormComponents/CustomInput";
 import editProfileApi from "../../api/editProfileApi";
 import { useState } from "react";
+import { setUserAvatar } from "../../store/modules/userMenuInfoSlice";
+import { useDispatch } from "react-redux";
+import { setNotification } from "../../store/modules/notificationSlice";
 
 function UpdateProfilePage({ open, setOpen }) {
   const [info, setInfo] = useState({
@@ -12,11 +15,51 @@ function UpdateProfilePage({ open, setOpen }) {
     bio: "",
   });
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const response = await editProfileApi(info);
-    console.log("info: ", info);
-    // console.log("response: ", response);
+    try {
+      const response = await editProfileApi(info);
+      console.log("info: ", info);
+      console.log("response: ", response);
+
+      if (response) {
+        console.log("Profile updated successfully");
+        dispatch(setUserAvatar(info.avatar));
+        setOpen(false);
+        dispatch(
+          setNotification({
+            message: "Profile updated successfully!",
+            details: "Your changes have been saved.",
+            isSuccessful: true,
+            show: true,
+          })
+        );
+      } else {
+        console.log("Profile update failed");
+        setOpen(false);
+        dispatch(
+          setNotification({
+            message: "Profile update failed!",
+            details: "Please try again later.",
+            isSuccessful: false,
+            show: true,
+          })
+        );
+      }
+    } catch (error) {
+      console.log("error: ", error);
+      setOpen(false);
+      dispatch(
+        setNotification({
+          message: "Profile update failed!",
+          details: "Please try again later.",
+          isSuccessful: false,
+          show: true,
+        })
+      );
+    }
   };
 
   const handleChange = (e) => {
@@ -100,7 +143,14 @@ function UpdateProfilePage({ open, setOpen }) {
                                     marginTop="mt-0"
                                     placeholder="Paste a URL to an image to set it as your cover photo."
                                   />
-                                  <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                                  <div className="relative mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                                    <div className="absolute top-0 h-full w-full">
+                                      <img
+                                        className="h-full w-full"
+                                        src=""
+                                        alt="Cover photo preview"
+                                      />
+                                    </div>
                                     <div className="text-center">
                                       <PhotoIcon
                                         className="mx-auto h-12 w-12 text-gray-300"

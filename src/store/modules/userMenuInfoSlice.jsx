@@ -9,8 +9,13 @@ const userMenuInfoSlice = createSlice({
     setUserMenuInfo: (state, action) => {
       state.userMenuInfo = action.payload;
     },
+    setUserAvatar: (state, action) => {
+      if (state.userMenuInfo) {
+        state.userMenuInfo.avatar = action.payload;
+      }
+    },
   },
 });
 
-export const { setUserMenuInfo } = userMenuInfoSlice.actions;
+export const { setUserMenuInfo, setUserAvatar } = userMenuInfoSlice.actions;
 export default userMenuInfoSlice.reducer;

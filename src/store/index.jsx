@@ -10,6 +10,7 @@ import authenticationSlice from "./modules/authenticationSlice";
 import loaderSlice from "./modules/loaderSlice";
 import userMenuInfoSlice from "./modules/userMenuInfoSlice";
 import notificationSlice from "./modules/notificationSlice";
+import venuesSlice from "./modules/venuesSlice";
 
 const reducer = combineReducers({
   headerImage: headerImageSlice,
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   loader: loaderSlice,
   userMenuInfo: userMenuInfoSlice,
   notification: notificationSlice,
+  venues: venuesSlice,
 });
 
 const persistConfig = {

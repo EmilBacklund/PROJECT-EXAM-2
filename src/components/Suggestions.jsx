@@ -6,7 +6,17 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Suggestions = ({ places, setValue, value, ready, handleSelect }) => {
+const Suggestions = ({
+  places,
+  setValue,
+  value,
+  ready,
+  handleSelect,
+  shadow,
+  marginTop = "mt-6",
+  marginX = "mx-6",
+  rounded = "rounded-2xl",
+}) => {
   const [selectedPlace, setSelectedPlace] = useState(null);
 
   return (
@@ -18,9 +28,9 @@ const Suggestions = ({ places, setValue, value, ready, handleSelect }) => {
         handleSelect(val);
       }}
     >
-      <div className="relative mx-6 mt-6">
+      <div className={`relative  ${marginTop} ${marginX}`}>
         <Combobox.Input
-          className="h-12 w-full rounded-2xl border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-secondaryOrange sm:text-sm sm:leading-6"
+          className={`h-12 w-full border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-secondaryOrange sm:text-sm sm:leading-6 ${shadow} ${rounded}`}
           value={value}
           disabled={!ready}
           onChange={(e) => setValue(e.target.value)}

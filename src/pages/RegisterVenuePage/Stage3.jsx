@@ -5,7 +5,7 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
-import Suggestions from "./Suggestions";
+import Suggestions from "../../components/Suggestions";
 import LocationDetails from "./LocationDetails";
 import { useSelector, useDispatch } from "react-redux";
 import { handleMultipleValueChange } from "./LocationDetails";

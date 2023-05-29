@@ -24,8 +24,8 @@ const SellingSection = ({ title, data }) => {
         <div className="embla__container">
           {!data && <p>Loading....</p>}
           {data &&
-            data.map((item) => (
-              <NavLink to={item.id ? `/venue/${item.id}` : "#"}>
+            data.map((item, index) => (
+              <NavLink key={index} to={item.id ? `/venue/${item.id}` : "#"}>
                 <div className="sellingSectionCard embla__slide">
                   <img
                     loading="lazy"

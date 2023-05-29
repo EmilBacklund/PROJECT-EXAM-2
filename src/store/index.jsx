@@ -9,6 +9,7 @@ import carouselIndexSlice from "./modules/carouselIndexSlice";
 import authenticationSlice from "./modules/authenticationSlice";
 import loaderSlice from "./modules/loaderSlice";
 import userMenuInfoSlice from "./modules/userMenuInfoSlice";
+import notificationSlice from "./modules/notificationSlice";
 
 const reducer = combineReducers({
   headerImage: headerImageSlice,
@@ -19,6 +20,7 @@ const reducer = combineReducers({
   authentication: authenticationSlice,
   loader: loaderSlice,
   userMenuInfo: userMenuInfoSlice,
+  notification: notificationSlice,
 });
 
 const persistConfig = {

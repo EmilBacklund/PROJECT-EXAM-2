@@ -2,10 +2,14 @@ import { useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 // import Autoplay from 'embla-carousel-autoplay';
 import "../../styles/emblaStyles.css";
+import { NavLink, useNavigate } from "react-router-dom";
 
-const SellingSection = ({ title }) => {
+const SellingSection = ({ title, data }) => {
   // const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()]);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
+  const navigate = useNavigate();
+
+  console.log("data: ", data);
 
   useEffect(() => {
     if (emblaApi) {
@@ -18,54 +22,20 @@ const SellingSection = ({ title }) => {
       <h2 className="mb-4 lg:mb-10">{title}</h2>
       <div className="embla" ref={emblaRef}>
         <div className="embla__container">
-          <div className="sellingSectionCard embla__slide">
-            <img
-              loading="lazy"
-              className="aspect-square h-full object-cover"
-              src="/images/image1.jpg "
-              alt=""
-            />
-          </div>
-          <div className="sellingSectionCard embla__slide">
-            <img
-              loading="lazy"
-              className="aspect-square h-full object-cover"
-              src="/images/image2.jpg"
-              alt=""
-            />
-          </div>
-          <div className="sellingSectionCard embla__slide">
-            <img
-              loading="lazy"
-              className="aspect-square h-full object-cover"
-              src="/images/image3.jpg"
-              alt=""
-            />
-          </div>
-          <div className="sellingSectionCard embla__slide">
-            <img
-              loading="lazy"
-              className="aspect-square h-full object-cover"
-              src="/images/image1.jpg "
-              alt=""
-            />
-          </div>
-          <div className="sellingSectionCard embla__slide">
-            <img
-              loading="lazy"
-              className="aspect-square h-full object-cover"
-              src="/images/image2.jpg"
-              alt=""
-            />
-          </div>
-          <div className="sellingSectionCard embla__slide">
-            <img
-              loading="lazy"
-              className="aspect-square h-full object-cover"
-              src="/images/image3.jpg"
-              alt=""
-            />
-          </div>
+          {!data && <p>Loading....</p>}
+          {data &&
+            data.map((item) => (
+              <NavLink to={item.id ? `/venue/${item.id}` : "#"}>
+                <div className="sellingSectionCard embla__slide">
+                  <img
+                    loading="lazy"
+                    className="aspect-square h-full object-cover"
+                    src={item.image}
+                    alt=""
+                  />
+                </div>
+              </NavLink>
+            ))}
         </div>
       </div>
     </div>

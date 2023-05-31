@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const getVenue = async (dispatch) => {
+const getAllVenue = async (dispatch) => {
   try {
     const response = await axios.get(`http://localhost:8080/get/venues/all`);
     console.log("Response data from getVenue", response.data);
@@ -10,4 +10,4 @@ const getVenue = async (dispatch) => {
   }
 };
 
-export default getVenue;
+export default getAllVenue;

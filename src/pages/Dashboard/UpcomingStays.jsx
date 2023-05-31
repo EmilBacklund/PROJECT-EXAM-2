@@ -23,12 +23,15 @@ const UpcomingStays = () => {
   return (
     <div className="section-container divide-gray-[#D9D9D9] divide-y">
       {userBookingData &&
-        userBookingData.map((booking) => {
+        userBookingData.map((booking, index) => {
           const formattedStart = formatDate(booking.start);
           const formattedEnd = formatDate(booking.end);
 
           return (
-            <div className="profileSmallScreen: box-border flex flex-col gap-4 py-4">
+            <div
+              key={index}
+              className="profileSmallScreen: box-border flex flex-col gap-4 py-4"
+            >
               <div className="flex flex-col justify-between profileSmallScreen:flex-row">
                 <div className="flex h-full flex-col justify-between ">
                   <div>

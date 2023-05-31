@@ -31,6 +31,9 @@ const SingleDetailVenuePage = () => {
   const [maxToDate, setMaxToDate] = useState(null);
   const [bookingMessage, setBookingMessage] = useState(false);
   const navigate = useNavigate();
+  const isAuthenticated = useSelector(
+    (state) => state.authentication.isAuthenticated
+  );
 
   const isMobileView = windowWidth <= 768;
 
@@ -155,7 +158,7 @@ const SingleDetailVenuePage = () => {
   console.log("fromDate:", fromDate);
 
   useEffect(() => {
-    dispatch(getVenue(id))
+    dispatch(getVenue(id, isAuthenticated))
       .then((data) => {
         setVenueData(data);
       })
@@ -341,10 +344,13 @@ const SingleDetailVenuePage = () => {
                   Amenities
                 </h3>
                 <div className="flex flex-wrap">
-                  {venueData.amenities.map((amenity) => {
+                  {venueData.amenities.map((amenity, index) => {
                     if (amenityImages[amenity]) {
                       return (
-                        <div className="mb-4 flex w-1/2 flex-col items-center gap-1 smallScreen:flex-row smallScreen:gap-4 md:w-1/3">
+                        <div
+                          key={index}
+                          className="mb-4 flex w-1/2 flex-col items-center gap-1 smallScreen:flex-row smallScreen:gap-4 md:w-1/3"
+                        >
                           <img
                             className="w-8"
                             src={amenityImages[amenity]}

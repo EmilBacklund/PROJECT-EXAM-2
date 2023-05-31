@@ -10,14 +10,10 @@ function AddToFavorite({ open, setOpen, venueData, setIsFavorite }) {
   const [selected, setSelected] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [collections, setCollections] = useState([]);
-  const id = venueData.id;
-  const image = venueData.media[0].image;
-  const title = venueData.title;
+  const id = venueData?.id;
+  const image = venueData?.media?.[0]?.image || venueData?.coverPhoto;
+  const title = venueData?.title;
   const [message, setMessage] = useState("");
-
-  console.log("venueData from AddToFavorite component: ", venueData);
-  console.log("id from AddToFavorite component: ", id);
-  console.log("image from AddToFavorite component: ", image);
 
   useEffect(() => {
     let loadedCollections =

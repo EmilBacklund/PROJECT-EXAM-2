@@ -28,6 +28,24 @@ function Router() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/search/*" element={<SearchPage />} />
         <Route path="/favorites" element={<DreamStaysPage />} />
+        <Route
+          path="/search/:query/:query/:query/:query/venue/:id"
+          element={<SingleDetailVenuePage />}
+        />
+        <Route
+          path="/search/:query/:query/:query/venue/:id"
+          element={<SingleDetailVenuePage />}
+        />
+        <Route
+          path="/search/:query/:query/venue/:id"
+          element={<SingleDetailVenuePage />}
+        />
+        <Route
+          path="/search/:query/venue/:id"
+          element={<SingleDetailVenuePage />}
+        />
+        <Route path="/search/venue/:id" element={<SingleDetailVenuePage />} />
+
         <Route path="/venue/:id" element={<SingleDetailVenuePage />} />
         <Route path="/registerVenue" element={<RegisterVenuePage />}>
           <Route path="essential-information" element={<Stage1 />} />

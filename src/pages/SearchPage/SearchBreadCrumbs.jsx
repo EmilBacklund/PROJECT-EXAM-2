@@ -29,8 +29,6 @@ function SearchBreadCrumbs({ isLoading }) {
   const handleSearch = (searchTerm, index) => {
     dispatch(setLoadingState(true));
 
-    console.log("BÖG info: ", index, locationParts.length);
-
     const newVenueSearch = locationParts
       .slice(0, index + 1)
       .reverse()

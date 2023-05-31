@@ -5,6 +5,9 @@ export const venuesSlice = createSlice({
   initialState: {
     filteredVenues: [],
     venueSearch: "",
+    startDate: "",
+    endDate: "",
+    guestValue: "",
   },
   reducers: {
     setFilteredVenues: (state, action) => {

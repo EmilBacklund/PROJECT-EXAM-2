@@ -1,10 +1,12 @@
 import getUserVenueBookings from "../../api/getUserVenueBookings";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ConfirmedGuests = () => {
   const dispatch = useDispatch();
   const [userVenueBookingData, setUserVenueBookingData] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserVenueBookings = async () => {
@@ -21,12 +23,15 @@ const ConfirmedGuests = () => {
   return (
     <div className="section-container divide-gray-[#D9D9D9] divide-y">
       {userVenueBookingData &&
-        userVenueBookingData.map((booking) => {
+        userVenueBookingData.map((booking, index) => {
           const formattedStart = formatDate(booking.bookings.start);
           const formattedEnd = formatDate(booking.bookings.end);
 
           return (
-            <div className="profileSmallScreen: box-border flex flex-col gap-4 py-4">
+            <div
+              key={index}
+              className="profileSmallScreen: box-border flex flex-col gap-4 py-4"
+            >
               <h3 className="text-xl font-bold capitalize text-primaryRed md:text-2xl ">
                 {booking.venueTitel}
               </h3>

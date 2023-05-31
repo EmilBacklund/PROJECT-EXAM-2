@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const displayedVenueStageSlice = createSlice({
-  name: 'displayedVenueStage',
+  name: "displayedVenueStage",
   initialState: {
     stage: 0,
     allStagesAreValid: false,
@@ -15,39 +15,39 @@ const displayedVenueStageSlice = createSlice({
       stage6: {
         coverPhoto: {
           img: null,
-          description: '',
+          description: "",
         },
         photo1: {
           img: null,
-          description: '',
+          description: "",
         },
         photo2: {
           img: null,
-          description: '',
+          description: "",
         },
         photo3: {
           img: null,
-          description: '',
+          description: "",
         },
         photo4: {
           img: null,
-          description: '',
+          description: "",
         },
         photo5: {
           img: null,
-          description: '',
+          description: "",
         },
         photo6: {
           img: null,
-          description: '',
+          description: "",
         },
         photo7: {
           img: null,
-          description: '',
+          description: "",
         },
         photo8: {
           img: null,
-          description: '',
+          description: "",
         },
       },
     },

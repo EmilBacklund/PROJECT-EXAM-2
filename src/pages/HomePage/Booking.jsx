@@ -20,6 +20,9 @@ import {
 } from "../../store/modules/venuesSlice";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import Suggestions from "../../components/Suggestions";
+import normalizeDate from "../../utils/normalizeDate";
+import transliterate from "../../utils/transliterate";
+import normalizeString from "../../utils/normalizeString";
 
 const Booking = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -27,32 +30,11 @@ const Booking = () => {
   const dispatch = useDispatch();
   const [guestValue, setGuestValue] = useState("");
   const navigate = useNavigate();
-
-  const normalizeDate = (date) => {
-    const normalizedDate = new Date(date);
-    normalizedDate.setHours(0, 0, 0, 0);
-    return normalizedDate;
-  };
+  const [message, setMessage] = useState("");
 
   const handleSelect = async (address) => {
     setLocationValue(address, false);
     clearSuggestions();
-  };
-
-  const transliterate = (word) => {
-    const dictionary = {
-      ä: "a",
-      ö: "o",
-      å: "a",
-      ø: "o",
-      æ: "a",
-      ü: "u",
-    };
-
-    return word
-      .split("")
-      .map((char) => dictionary[char] || char)
-      .join("");
   };
 
   const {
@@ -64,14 +46,19 @@ const Booking = () => {
   } = usePlacesAutocomplete();
 
   const filterVenues = (venues, location, guests, startDate, endDate) => {
-    const locationParts = location
-      .toLowerCase()
+    const normalizedLocation = normalizeString(location.toLowerCase());
+    const locationParts = normalizedLocation
       .split(/[, ]+/)
       .map((part) => part.trim());
+
     let filteredVenues = venues.filter((venue) => {
       const venueLocation =
         `${venue.location.country} ${venue.location.state} ${venue.location.city} ${venue.location.zip} ${venue.location.street}`.toLowerCase();
-      return locationParts.every((part) => venueLocation.includes(part));
+      const normalizedVenueLocation = normalizeString(venueLocation);
+
+      return locationParts.every((part) =>
+        normalizedVenueLocation.includes(part)
+      );
     });
     filteredVenues = filteredVenues.filter((venue) => venue.guests >= guests);
     filteredVenues = filteredVenues.filter((venue) => {
@@ -93,6 +80,7 @@ const Booking = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     dispatch(setLoadingState(true));
+    setMessage("");
 
     getAllVenues()
       .then((response) => {
@@ -109,28 +97,30 @@ const Booking = () => {
 
           dispatch(setFilteredVenues(filteredVenues));
           dispatch(setVenueSearch(locationValue));
-          dispatch(setVenueStartDate(startDate));
-          dispatch(setVenueEndDate(endDate));
+          dispatch(setVenueStartDate(startDate.toISOString()));
+          dispatch(setVenueEndDate(endDate.toISOString()));
           dispatch(setVenueGuestValue(guestValue));
 
           if (filteredVenues.length > 0) {
             const path = generatePath(locationValue);
             navigate(path);
+          } else {
+            setMessage("No venues matched your search. 👀");
           }
         } else {
-          console.log("response failed");
+          setMessage("Request failed. Please try again.");
         }
       })
       .catch((error) => {
         dispatch(setLoadingState(false));
+        setMessage("Error. Please try again.");
         console.log("error", error);
       });
   };
 
   const generatePath = (search) => {
-    const parts = search.split(","); // Assume the parts are separated by commas
+    const parts = search.split(",");
     let path = "/search";
-    // reverse the order of parts
     const reversedParts = parts.reverse();
     for (const part of reversedParts) {
       const trimmed = part.trim();
@@ -145,6 +135,9 @@ const Booking = () => {
     <>
       <MainFormComponent>
         <div className="flex flex-col gap-2 rounded-b md:bg-white md:px-6 md:py-9">
+          {message.length > 0 && (
+            <p className="font-bold text-red-500">{message}</p>
+          )}
           <div className="flex flex-col gap-2 md:flex-row">
             <div className=" flex-1">
               <Suggestions

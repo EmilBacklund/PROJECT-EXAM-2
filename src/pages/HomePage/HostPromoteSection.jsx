@@ -21,9 +21,9 @@ const HostPromoteSection = () => {
             Becoming a Host
           </h3>
           <p className="md:text-lg">
-            Key benefits: Highlight the advantages of becoming a host on your
-            platform, such as flexible hosting options, secure payments, and
-            user-friendly tools for managing bookings.
+            Unlock your property's potential. Join our secure platform, enjoy
+            flexible hosting, and user-friendly tools. Start your profitable
+            hosting journey today!
           </p>
         </div>
         <div className="flex-1">
@@ -37,8 +37,10 @@ const HostPromoteSection = () => {
             Testomonials from Host
           </h3>
           <p className="md:text-lg">
-            Share real-life experiences from successful hosts, demonstrating the
-            value and support your platform provides.
+            "As a host on this platform, I've experienced a fantastic blend of
+            profitability and simplicity. It's a stylish, secure, and
+            user-friendly service that truly elevates my hosting experience." -
+            John D., Luxury Property Owner
           </p>
         </div>
       </div>

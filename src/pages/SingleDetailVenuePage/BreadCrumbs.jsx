@@ -1,13 +1,77 @@
 import { HomeIcon } from "@heroicons/react/20/solid";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import getAllVenue from "../../api/getAllVenues";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoadingState } from "../../store/modules/loaderSlice";
+import normalizeString from "../../utils/normalizeString";
+import {
+  setFilteredVenues,
+  setVenueSearch,
+} from "../../store/modules/venuesSlice";
+import { useEffect } from "react";
 
-export default function BreadCrumbs({ venueData, isLoading }) {
+function BreadCrumbs({ venueData, isLoading }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { venueSearch } = useSelector((state) => state.venues);
+
+  console.log("venueSearch: ", venueSearch);
+
+  const handleSearch = (venueSearch) => {
+    dispatch(setLoadingState(true));
+
+    getAllVenue().then((res) => {
+      dispatch(setLoadingState(false));
+      let searchResult = res.filter((venue) => {
+        let match = false;
+
+        const venueLocation = `${venue.location?.street} ${venue.location?.city}, ${venue.location?.state}, ${venue.location?.country}`;
+        const venueSearchParts = venueSearch
+          .toLowerCase()
+          .split(",")
+          .map((part) => part.trim());
+
+        for (let part of venueSearchParts) {
+          if (venueLocation.toLowerCase().includes(part)) {
+            match = true;
+            break;
+          }
+        }
+
+        return match;
+      });
+
+      dispatch(setFilteredVenues(searchResult));
+      navigate(`/search/${venueSearch.toLowerCase().split(", ").join("/")}`);
+    });
+  };
+
+  const handleBreadcrumbClick = (clickedBreadcrumb) => {
+    let searchStringArray = [];
+
+    for (let i = 0; i < pages.length; i++) {
+      searchStringArray.push(pages[i].name);
+
+      if (pages[i].name === clickedBreadcrumb) {
+        break;
+      }
+    }
+
+    const searchString = searchStringArray.reverse().join(", ");
+
+    dispatch(setVenueSearch(searchString));
+
+    if (!pages.find((page) => page.name === clickedBreadcrumb).current) {
+      handleSearch(searchString);
+    }
+  };
+
   let pages = [];
+
   if (venueData) {
     if (venueData.location.country) {
       pages.push({
         name: venueData.location.country,
-        href: "#", // Update href as needed
         current: false,
       });
     }
@@ -15,7 +79,6 @@ export default function BreadCrumbs({ venueData, isLoading }) {
     if (venueData.location.state) {
       pages.push({
         name: venueData.location.state,
-        href: "#", // Update href as needed
         current: false,
       });
     }
@@ -23,16 +86,16 @@ export default function BreadCrumbs({ venueData, isLoading }) {
     if (venueData.location.city) {
       pages.push({
         name: venueData.location.city,
-        href: "#", // Update href as needed
         current: false,
       });
     }
 
-    pages.push({
-      name: venueData.title,
-      href: "#", // Update href as needed
-      current: true,
-    });
+    if (venueData.title) {
+      pages.push({
+        name: venueData.title,
+        current: true,
+      });
+    }
   }
 
   return (
@@ -84,7 +147,7 @@ export default function BreadCrumbs({ venueData, isLoading }) {
                   <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
                 </svg>
                 <NavLink
-                  to={page.href}
+                  onClick={() => handleBreadcrumbClick(page.name)}
                   className={`ml-0 whitespace-nowrap text-xs font-medium hover:text-gray-700 sm:ml-4 sm:text-sm ${
                     page.current
                       ? "font-semibold text-secondaryOrange hover:text-primaryRed "
@@ -101,3 +164,5 @@ export default function BreadCrumbs({ venueData, isLoading }) {
     </nav>
   );
 }
+
+export default BreadCrumbs;

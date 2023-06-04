@@ -4,6 +4,7 @@ import displayedDashboardViewSlice from "../../store/modules/displayedDashboardV
 import { useDispatch, useSelector } from "react-redux";
 import UpcomingStays from "./UpcomingStays";
 import ConfirmedGuests from "./ConfirmedGuests";
+import ManagingVenues from "./ManagingVenues";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const Dashboard = () => {
       </div>
       {selectedView === "Upcoming Stays" && <UpcomingStays />}
       {selectedView === "Confirmed Guests" && <ConfirmedGuests />}
+      {selectedView === "Managing Venues" && <ManagingVenues />}
     </main>
   );
 };

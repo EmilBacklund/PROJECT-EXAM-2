@@ -16,9 +16,36 @@
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.4);
 }
 
+.dashboardImgShadow {
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.3));
+  transition: all 0.25s ease;
+}
+
+.dashboardImgShadow:hover {
+  filter: drop-shadow(0px 0px 10px rgba(167, 65, 34, 0.7));
+}
+
 .buttonCTAeffect {
   transition-timing-function: cubic-bezier(0.5, 1.6, 0.4, 0.7);
   content: '';
+}
+
+@keyframes bounce {
+  0%, 20%, 60%, 100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-12px);
+  }
+
+  80% {
+    transform: translateY(-6px);
+  }
+}
+
+.bounce {
+  animation: bounce 0.6s;
 }
 
 .gradient-divider {

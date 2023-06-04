@@ -37,25 +37,27 @@ const SingleDetailVenuePage = () => {
 
   const isMobileView = windowWidth <= 768;
 
-  const bookedDates = venueData?.bookings.map((booking) => {
-    const startDate = new Date(booking.start);
-    const endDate = new Date(booking.end);
+  const bookedDates = venueData?.bookings?.map((booking) => {
+    const startDate = new Date(booking.dateFrom);
+    const endDate = new Date(booking.dateTo);
 
     // Add one day to the start date
     startDate.setDate(startDate.getDate() - 1);
 
     return {
-      start: startDate,
-      end: endDate,
+      dateFrom: startDate,
+      dateTo: endDate,
     };
   });
 
   async function handleBooking() {
     dispatch(setSelectedView("Upcoming Stays"));
     const bookingData = {
-      start: fromDate,
-      end: toDate,
+      dateFrom: fromDate,
+      dateTo: toDate,
     };
+
+    console.log("bookingData: ", bookingData);
 
     try {
       if (fromDate && toDate !== null) {
@@ -74,7 +76,7 @@ const SingleDetailVenuePage = () => {
 
   const isDateBooked = (date) => {
     return bookedDates.some((range) => {
-      return date >= range.start && date <= range.end;
+      return date >= range.dateFrom && date <= range.dateTo;
     });
   };
 
@@ -170,12 +172,12 @@ const SingleDetailVenuePage = () => {
   useEffect(() => {
     if (fromDate && venueData) {
       const sortedBookings = [...venueData.bookings].sort(
-        (a, b) => new Date(a.start) - new Date(b.start)
+        (a, b) => new Date(a.dateFrom) - new Date(b.dateFrom)
       );
       const nextBooking = sortedBookings.find(
-        (booking) => new Date(booking.start) > fromDate
+        (booking) => new Date(booking.dateFrom) > fromDate
       );
-      setMaxToDate(nextBooking ? new Date(nextBooking.start) : null);
+      setMaxToDate(nextBooking ? new Date(nextBooking.dateFrom) : null);
     }
   }, [fromDate, venueData]);
 
@@ -225,9 +227,7 @@ const SingleDetailVenuePage = () => {
             <div className="section-container">
               <div className="mb-4 flex flex-wrap justify-between gap-2 text-sm font-bold sm:mb-10 md:text-xl lg:font-semibold">
                 <div className="mr-10">
-                  {venueData.venueProfileRatings.length === 0 && (
-                    <div>Currently no rating</div>
-                  )}
+                  {!venueData.rating.length && <div>Currently no rating</div>}
                 </div>
                 <div className="mr-10">{venueData.squareMeter}m²</div>
                 <div className="mr-10">{venueData.price}kr /night</div>
@@ -252,8 +252,8 @@ const SingleDetailVenuePage = () => {
                       if (isMobileView) {
                         if (isPickingStartDate) {
                           setFromDate(date);
-                          setToDate(null); // reset toDate when fromDate is changed
-                          setMaxToDate(null); // reset maxToDate when fromDate is changed
+                          setToDate(null);
+                          setMaxToDate(null);
                           setIsPickingStartDate(false);
                         } else {
                           if (date >= fromDate) {
@@ -265,8 +265,8 @@ const SingleDetailVenuePage = () => {
                         }
                       } else {
                         setFromDate(date);
-                        setToDate(null); // reset toDate when fromDate is changed
-                        setMaxToDate(null); // reset maxToDate when fromDate is changed
+                        setToDate(null);
+                        setMaxToDate(null);
                       }
                     }}
                     value={isPickingStartDate ? fromDate : toDate}
@@ -291,9 +291,8 @@ const SingleDetailVenuePage = () => {
                       tileClassName={highlightRange}
                       goToRangeStartOnSelect={true}
                       showWeekNumbers={true}
-                      tileDisabled={
-                        ({ date, view }) =>
-                          view === "month" && isDateBooked(date) // disable if date is booked
+                      tileDisabled={({ date, view }) =>
+                        view === "month" && isDateBooked(date)
                       }
                     />
                   </div>
@@ -343,13 +342,19 @@ const SingleDetailVenuePage = () => {
                 <h3 className="mb-4 text-xl leading-[44px] sm:text-[32px]">
                   Amenities
                 </h3>
-                <div className="flex flex-wrap">
-                  {venueData.amenities.map((amenity, index) => {
-                    if (amenityImages[amenity]) {
+                {Object.values(venueData.meta).every((value) => !value) ? (
+                  <p>No amenities selected for this venue.</p>
+                ) : (
+                  <div className="flex flex-wrap">
+                    {Object.keys(venueData.meta).map((amenity, index) => {
                       return (
                         <div
                           key={index}
-                          className="mb-4 flex w-1/2 flex-col items-center gap-1 smallScreen:flex-row smallScreen:gap-4 md:w-1/3"
+                          className={`mb-4 flex w-1/2 flex-col items-center gap-1 smallScreen:flex-row smallScreen:gap-4 md:w-1/3 ${
+                            venueData.meta[amenity] === false
+                              ? "opacity-50"
+                              : ""
+                          }`}
                         >
                           <img
                             className="w-8"
@@ -362,10 +367,9 @@ const SingleDetailVenuePage = () => {
                           </p>
                         </div>
                       );
-                    }
-                    return null;
-                  })}
-                </div>
+                    })}
+                  </div>
+                )}
               </section>
             </div>
           </main>

@@ -1,20 +1,14 @@
 import axios from "axios";
 import { getItem } from "../utils/storage";
 
-const postBooking = (body) => {
+const getUserProfile = (param) => {
   const token = getItem("token");
 
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await axios.post(
-        `https://nf-api.onrender.com/api/v1/holidaze/bookings`,
-        body,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
+      const response = await axios.get(
+        `https://nf-api.onrender.com/api/v1/holidaze/profiles/${param}`,
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log("Response data from Venue post", response.data);
       resolve(response.data);
@@ -25,4 +19,4 @@ const postBooking = (body) => {
   });
 };
 
-export default postBooking;
+export default getUserProfile;

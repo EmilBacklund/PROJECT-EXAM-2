@@ -21,7 +21,7 @@ function Router() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/profile/:userId" element={<ProfilePage />}>
+        <Route path="/profile/:userName" element={<ProfilePage />}>
           <Route path="edit" element={<UpdateProfilePage />} />
         </Route>
         <Route path="/dreamstays" element={<DreamStaysPage />} />

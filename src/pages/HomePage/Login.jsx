@@ -1,18 +1,18 @@
 import MainFormComponent from "./MainFormComponent";
 import CustomInput from "../../components/FormComponents/CustomInput";
 import { PrimaryBtn } from "../../components/StyledButtons";
-import reusableAxiosComponent from "../../api/reusableAxiosComponent";
 import { useState, useEffect } from "react";
-import { setItem, getItem } from "../../utils/storage";
+import { setItem } from "../../utils/storage";
 import { setSelectedView } from "../../store/modules/displayedHomepageViewSlice";
 import { useDispatch } from "react-redux";
 import { setAuthentication } from "../../store/modules/authenticationSlice";
+import loginUser from "../../api/loginUserApi";
 
 const Login = ({ email, password }) => {
   const [localEmail, setLocalEmail] = useState(email);
   const [localPassword, setLocalPassword] = useState(password);
   const dispatch = useDispatch();
-  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     setLocalEmail(email);
@@ -28,26 +28,26 @@ const Login = ({ email, password }) => {
     };
 
     try {
-      const response = await reusableAxiosComponent(
-        user,
-        "authenticate",
-        "POST"
-      );
+      const response = await loginUser(user, "POST");
       console.log("response: ", response);
-      setError(false);
+      setErrorMessage("");
 
-      setItem("token", response.token);
-      setItem("user", {
-        id: response.user.id,
-        birthDay: response.user.birthDay,
-        name: response.user.name,
-      });
+      if (response.accessToken) {
+        setItem("token", response.accessToken);
+        setItem("user", {
+          name: response.name,
+          avatar: response.avatar,
+          email: response.email,
+          venueManager: response.venueManager,
+        });
 
-      dispatch(setSelectedView("Booking"));
-      dispatch(setAuthentication(true));
+        dispatch(setSelectedView("Booking"));
+        dispatch(setAuthentication(true));
+      } else {
+        setErrorMessage(response.data.errors[0].message);
+      }
     } catch (error) {
-      console.error(error);
-      setError(true);
+      setErrorMessage(error.response.data.errors[0].message);
     }
   };
   return (
@@ -82,9 +82,9 @@ const Login = ({ email, password }) => {
           />
           <PrimaryBtn name="LOGIN" width="w-full" flex1="md:flex-1" />
         </div>
-        {error && (
+        {errorMessage && (
           <p className="mt-2 text-sm font-bold text-primaryRed">
-            Check if your password or email is correct and try again
+            {errorMessage}
           </p>
         )}
       </div>

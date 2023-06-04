@@ -1,12 +1,12 @@
 import axios from "axios";
 import { getItem } from "../utils/storage";
 
-const editProfileApi = async (body, user) => {
+const editVenueManager = async (body, user) => {
   const token = getItem("token");
 
   try {
     const response = await axios.put(
-      `https://nf-api.onrender.com/api/v1/holidaze/profiles/${user}/media`,
+      `https://nf-api.onrender.com/api/v1/holidaze/profiles/${user}`,
       body,
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -18,4 +18,4 @@ const editProfileApi = async (body, user) => {
   }
 };
 
-export default editProfileApi;
+export default editVenueManager;

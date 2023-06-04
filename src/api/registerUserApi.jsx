@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const reusableAxiosComponent = (data, endpoint, request) => {
+const registerUser = (data, request) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios({
         method: request,
-        url: `http://localhost:8080/get/user/${endpoint}`,
+        url: `https://nf-api.onrender.com/api/v1/holidaze/auth/register`,
         data: data,
       });
       console.log("Response data from User post", response.data);
@@ -17,4 +17,4 @@ const reusableAxiosComponent = (data, endpoint, request) => {
   });
 };
 
-export default reusableAxiosComponent;
+export default registerUser;

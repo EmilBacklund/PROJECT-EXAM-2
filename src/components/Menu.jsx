@@ -4,9 +4,7 @@ import { useDispatch } from "react-redux";
 import { setSelectedView } from "../store/modules/displayedHomepageViewSlice";
 import { setCarouselIndex } from "../store/modules/carouselIndexSlice";
 import { useSelector } from "react-redux";
-import getUserMenuInfo from "../api/getUserMenuInfo";
 import { useEffect } from "react";
-import { setUserMenuInfo } from "../store/modules/userMenuInfoSlice";
 import { getItem } from "../utils/storage";
 
 const Menu = ({ setMenuActive }) => {
@@ -17,28 +15,19 @@ const Menu = ({ setMenuActive }) => {
   const isAuthenticated = useSelector(
     (state) => state.authentication.isAuthenticated
   );
-  const userMenuInfo = useSelector((state) => state.userMenuInfo.userMenuInfo);
 
   const user = getItem("user");
   const token = getItem("token");
+  const { venueManager } = getItem("user");
+
+  console.log("user: ", user);
+  console.log("venueManager: ", venueManager);
 
   useEffect(() => {
     if (!user || !token) {
       logOut();
     }
   }, [setMenuActive]);
-
-  useEffect(() => {
-    const fetchUserMenuInfo = async () => {
-      if (!userMenuInfo) {
-        const response = await getUserMenuInfo();
-        dispatch(setUserMenuInfo(response));
-      }
-    };
-    fetchUserMenuInfo();
-  }, [dispatch, userMenuInfo]);
-
-  console.log("userMenuInfo: ", userMenuInfo);
 
   console.log("isAuthenticated asd: ", isAuthenticated);
 
@@ -97,26 +86,26 @@ const Menu = ({ setMenuActive }) => {
       >
         {isAuthenticated && (
           <div className="flex items-center px-4">
-            {userMenuInfo && (
+            {user && (
               <>
                 <div className="h-10 w-10 flex-shrink-0">
                   <img
                     className=" h-full w-full rounded object-cover"
-                    src={userMenuInfo?.avatar}
+                    src={user?.avatar ? user?.avatar : "/images/avatar.png"}
                     alt=""
                   />
                 </div>
                 <div className="ml-3">
                   <div className="text-base font-medium text-gray-800 ">
-                    {userMenuInfo?.name}
+                    {user?.name}
                   </div>
                   <div className="text-sm font-medium text-gray-500">
-                    {userMenuInfo?.email}
+                    {user?.email}
                   </div>
                 </div>
               </>
             )}
-            {!userMenuInfo && <p>Loading....</p>}
+            {!user && <p>Loading....</p>}
           </div>
         )}
         <div className={` space-y-1 ${isAuthenticated ? "mt-3" : "mt-0"}`}>
@@ -128,11 +117,11 @@ const Menu = ({ setMenuActive }) => {
                   setMenuActive(false);
                 }}
                 className={`${baseClasses} ${activeClassName(
-                  `/profile/${user?.id}`,
+                  `/profile/${user?.name}`,
                   activeClasses,
                   notActiveClasses
                 )}`}
-                to={`/profile/${user?.id}`}
+                to={`/profile/${user?.name}`}
               >
                 Your Profile
               </NavLink>
@@ -198,15 +187,23 @@ const Menu = ({ setMenuActive }) => {
               </NavLink>
               <div className="pb-3">
                 <NavLink
+                  title={`${
+                    !venueManager &&
+                    "You need to be a venue manager to register a venue"
+                  }`}
                   onClick={(event) => {
-                    event.stopPropagation();
-                    setMenuActive(false);
+                    if (!venueManager) {
+                      event.preventDefault();
+                    } else {
+                      event.stopPropagation();
+                      setMenuActive(false);
+                    }
                   }}
                   className={`${baseClasses} ${activeClassName(
                     "/registerVenue",
                     activeClasses,
                     notActiveClasses
-                  )}`}
+                  )} ${!venueManager && "cursor-not-allowed opacity-50"}`}
                   to="/registerVenue"
                 >
                   Register Venue

@@ -50,7 +50,6 @@ const MobileCarousel = ({ slides, options }) => {
                 <img
                   className="h-full w-full object-cover"
                   src={slide.image ? slide.image : ""}
-                  alt={slide.description ? slide.description : ""}
                 />
               </div>
             ))}

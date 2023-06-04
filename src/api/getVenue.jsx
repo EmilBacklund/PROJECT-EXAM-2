@@ -14,7 +14,7 @@ const getVenue = (venueId, isAuthenticated) => async (dispatch) => {
       };
     }
     const response = await axios.get(
-      `http://localhost:8080/get/venue/${venueId}`,
+      `https://nf-api.onrender.com/api/v1/holidaze/venues/${venueId}?_bookings=true`,
       config
     );
     console.log("Response data from getVenue", response.data);

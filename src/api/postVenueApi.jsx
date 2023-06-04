@@ -2,13 +2,12 @@ import axios from "axios";
 import { getItem } from "../utils/storage";
 
 const postVenue = (data) => {
-  const user = getItem("user");
   const token = getItem("token");
 
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.post(
-        `http://localhost:8080/get/venue/register/${user.id}`,
+        `https://nf-api.onrender.com/api/v1/holidaze/venues`,
         data,
         { headers: { Authorization: `Bearer ${token}` } }
       );

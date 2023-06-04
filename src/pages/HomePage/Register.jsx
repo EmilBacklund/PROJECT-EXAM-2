@@ -5,10 +5,10 @@ import "react-calendar/dist/Calendar.css";
 import MainFormComponent from "./MainFormComponent";
 import CustomInput from "../../components/FormComponents/CustomInput";
 import { PrimaryBtn } from "../../components/StyledButtons";
-import reusableAxiosComponent from "../../api/reusableAxiosComponent";
 import { useDispatch } from "react-redux";
 import { setSelectedView } from "../../store/modules/displayedHomepageViewSlice";
 import { setCarouselIndex } from "../../store/modules/carouselIndexSlice";
+import registerUser from "../../api/registerUserApi";
 
 const Register = ({ onRegisterSuccess }) => {
   const [birthDate, setBirthDate] = useState(new Date());
@@ -30,12 +30,13 @@ const Register = ({ onRegisterSuccess }) => {
     setMessage(false);
 
     const user = {
-      firstname,
-      lastname,
+      name: `${firstname}${lastname}`,
       email,
       password,
       birthDate,
     };
+
+    console.log(user.name);
 
     const eighteenYearsAgo = new Date();
     eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
@@ -59,15 +60,19 @@ const Register = ({ onRegisterSuccess }) => {
         return;
       }
 
-      const response = await reusableAxiosComponent(user, "register", "POST");
-      dispatch(setSelectedView("Login"));
-      dispatch(setCarouselIndex(0));
-      await onRegisterSuccess(email, password);
+      const response = await registerUser(user, "POST");
+
+      console.log("Response from registerUser: ", response);
+      if (response) {
+        dispatch(setSelectedView("Login"));
+        dispatch(setCarouselIndex(0));
+        await onRegisterSuccess(email, password);
+      } else {
+        setMessage(response.data.errors[0].message);
+      }
     } catch (error) {
-      console.error(error);
-      setMessage(
-        "Unknown error occurred, if the problem persists, try to register with another email"
-      );
+      console.error("This is error: ", error);
+      setMessage(error.response.data.errors[0].message);
     }
   };
 

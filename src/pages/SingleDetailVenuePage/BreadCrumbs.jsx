@@ -90,9 +90,9 @@ function BreadCrumbs({ venueData, isLoading }) {
       });
     }
 
-    if (venueData.title) {
+    if (venueData.name) {
       pages.push({
-        name: venueData.title,
+        name: venueData.name,
         current: true,
       });
     }

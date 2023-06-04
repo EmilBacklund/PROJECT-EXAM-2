@@ -19,7 +19,6 @@ const AddImageModal = ({ open, setOpen, clickedButton }) => {
   const [isSameValue, setIsSameValue] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [message, setMessage] = useState("");
-  const [imageDescription, setImageDescription] = useState("");
 
   useEffect(() => {
     if (
@@ -31,12 +30,6 @@ const AddImageModal = ({ open, setOpen, clickedButton }) => {
       setIsVisible(false);
     }
   }, [stageData, clickedButton, showMessage]);
-
-  // console.log('imageUrl: ', imageUrl);
-  // console.log(
-  //   'stageData[clickedButton]: ',
-  //   stageData[clickedButton]
-  // );
 
   useEffect(() => {
     if (
@@ -52,10 +45,8 @@ const AddImageModal = ({ open, setOpen, clickedButton }) => {
   useEffect(() => {
     if (open && stageData && stageData[clickedButton].img) {
       setImageUrl(stageData[clickedButton].img);
-      setImageDescription(stageData[clickedButton].description);
     } else if (open) {
       setImageUrl(undefined);
-      setImageDescription("");
     }
   }, [open, stageData, clickedButton]);
 
@@ -67,7 +58,6 @@ const AddImageModal = ({ open, setOpen, clickedButton }) => {
           ...stageData,
           [clickedButton]: {
             img: imageUrl || null,
-            description: imageDescription,
           },
         },
       })
@@ -91,11 +81,7 @@ const AddImageModal = ({ open, setOpen, clickedButton }) => {
   }, [imageUrl, isSameValue, stageData, clickedButton]);
 
   function disableSaveButton() {
-    if (
-      stageData[clickedButton].description !== imageDescription &&
-      imageUrl &&
-      imageUrl.length > 0
-    ) {
+    if (imageUrl && imageUrl.length > 0) {
       return false;
     }
     if (imageUrl === undefined || isSameValue) {
@@ -223,9 +209,8 @@ const AddImageModal = ({ open, setOpen, clickedButton }) => {
                         </div>
                         <textarea
                           placeholder="What does your photo show?"
-                          value={imageDescription}
+                          value=""
                           disabled={disableTextfield()}
-                          onChange={(e) => setImageDescription(e.target.value)}
                           className="mt-2 w-full rounded-md border px-1.5 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-secondaryOrange sm:text-sm sm:leading-6"
                         />
                       </div>

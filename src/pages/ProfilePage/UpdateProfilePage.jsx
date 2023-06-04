@@ -3,30 +3,56 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import CustomInput from "../../components/FormComponents/CustomInput";
 import editProfileApi from "../../api/editProfileApi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { setUserAvatar } from "../../store/modules/userMenuInfoSlice";
 import { useDispatch } from "react-redux";
-import { setNotification } from "../../store/modules/notificationSlice";
+import {
+  closeNotification,
+  setNotification,
+} from "../../store/modules/notificationSlice";
+import { setItem, getItem } from "../../utils/storage";
+import ToggleButton from "../../components/ToggleButton";
+import editVenueManager from "../../api/editVenueManager";
+import { setLoadingState } from "../../store/modules/loaderSlice";
 
-function UpdateProfilePage({ open, setOpen }) {
+function UpdateProfilePage({ open, setOpen, profile }) {
   const [info, setInfo] = useState({
     avatar: "",
-    background: "",
-    bio: "",
   });
+  const user = getItem("user");
+  const [venueManager, setVenueManager] = useState(user?.venueManager || false);
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(closeNotification({ show: false }));
+  }, []);
+
+  useEffect(() => {
+    setInfo({
+      avatar: profile?.avatar || "",
+    });
+  }, [profile]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setLoadingState(true));
     try {
-      const response = await editProfileApi(info);
+      const mediaBody = {
+        avatar: info.avatar,
+      };
+
+      const response = await editProfileApi(mediaBody, profile.name);
       console.log("info: ", info);
       console.log("response: ", response);
 
       if (response) {
         console.log("Profile updated successfully");
         dispatch(setUserAvatar(info.avatar));
+        setItem("user", {
+          ...user,
+          avatar: response.avatar,
+        });
         setOpen(false);
         dispatch(
           setNotification({
@@ -36,13 +62,33 @@ function UpdateProfilePage({ open, setOpen }) {
             show: true,
           })
         );
+        dispatch(setLoadingState(false));
+      }
+      if (user.venueManager !== venueManager) {
+        const venueBody = {
+          venueManager: venueManager,
+        };
+        const venueResponse = await editVenueManager(venueBody, profile.name);
+
+        console.log("venueResponse: ", venueResponse);
+        if (venueResponse) {
+          setItem("user", {
+            ...user,
+            venueManager: venueManager,
+          });
+        }
+        dispatch(setLoadingState(false));
       } else {
         console.log("Profile update failed");
         setOpen(false);
         dispatch(
           setNotification({
             message: "Profile update failed!",
-            details: "Please try again later.",
+            details: `${
+              response.data.errors[0].message
+                ? response.data.errors[0].message
+                : "Please try again later."
+            }`,
             isSuccessful: false,
             show: true,
           })
@@ -51,10 +97,17 @@ function UpdateProfilePage({ open, setOpen }) {
     } catch (error) {
       console.log("error: ", error);
       setOpen(false);
+      dispatch(setLoadingState(false));
       dispatch(
         setNotification({
-          message: "Profile update failed!",
-          details: "Please try again later.",
+          message: `${
+            error.message ? error.message : "Profile update failed!"
+          }`,
+          details: `${
+            error.response.data.errors[0].message
+              ? error.response.data.errors[0].message
+              : "Please try again later."
+          }`,
           isSuccessful: false,
           show: true,
         })
@@ -96,7 +149,7 @@ function UpdateProfilePage({ open, setOpen }) {
                             <h3 className="text-base font-semibold leading-7 text-white md:text-2xl ">
                               Profile
                             </h3>
-                            <p className="mt-1 text-sm leading-6 text-white">
+                            <p className="mt-1  text-sm leading-6 text-white">
                               This information will be displayed publicly so be
                               careful what you share.
                             </p>
@@ -112,13 +165,23 @@ function UpdateProfilePage({ open, setOpen }) {
                                     Photo
                                   </label>
                                   <div className="mt-2 flex items-center gap-x-3">
-                                    <UserCircleIcon
-                                      className="h-12 w-12 text-gray-300"
-                                      aria-hidden="true"
-                                    />
+                                    {!profile?.avatar && (
+                                      <UserCircleIcon
+                                        className="h-12 w-12 text-gray-300"
+                                        aria-hidden="true"
+                                      />
+                                    )}
+                                    {profile?.avatar && (
+                                      <img
+                                        src={profile?.avatar}
+                                        className="h-12  w-12 rounded object-cover text-gray-300"
+                                        aria-hidden="true"
+                                      />
+                                    )}
                                     <CustomInput
                                       flex1="flex-1"
                                       name="avatar"
+                                      value={info.avatar || ""}
                                       onChange={handleChange}
                                       required=""
                                       colonSymbol=""
@@ -127,58 +190,16 @@ function UpdateProfilePage({ open, setOpen }) {
                                     />
                                   </div>
                                 </div>
-                                <div className="col-span-full">
-                                  <label
-                                    htmlFor="background"
-                                    className="block text-sm font-medium leading-6 text-gray-900"
-                                  >
-                                    Cover photo
-                                  </label>
-                                  <CustomInput
-                                    name="background"
-                                    onChange={handleChange}
-                                    flex1="flex-1"
-                                    required=""
-                                    colonSymbol=""
-                                    marginTop="mt-0"
-                                    placeholder="Paste a URL to an image to set it as your cover photo."
-                                  />
-                                  <div className="relative mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                                    <div className="absolute top-0 h-full w-full">
-                                      <img
-                                        className="h-full w-full"
-                                        src=""
-                                        alt="Cover photo preview"
-                                      />
-                                    </div>
-                                    <div className="text-center">
-                                      <PhotoIcon
-                                        className="mx-auto h-12 w-12 text-gray-300"
-                                        aria-hidden="true"
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="col-span-full">
-                                  <label
-                                    htmlFor="bio"
-                                    className="block text-sm font-medium leading-6 text-gray-900"
-                                  >
-                                    About
-                                  </label>
-                                  <div className="mt-2">
-                                    <textarea
-                                      id="bio"
-                                      name="bio"
-                                      onChange={handleChange}
-                                      rows={5}
-                                      className="block w-full rounded-md border-0 py-1.5 indent-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-secondaryOrange sm:text-sm sm:leading-6"
-                                      defaultValue={""}
-                                    />
-                                  </div>
-                                  <p className="mt-3 text-sm leading-6 text-gray-600">
-                                    Write a few sentences about yourself.
+                                <div className="col-span-full ml-2">
+                                  <p className="w-full">
+                                    {venueManager
+                                      ? "You are a Venue Manager"
+                                      : "You are not a Venue Manager"}
                                   </p>
+                                  <ToggleButton
+                                    enabled={venueManager}
+                                    setEnabled={setVenueManager}
+                                  />
                                 </div>
                               </div>
                             </div>

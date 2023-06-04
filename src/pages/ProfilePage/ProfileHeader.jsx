@@ -1,16 +1,17 @@
-import { Outlet } from "react-router-dom";
 import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
 import { Cog6ToothIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import UpdateProfilePage from "./UpdateProfilePage";
 
-const ProfileHeader = ({ user, isLoggedInUser }) => {
+const ProfileHeader = ({ user, isLoggedInUser, profile }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <div className="section-container">
-        {open && <UpdateProfilePage open={open} setOpen={setOpen} />}
+        {open && (
+          <UpdateProfilePage open={open} setOpen={setOpen} profile={profile} />
+        )}
         <h1 className="mt-6 font-carena text-2xl leading-[24px] md:mt-10 md:text-[32px] md:leading-[32px]">
           {isLoggedInUser && user.name}
         </h1>
@@ -21,7 +22,7 @@ const ProfileHeader = ({ user, isLoggedInUser }) => {
           <div className="aspect-square h-full max-h-[295px]">
             <img
               className="h-[112px] w-[112px] rounded object-cover profileSmallScreen:h-full profileSmallScreen:w-full profileSmallScreen:rounded-none "
-              src="/images/profileTest2.png"
+              src={profile?.avatar || "/images/avatar.png"}
               alt=""
             />
           </div>

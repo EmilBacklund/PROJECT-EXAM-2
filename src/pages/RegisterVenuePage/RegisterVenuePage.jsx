@@ -26,28 +26,22 @@ const RegisterVenue = () => {
 
   if (stageData && allStagesAreValid) {
     postData = {
-      squareMeter: stageData.stage1.m2,
-      beds: stageData.stage1.beds,
-      bathrooms: stageData.stage1.bathrooms,
-      guests: stageData.stage1.guests,
-      title: stageData.stage2.title,
+      maxGuests: stageData.stage1.guests,
+      name: stageData.stage2.title,
       description: stageData.stage2.description,
-      street: stageData.stage3.street,
-      city: stageData.stage3.city,
-      country: stageData.stage3.country,
-      zip: stageData.stage3.zipCode,
-      lat: stageData.stage3.lat,
-      lng: stageData.stage3.lng,
-      placeId: stageData.stage3.place_id,
-      state: stageData.stage3.state,
-      amenities: stageData.stage4,
+      location: {
+        adress: stageData.stage3.street,
+        city: stageData.stage3.city,
+        country: stageData.stage3.country,
+        zip: stageData.stage3.zipCode,
+        lat: stageData.stage3.lat,
+        lng: stageData.stage3.lng,
+      },
+      meta: stageData.stage4,
       price: stageData.stage5.price,
       media: Object.values(stageData.stage6)
         .filter((photo) => photo.img)
-        .map((photo) => ({
-          image: photo.img,
-          description: photo.description,
-        })),
+        .map((photo) => photo.img),
     };
   }
 
@@ -144,12 +138,12 @@ const RegisterVenue = () => {
                     .then((venueId) => {
                       console.log("Post succeeded:", venueId);
                       dispatch(submitAttempted(false));
-                      navigate(`/venue/${venueId}`);
+                      navigate(`/venue/${venueId.id}`);
                       // Handle success (e.g., navigate to a different page)
                     })
                     .catch((error) => {
                       console.error("Post failed:", error);
-                      setError(error);
+                      setError(error.response.data.errors);
                       dispatch(submitAttempted(true));
                       // Handle error (e.g., show a message to the user)
                     });

@@ -8,7 +8,7 @@ import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/plugins/captions.css";
 
 const ComputerCarousel = ({ venueData }) => {
-  const validImages = venueData.media.filter((item) => item.image !== null);
+  const validImages = venueData.media.filter((item) => item !== null);
   const firstFourImages = validImages.slice(0, 4);
   const remainingImages = validImages.length - 4;
   const [open, setOpen] = useState(false);
@@ -22,7 +22,7 @@ const ComputerCarousel = ({ venueData }) => {
         >
           <img
             className="h-full w-full rounded-bl-2xl rounded-tl-[40px] object-cover"
-            src={firstFourImages[0]?.image}
+            src={firstFourImages?.[0]}
             alt=""
           />
         </div>
@@ -33,7 +33,7 @@ const ComputerCarousel = ({ venueData }) => {
           >
             <img
               className="w-full rounded-tr-2xl object-cover"
-              src={firstFourImages[1]?.image}
+              src={firstFourImages?.[1]}
               alt=""
             />
           </div>
@@ -44,7 +44,7 @@ const ComputerCarousel = ({ venueData }) => {
             >
               <img
                 className="h-full w-full object-cover "
-                src={firstFourImages[2]?.image}
+                src={firstFourImages?.[2]}
                 alt=""
               />
             </div>
@@ -54,7 +54,7 @@ const ComputerCarousel = ({ venueData }) => {
             >
               <img
                 className="h-full w-full rounded-br-[40px] object-cover"
-                src={firstFourImages[3]?.image}
+                src={firstFourImages?.[3]}
                 alt=""
               />
               {remainingImages > 0 && (
@@ -75,9 +75,7 @@ const ComputerCarousel = ({ venueData }) => {
       </div>
       <Lightbox
         slides={validImages.map((item) => ({
-          src: item.image,
-          alt: item.description,
-          description: item.description,
+          src: item,
         }))}
         open={open}
         close={() => setOpen(false)}

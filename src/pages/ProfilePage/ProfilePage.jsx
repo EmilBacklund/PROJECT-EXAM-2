@@ -3,28 +3,44 @@ import ProfileMain from "./ProfileMain";
 import { getItem } from "../../utils/storage";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import getUserProfile from "../../api/getUserProfile";
 
 const ProfilePage = () => {
   const user = getItem("user");
-  const { userId } = useParams();
+  const { userName } = useParams();
   const [isLoggedInUser, setIsLoggedInUser] = useState(false);
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    if (user.id == userId) {
+    if (user.name == userName) {
       setIsLoggedInUser(true);
     } else {
       setIsLoggedInUser(false);
     }
-  }, [user.id, userId]);
+  }, [user.name, userName]);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const fetchedProfile = await getUserProfile(userName);
+        setProfile(fetchedProfile);
+        console.log("profile: ", profile); //
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchProfile(); // Call the function
+  }, [userName]);
 
   return (
     <>
       <ProfileHeader
         isLoggedInUser={isLoggedInUser}
-        userId={userId}
+        userName={userName}
         user={user}
+        profile={profile}
       />
-      <ProfileMain />
+      <ProfileMain profile={profile} />
     </>
   );
 };

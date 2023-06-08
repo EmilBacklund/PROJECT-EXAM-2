@@ -52,11 +52,11 @@ const SearchResults = () => {
     setFavoriteVenues(isFavoriteArray.map((v, i) => v || isCollectionArray[i]));
   }, [filteredVenues, open]);
 
-  const truncateTitle = (title, length = 17) => {
-    if (title.length > length) {
-      return `${title.substring(0, length)}..`;
+  const truncateName = (name, length = 17) => {
+    if (name.length > length) {
+      return `${name.substring(0, length)}..`;
     }
-    return title;
+    return name;
   };
 
   return (
@@ -71,7 +71,7 @@ const SearchResults = () => {
               <div className="aspect-video max-h-[256px] w-full overflow-hidden">
                 <img
                   className="h-full w-full object-cover"
-                  src={venue.coverPhoto}
+                  src={venue.media[0]}
                 />
               </div>
             </NavLink>
@@ -79,10 +79,10 @@ const SearchResults = () => {
               <div className="flex items-start justify-between">
                 <div className="w-full">
                   <h3
-                    title={venue.title}
+                    name={venue.name}
                     className="w-3/4 cursor-default text-xl font-bold"
                   >
-                    {truncateTitle(venue.title)}
+                    {truncateName(venue.name)}
                   </h3>
                   <div className=" flex gap-1.5 text-sm">
                     <p>{venue.beds} beds</p>

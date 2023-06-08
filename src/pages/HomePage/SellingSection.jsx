@@ -1,21 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-// import Autoplay from 'embla-carousel-autoplay';
 import "../../styles/emblaStyles.css";
 import { NavLink, useNavigate } from "react-router-dom";
 
-const SellingSection = ({ title, data }) => {
-  // const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()]);
+const SellingSection = ({ title, data, processItems }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
-  const navigate = useNavigate();
-
-  console.log("data: ", data);
+  const [carouselData, setCarouselData] = useState([]);
 
   useEffect(() => {
-    if (emblaApi) {
-      console.log(emblaApi.slideNodes()); // Access API
+    if (data && processItems) {
+      setCarouselData(processItems(data));
+    } else if (data) {
+      // if processItems is not provided, assume that no processing is needed
+      setCarouselData(data);
     }
-  }, [emblaApi]);
+  }, [data, processItems]);
 
   return (
     <div className="section-container my-6 w-full text-center md:mb-[80px] md:mt-[80px] md:text-start lg:mb-[120px] lg:mt-[120px]">
@@ -23,19 +22,41 @@ const SellingSection = ({ title, data }) => {
       <div className="embla" ref={emblaRef}>
         <div className="embla__container">
           {!data && <p>Loading....</p>}
-          {data &&
-            data.map((item, index) => (
-              <NavLink key={index} to={item.id ? `/venue/${item.id}` : "#"}>
-                <div className="sellingSectionCard embla__slide">
-                  <img
-                    loading="lazy"
-                    className="aspect-square h-full object-cover"
-                    src={item.image}
-                    alt=""
-                  />
+          {carouselData &&
+            carouselData.map((item, index) => {
+              return (
+                <div key={index} className="embla__slide group  aspect-square ">
+                  <NavLink
+                    to={
+                      title === "Affordable Escapes"
+                        ? item.id
+                          ? `/venue/${item.id}`
+                          : "#"
+                        : "/"
+                    }
+                  >
+                    <div className="relative overflow-hidden rounded-bl-[8px] rounded-br-[32px] rounded-tl-[32px] rounded-tr-[8px]">
+                      <img
+                        loading="lazy "
+                        className="aspect-square h-full object-cover transition duration-500 ease-out group-hover:scale-105"
+                        src={item.media[0]}
+                        alt=""
+                      />
+                      {title === "Popular Destinations" && (
+                        <div className="popularDestinationGradient absolute bottom-0 w-full bg-opacity-80 py-1 text-center text-lg font-bold md:h-[66px] md:py-0 md:text-2xl md:leading-[66px]">
+                          {item.location.city}, {item.location.country}
+                        </div>
+                      )}
+                    </div>
+                  </NavLink>
+                  {item.price && (
+                    <p className="mt-2 text-center text-lg text-gray-500 transition duration-300 group-hover:text-textBlack lg:text-2xl">
+                      {item.price} kr / night
+                    </p>
+                  )}
                 </div>
-              </NavLink>
-            ))}
+              );
+            })}
         </div>
       </div>
     </div>

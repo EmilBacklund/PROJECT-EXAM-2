@@ -67,18 +67,20 @@ const SearchComponent = () => {
 
     let filteredVenues = venues.filter((venue) => {
       const venueLocation =
-        `${venue.location.country} ${venue.location.state} ${venue.location.city} ${venue.location.zip} ${venue.location.street}`.toLowerCase();
+        `${venue.location.country} ${venue.location.continent} ${venue.location.city} ${venue.location.zip} ${venue.location.adress}`.toLowerCase();
       const normalizedVenueLocation = normalizeString(venueLocation);
 
       return locationParts.every((part) =>
         normalizedVenueLocation.includes(part)
       );
     });
-    filteredVenues = filteredVenues.filter((venue) => venue.guests >= guests);
+    filteredVenues = filteredVenues.filter(
+      (venue) => venue.maxGuests >= guests
+    );
     filteredVenues = filteredVenues.filter((venue) => {
       return !venue.bookings.some((booking) => {
-        const bookingStartDate = normalizeDate(new Date(booking.start));
-        const bookingEndDate = normalizeDate(new Date(booking.end));
+        const bookingStartDate = normalizeDate(new Date(booking.dateFrom));
+        const bookingEndDate = normalizeDate(new Date(booking.dateTo));
         const normalizedStartDate = normalizeDate(startDate);
         const normalizedEndDate = normalizeDate(endDate);
         return (
@@ -118,6 +120,8 @@ const SearchComponent = () => {
           if (filteredVenues.length > 0) {
             const path = generatePath(locationValue);
             navigate(path);
+          } else {
+            setMessage("No venues matched your search.");
           }
         } else {
           setMessage("Request failed. Please try again.");

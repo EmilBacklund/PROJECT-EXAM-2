@@ -12,6 +12,7 @@ const UpcomingStays = () => {
     const fetchUserBookings = async () => {
       const response = await dispatch(getUserBookings());
       setUserBookingData(response);
+      console.log("userBookingData: ", userBookingData);
     };
     fetchUserBookings();
   }, [dispatch]);
@@ -24,8 +25,8 @@ const UpcomingStays = () => {
     <div className="section-container divide-gray-[#D9D9D9] divide-y">
       {userBookingData &&
         userBookingData.map((booking, index) => {
-          const formattedStart = formatDate(booking.start);
-          const formattedEnd = formatDate(booking.end);
+          const formattedStart = formatDate(booking.dateFrom);
+          const formattedEnd = formatDate(booking.dateTo);
 
           return (
             <div
@@ -36,12 +37,12 @@ const UpcomingStays = () => {
                 <div className="flex h-full flex-col justify-between ">
                   <div>
                     <h3 className="mb-2 text-2xl font-bold capitalize text-primaryRed profileSmallScreen:mb-0">
-                      {booking.venue.title}
+                      {booking.venue.name}
                     </h3>
                     <p className="mb-1 font-bold text-primaryRed profileSmallScreen:mb-0">
                       Host:{" "}
                       <span className="font-normal text-textBlack">
-                        {booking.venue.owner.name}
+                        {/* {booking.venue.owner.name} */}
                       </span>
                     </p>
                   </div>
@@ -69,7 +70,7 @@ const UpcomingStays = () => {
                 </button>
                 <button
                   onClick={() => {
-                    navigate(`/venue/${booking.venue.venueId}`);
+                    navigate(`/venue/${booking.venue.id}`);
                   }}
                   className=" w-max rounded-lg border-2 border-primaryRed bg-transparent px-4 py-2.5 text-sm font-bold text-primaryRed outline-offset-1 outline-textBlack hover:border-secondaryOrange hover:text-secondaryOrange focus:outline"
                 >

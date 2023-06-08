@@ -137,6 +137,7 @@ const RegisterVenue = () => {
                   postVenue(postData)
                     .then((venueId) => {
                       console.log("Post succeeded:", venueId);
+                      console.log(postData);
                       dispatch(submitAttempted(false));
                       navigate(`/venue/${venueId.id}`);
                       // Handle success (e.g., navigate to a different page)

@@ -3,5 +3,16 @@ export const setItem = (key, value) => {
 };
 
 export const getItem = (key) => {
-  return JSON.parse(localStorage.getItem(key));
+  const item = localStorage.getItem(key);
+
+  if (!item) {
+    return null; // or whatever you prefer
+  }
+
+  try {
+    return JSON.parse(item);
+  } catch (error) {
+    console.error("Parsing error:", error);
+    return null; // or whatever you prefer
+  }
 };

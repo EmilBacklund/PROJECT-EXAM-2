@@ -55,13 +55,15 @@ const SingleDetailVenuePage = () => {
     const bookingData = {
       dateFrom: fromDate,
       dateTo: toDate,
+      guests: venueData.maxGuests,
+      venueId: venueData.id,
     };
 
     console.log("bookingData: ", bookingData);
 
     try {
       if (fromDate && toDate !== null) {
-        await postBooking(venueData.id, bookingData);
+        await postBooking(bookingData);
         setBookingMessage(false);
         console.log("Data sent to the server!");
         navigate("/dashboard");
@@ -352,7 +354,7 @@ const SingleDetailVenuePage = () => {
                           key={index}
                           className={`mb-4 flex w-1/2 flex-col items-center gap-1 smallScreen:flex-row smallScreen:gap-4 md:w-1/3 ${
                             venueData.meta[amenity] === false
-                              ? "opacity-50"
+                              ? "cursor-not-allowed opacity-20"
                               : ""
                           }`}
                         >

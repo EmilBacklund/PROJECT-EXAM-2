@@ -5,7 +5,7 @@ const SearchHeading = () => {
 
   return (
     <div className="mb-10">
-      <h2 className="section-container">{venueSearch}</h2>
+      <h2 className="section-container capitalize">{venueSearch}</h2>
       <div className="mt-2 h-0.5 w-full bg-primaryRed"></div>
     </div>
   );

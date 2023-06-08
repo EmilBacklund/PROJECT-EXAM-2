@@ -56,6 +56,7 @@ const displayedVenueStageSlice = createSlice({
     setStage: (state, action) => {
       state.stage = action.payload;
     },
+    resetState: () => initialState,
     incrementStage: (state) => {
       state.stage = state.stage + 1;
     },
@@ -77,6 +78,7 @@ const displayedVenueStageSlice = createSlice({
 
 export const {
   setStage,
+  resetState,
   incrementStage,
   decrementStage,
   updateStageData,

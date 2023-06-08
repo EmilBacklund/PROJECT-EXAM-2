@@ -67,6 +67,10 @@
   );
 }
 
+.popularDestinationGradient {
+  background: linear-gradient(90deg, rgba(235, 115, 122, 0.8) 0%, rgba(253, 126, 64, 0.8) 100%);
+}
+
 .inactiveShadowBtn {
   box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.25);
   transition: box-shadow 0.25s ease;

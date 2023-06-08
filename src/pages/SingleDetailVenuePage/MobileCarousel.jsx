@@ -49,7 +49,7 @@ const MobileCarousel = ({ slides, options }) => {
               >
                 <img
                   className="h-full w-full object-cover"
-                  src={slide.image ? slide.image : ""}
+                  src={slide ? slide : ""}
                 />
               </div>
             ))}

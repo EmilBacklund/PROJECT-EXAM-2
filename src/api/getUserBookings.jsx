@@ -9,7 +9,7 @@ const getUserBookings = () => async (dispatch) => {
   dispatch(setLoadingState(true));
   try {
     const response = await axios.get(
-      `http://localhost:8080/get/booking/user/${user.id}`,
+      `https://nf-api.onrender.com/api/v1/holidaze/profiles/${user.name}/bookings?_venue=true`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     console.log("Response data from getUserBookings", response.data);

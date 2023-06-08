@@ -18,8 +18,7 @@ const Menu = ({ setMenuActive }) => {
 
   const user = getItem("user");
   const token = getItem("token");
-  const { venueManager } = getItem("user");
-
+  const venueManager = user ? user.venueManager : logOut();
   console.log("user: ", user);
   console.log("venueManager: ", venueManager);
 

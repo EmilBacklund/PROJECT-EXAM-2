@@ -37,7 +37,6 @@ const Main = () => {
       case "Login":
         return <Login email={email} password={password} />;
       default:
-        console.error("Something went wrong");
     }
   }, [selectedView, email, password]);
 
@@ -45,7 +44,6 @@ const Main = () => {
   const storedDesktopImage = localStorage.getItem("desktopImage");
 
   const checkWindowSize = () => {
-    console.log("checkWindowSize, rendered");
     const width = window.innerWidth;
     setWindowWidth(width);
   };

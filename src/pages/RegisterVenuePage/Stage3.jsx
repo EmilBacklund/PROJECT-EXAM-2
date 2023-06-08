@@ -37,9 +37,6 @@ function Map() {
     3
   );
 
-  console.log("addressComponents", addressComponents);
-  console.log("stage3", stageData.stage3);
-
   return (
     <div>
       <StageTemplate stageNumber={3} stageTitle={"Location"} />
@@ -85,8 +82,6 @@ const PlacesAutoComplete = ({
   } = usePlacesAutocomplete();
   const [initialSearchPerformed, setInitialSearchPerformed] = useState(false);
 
-  console.log(data);
-
   const handleSelect = async (address) => {
     setValue(address, false);
     clearSuggestions();
@@ -95,7 +90,6 @@ const PlacesAutoComplete = ({
     const { lat, lng } = await getLatLng(results[0]);
     setSelected({ lat, lng });
     setCenter({ lat, lng });
-    console.log("results: ", results);
 
     const locationType = results[0].types[0];
 

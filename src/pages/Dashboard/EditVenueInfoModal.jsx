@@ -81,8 +81,6 @@ const EditVenueInfoModal = ({
       setMedia((prevMedia) => [...prevMedia, { image: "", description: "" }]);
     }
   };
-  console.log("venueData", venueData);
-  console.log("formFields", formFields);
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog

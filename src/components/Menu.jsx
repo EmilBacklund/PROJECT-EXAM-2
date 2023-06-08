@@ -19,16 +19,12 @@ const Menu = ({ setMenuActive }) => {
   const user = getItem("user");
   const token = getItem("token");
   const venueManager = user ? user.venueManager : logOut();
-  console.log("user: ", user);
-  console.log("venueManager: ", venueManager);
 
   useEffect(() => {
     if (!user || !token) {
       logOut();
     }
   }, [setMenuActive]);
-
-  console.log("isAuthenticated asd: ", isAuthenticated);
 
   const loginView = () => {
     navigate("/");

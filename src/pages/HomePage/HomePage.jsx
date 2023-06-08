@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 const getPopularDestinations = (data) => {
   let bookingCounts = {};
 
-  // Count the number of bookings per city-country pair
   if (!data) return [];
   data.forEach((item) => {
     if (item.location.city && item.location.country) {
@@ -64,7 +63,9 @@ const getPopularDestinations = (data) => {
 const HomePage = () => {
   const [homeData, setHomeData] = useState(null);
 
-  console.log("popular destinations: ", getPopularDestinations(homeData));
+  useEffect(() => {
+    document.title = `Holidaze | Home`;
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {

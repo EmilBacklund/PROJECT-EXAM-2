@@ -1,18 +1,20 @@
 import ViewDropdown from "./ViewDropdown";
 import Searchbar from "./Searchbar";
-import displayedDashboardViewSlice from "../../store/modules/displayedDashboardViewSlice";
 import { useDispatch, useSelector } from "react-redux";
 import UpcomingStays from "./UpcomingStays";
 import ConfirmedGuests from "./ConfirmedGuests";
 import ManagingVenues from "./ManagingVenues";
+import { useEffect } from "react";
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
   const selectedView = useSelector(
     (state) => state.displayedDashboardView.selectedView
   );
 
-  console.log("selectedView: ", selectedView);
+  useEffect(() => {
+    document.title = `Holidaze | ${selectedView}`;
+  }, [selectedView]);
+
   return (
     <main>
       <nav className="mb-4 flex justify-center md:mb-12">

@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 const Stage5 = () => {
   const minPrice = 100;
-  const maxPrice = 110000;
+  const maxPrice = 30000;
   const step = 50;
   const stageData = useSelector((state) => state.displayedVenueStage.stageData);
   const dispatch = useDispatch();
@@ -108,8 +108,8 @@ const Stage5 = () => {
           type="range"
         />
         <div className="flex justify-between text-sm font-medium">
-          <p>Min 100 kr</p>
-          <p>Max 110 000 kr</p>
+          <p>Min {minPrice} kr</p>
+          <p>Max {maxPrice} kr</p>
         </div>
       </div>
     </div>

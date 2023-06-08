@@ -43,11 +43,8 @@ function UpdateProfilePage({ open, setOpen, profile }) {
       };
 
       const response = await editProfileApi(mediaBody, profile.name);
-      console.log("info: ", info);
-      console.log("response: ", response);
 
       if (response) {
-        console.log("Profile updated successfully");
         dispatch(setUserAvatar(info.avatar));
         setItem("user", {
           ...user,
@@ -70,7 +67,6 @@ function UpdateProfilePage({ open, setOpen, profile }) {
         };
         const venueResponse = await editVenueManager(venueBody, profile.name);
 
-        console.log("venueResponse: ", venueResponse);
         if (venueResponse) {
           setItem("user", {
             ...user,
@@ -79,7 +75,6 @@ function UpdateProfilePage({ open, setOpen, profile }) {
         }
         dispatch(setLoadingState(false));
       } else {
-        console.log("Profile update failed");
         setOpen(false);
         dispatch(
           setNotification({
@@ -95,7 +90,6 @@ function UpdateProfilePage({ open, setOpen, profile }) {
         );
       }
     } catch (error) {
-      console.log("error: ", error);
       setOpen(false);
       dispatch(setLoadingState(false));
       dispatch(

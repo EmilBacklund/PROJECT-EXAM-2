@@ -12,7 +12,6 @@ const getUserBookings = () => async (dispatch) => {
       `https://nf-api.onrender.com/api/v1/holidaze/profiles/${user.name}/bookings?_venue=true`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    console.log("Response data from getUserBookings", response.data);
     dispatch(setLoadingState(false));
     return response.data;
   } catch (error) {

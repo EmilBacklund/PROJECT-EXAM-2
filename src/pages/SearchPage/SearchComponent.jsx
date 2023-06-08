@@ -28,6 +28,10 @@ const SearchComponent = () => {
   const venueEndDateString = useSelector((state) => state.venues.endDate);
   const [guests, setGuests] = useState(guestValue ? guestValue : "");
 
+  useEffect(() => {
+    document.title = `Holidaze | ${venueSearch}`;
+  }, [venueSearch]);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
@@ -130,7 +134,6 @@ const SearchComponent = () => {
       .catch((error) => {
         dispatch(setLoadingState(false));
         setMessage("Error. Please try again.");
-        console.log("error", error);
       });
   };
 

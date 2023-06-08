@@ -8,7 +8,6 @@ const loginUser = (data, request) => {
         url: `https://nf-api.onrender.com/api/v1/holidaze/auth/login`,
         data: data,
       });
-      console.log("Response data from User post", response.data);
       resolve(response.data);
     } catch (error) {
       console.error("Error:", error.response?.status);

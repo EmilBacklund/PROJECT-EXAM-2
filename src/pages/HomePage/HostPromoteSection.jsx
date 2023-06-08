@@ -40,7 +40,7 @@ const HostPromoteSection = () => {
             "As a host on this platform, I've experienced a fantastic blend of
             profitability and simplicity. It's a stylish, secure, and
             user-friendly service that truly elevates my hosting experience." -
-            John D., Luxury Property Owner
+            John D, Property Owner
           </p>
         </div>
       </div>

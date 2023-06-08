@@ -11,7 +11,6 @@ const postVenue = (data) => {
         data,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log("Response data from Venue post", response.data);
       resolve(response.data);
     } catch (error) {
       console.error("Error:", error.response.status);

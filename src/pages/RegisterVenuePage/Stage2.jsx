@@ -8,7 +8,6 @@ const Stage2 = () => {
   const stageData = useSelector(
     (state) => state.displayedVenueStage.stageData
   ) || { stage2: { title: "", description: "" } };
-  console.log("stage2 data", stageData);
 
   const handleChange = handleValueChange(dispatch, stageData, 2);
 

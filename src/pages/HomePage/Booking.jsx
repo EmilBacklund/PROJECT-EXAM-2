@@ -86,7 +86,6 @@ const Booking = () => {
 
     getAllVenues()
       .then((response) => {
-        console.log("response", response);
         dispatch(setLoadingState(false));
 
         if (response) {

@@ -41,11 +41,6 @@ function SearchBreadCrumbs({ isLoading }) {
       let searchResult = res.filter((venue) => {
         let match = false;
 
-        // console.log("venue", venue);
-        // console.log("searchTerm", searchTerm);
-        // console.log("venueSearch", venueSearch);
-
-        // Check if search term matches location details
         const venueLocation = `${venue.location?.street} ${venue.location?.city}, ${venue.location?.state}, ${venue.location?.country}`;
         if (venueLocation.toLowerCase().includes(searchTerm.toLowerCase())) {
           match = true;
@@ -91,13 +86,9 @@ function SearchBreadCrumbs({ isLoading }) {
         return match;
       });
 
-      console.log("searchResult", searchResult);
       dispatch(setFilteredVenues(searchResult));
       const path = generatePath(locationParts.slice(0, index + 1).join(","));
       navigate(path);
-
-      // Redirect to the new page with the searchResult
-      // You need to implement this part
     });
   };
 

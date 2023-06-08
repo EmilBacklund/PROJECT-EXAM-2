@@ -12,7 +12,6 @@ const UpcomingStays = () => {
     const fetchUserBookings = async () => {
       const response = await dispatch(getUserBookings());
       setUserBookingData(response);
-      console.log("userBookingData: ", userBookingData);
     };
     fetchUserBookings();
   }, [dispatch]);

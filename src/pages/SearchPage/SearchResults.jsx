@@ -113,7 +113,12 @@ const SearchResults = () => {
                 <div className="flex items-center gap-2">
                   <img src="/images/starsor.svg" />
                   <p className="text-sm font-bold">
-                    {!venue.rating && "No rating yet"}
+                    {venue.rating === 0 && "No rating yet"}
+                    {venue.rating > 0 && (
+                      <span className="font-josefinsSans text-4xl font-normal">
+                        {venue.rating}
+                      </span>
+                    )}
                   </p>
                 </div>
                 <div className="text-right">

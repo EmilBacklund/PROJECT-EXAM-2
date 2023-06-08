@@ -8,6 +8,10 @@ const DreamStaysPage = () => {
   const [showCreateCollectionModal, setCreateCollectionModal] = useState(false);
 
   useEffect(() => {
+    document.title = `Holidaze | favorites`;
+  }, []);
+
+  useEffect(() => {
     const localFavorites = localStorage.getItem("Favorites");
     const localCollections = localStorage.getItem("collections");
 
@@ -19,9 +23,6 @@ const DreamStaysPage = () => {
       setCollections(JSON.parse(localCollections));
     }
   }, [showCreateCollectionModal]);
-
-  console.log("favorites: ", favorites);
-  console.log("collections: ", collections);
 
   return (
     <main className="section-container">

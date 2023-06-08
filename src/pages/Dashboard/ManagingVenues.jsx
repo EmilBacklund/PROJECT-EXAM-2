@@ -24,12 +24,9 @@ const ManagingVenues = () => {
       .then((res) => {
         setVenues(res);
         dispatch(setLoadingState(false));
-
-        console.log("res", res);
       })
       .catch((error) => {
         dispatch(setLoadingState(false));
-        console.log(error);
       });
   }, []);
 
@@ -41,11 +38,9 @@ const ManagingVenues = () => {
         dispatch(setLoadingState(false));
         setOpen(true);
         setSingleVenueData(res);
-        console.log("res", res);
       });
     } catch (error) {
       dispatch(setLoadingState(false));
-      console.log(error);
     }
   };
 

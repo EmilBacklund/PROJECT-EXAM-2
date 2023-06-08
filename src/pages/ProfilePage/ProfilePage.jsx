@@ -12,6 +12,10 @@ const ProfilePage = () => {
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
+    document.title = `Holidaze | ${userName || user.name}`;
+  }, [userName, user.name]);
+
+  useEffect(() => {
     if (user.name == userName) {
       setIsLoggedInUser(true);
     } else {
@@ -24,12 +28,9 @@ const ProfilePage = () => {
       try {
         const fetchedProfile = await getUserProfile(userName);
         setProfile(fetchedProfile);
-        console.log("profile: ", profile); //
-      } catch (error) {
-        console.error(error);
-      }
+      } catch (error) {}
     };
-    fetchProfile(); // Call the function
+    fetchProfile();
   }, [userName]);
 
   return (

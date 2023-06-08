@@ -40,7 +40,6 @@ const AuthCarousel = () => {
     setIsDragTriggered(false);
     dispatch(setSelectedView(view));
     dispatch(setCarouselIndex(index));
-    console.log(currentIndex);
 
     if (index === 0) {
       goPrev();

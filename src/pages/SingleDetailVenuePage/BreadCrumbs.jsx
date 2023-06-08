@@ -3,19 +3,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import getAllVenue from "../../api/getAllVenues";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoadingState } from "../../store/modules/loaderSlice";
-import normalizeString from "../../utils/normalizeString";
 import {
   setFilteredVenues,
   setVenueSearch,
 } from "../../store/modules/venuesSlice";
-import { useEffect } from "react";
 
 function BreadCrumbs({ venueData, isLoading }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { venueSearch } = useSelector((state) => state.venues);
-
-  console.log("venueSearch: ", venueSearch);
 
   const handleSearch = (venueSearch) => {
     dispatch(setLoadingState(true));

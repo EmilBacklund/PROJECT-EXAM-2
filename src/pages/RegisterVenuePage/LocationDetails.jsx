@@ -26,7 +26,6 @@ export const handleMultipleValueChange = (dispatch, stageData, stage) => {
 const LocationDetails = ({ addressComponents }) => {
   const dispatch = useDispatch();
   const stageData = useSelector((state) => state.displayedVenueStage.stageData);
-  console.log("stage3", stageData);
 
   const handleChange = handleValueChange(dispatch, stageData, 3);
   const handleMultipleUpdates = useCallback(

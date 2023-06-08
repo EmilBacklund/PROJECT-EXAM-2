@@ -29,7 +29,6 @@ const Login = ({ email, password }) => {
 
     try {
       const response = await loginUser(user, "POST");
-      console.log("response: ", response);
       setErrorMessage("");
 
       if (response.accessToken) {

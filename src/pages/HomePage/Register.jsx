@@ -36,13 +36,10 @@ const Register = ({ onRegisterSuccess }) => {
       birthDate,
     };
 
-    console.log(user.name);
-
     const eighteenYearsAgo = new Date();
     eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
 
     try {
-      console.log("birthDate: ", birthDate);
       if (!firstname || !lastname || !email || !password || !birthDate) {
         setMessage("Please fill in all fields");
         return;
@@ -62,7 +59,6 @@ const Register = ({ onRegisterSuccess }) => {
 
       const response = await registerUser(user, "POST");
 
-      console.log("Response from registerUser: ", response);
       if (response) {
         dispatch(setSelectedView("Login"));
         dispatch(setCarouselIndex(0));
@@ -71,7 +67,6 @@ const Register = ({ onRegisterSuccess }) => {
         setMessage(response.data.errors[0].message);
       }
     } catch (error) {
-      console.error("This is error: ", error);
       setMessage(error.response.data.errors[0].message);
     }
   };

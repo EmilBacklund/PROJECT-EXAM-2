@@ -11,8 +11,6 @@ const Stage6 = () => {
     (state) => state.displayedVenueStage.stageData.stage6
   );
 
-  // console.log(stageData.coverPhoto);
-
   const handleButtonClick = (button) => {
     setClickedButton(button);
     setOpen(true);

@@ -17,7 +17,6 @@ const getUserVenueBookings = () => async (dispatch) => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    console.log("Response data from getUserVenueBookings", response.data);
     dispatch(setLoadingState(false));
     return response.data;
   } catch (error) {

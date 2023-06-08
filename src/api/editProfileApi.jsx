@@ -10,7 +10,6 @@ const editProfileApi = async (body, user) => {
       body,
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    console.log("Response data from editProfileApi", response.data);
     return response.data;
   } catch (error) {
     console.error("Edit avatar failed: ", error);

@@ -39,9 +39,10 @@ const TrendingCard = ({ flexDirection, data, secondCard, firstCard }) => {
   return (
     <>
       {trendingHomes &&
-        trendingHomes.map((home) => {
+        trendingHomes.map((home, index) => {
           return (
             <div
+              key={index}
               className={`section-container mb-10 flex flex-col ${flexDirection} md:mb-20 md:gap-6`}
             >
               <div className="aspect-video max-h-[400px] w-full overflow-hidden rounded-bl-[8px] rounded-br-[32px] rounded-tl-[32px] rounded-tr-[8px] bg-white md:aspect-auto md:flex-1">

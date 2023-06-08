@@ -62,7 +62,6 @@ const AddImageModal = ({ open, setOpen, clickedButton }) => {
         },
       })
     );
-    console.log(stageData);
     setShowMessage(true);
   };
 

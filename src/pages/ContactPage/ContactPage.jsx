@@ -2,8 +2,13 @@ import { FaGithubSquare } from "react-icons/fa";
 import { FaTwitterSquare } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+import { useEffect } from "react";
 
 const ContactPage = () => {
+  useEffect(() => {
+    document.title = "Holidaze | Contact";
+  }, []);
+
   return (
     <main className="mx-auto w-full smallScreen:w-11/12 smallScreen:max-w-[1440px]">
       <h1 className=" mb-6 mt-4 text-center text-2xl smallScreen:text-left">

@@ -17,7 +17,6 @@ export default function RegisterProgression() {
   const dispatch = useDispatch();
 
   const isValid = (stage) => {
-    console.log("StageData: ", stageData);
     if (!stageData) {
       return false;
     }
@@ -58,14 +57,11 @@ export default function RegisterProgression() {
     for (let i = 1; i <= 6; i++) {
       if (!isValid(i)) {
         valid = false;
-        console.log("stagezzzzz ", i, " is not valid");
         break;
       }
     }
     return dispatch(setAllStagesAreValid(valid));
   };
-
-  console.log("Are all stages valid? ", areAllStagesValid().payload);
 
   let stages = [
     {

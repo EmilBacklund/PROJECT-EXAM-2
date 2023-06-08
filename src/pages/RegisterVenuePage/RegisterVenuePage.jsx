@@ -22,6 +22,10 @@ const RegisterVenue = () => {
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    document.title = `Holidaze | ${currentStage}/6`;
+  }, [currentStage]);
+
   let postData = {};
 
   if (stageData && allStagesAreValid) {
@@ -136,14 +140,11 @@ const RegisterVenue = () => {
               : () => {
                   postVenue(postData)
                     .then((venueId) => {
-                      console.log("Post succeeded:", venueId);
-                      console.log(postData);
                       dispatch(submitAttempted(false));
                       navigate(`/venue/${venueId.id}`);
                       // Handle success (e.g., navigate to a different page)
                     })
                     .catch((error) => {
-                      console.error("Post failed:", error);
                       setError(error.response.data.errors);
                       dispatch(submitAttempted(true));
                       // Handle error (e.g., show a message to the user)

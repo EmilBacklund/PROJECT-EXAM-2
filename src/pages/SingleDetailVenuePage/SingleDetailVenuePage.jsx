@@ -37,18 +37,24 @@ const SingleDetailVenuePage = () => {
 
   const isMobileView = windowWidth <= 768;
 
-  const bookedDates = venueData?.bookings?.map((booking) => {
-    const startDate = new Date(booking.dateFrom);
-    const endDate = new Date(booking.dateTo);
+  const bookedDates =
+    venueData?.bookings?.map((booking) => {
+      const startDate = new Date(booking.dateFrom);
+      const endDate = new Date(booking.dateTo);
 
-    // Add one day to the start date
-    startDate.setDate(startDate.getDate() - 1);
+      startDate.setDate(startDate.getDate() - 1);
 
-    return {
-      dateFrom: startDate,
-      dateTo: endDate,
-    };
-  });
+      return {
+        dateFrom: startDate,
+        dateTo: endDate,
+      };
+    }) || [];
+
+  useEffect(() => {
+    if (venueData) {
+      console.log("venueData", venueData);
+    }
+  }, [venueData]);
 
   async function handleBooking() {
     dispatch(setSelectedView("Upcoming Stays"));
@@ -59,32 +65,27 @@ const SingleDetailVenuePage = () => {
       venueId: venueData.id,
     };
 
-    console.log("bookingData: ", bookingData);
-
     try {
       if (fromDate && toDate !== null) {
         await postBooking(bookingData);
         setBookingMessage(false);
-        console.log("Data sent to the server!");
         navigate("/dashboard");
       } else {
         setBookingMessage(true);
       }
     } catch (error) {
-      console.error(error);
       setBookingMessage(true);
     }
   }
 
   const isDateBooked = (date) => {
-    return bookedDates.some((range) => {
-      return date >= range.dateFrom && date <= range.dateTo;
-    });
+    return (
+      bookedDates &&
+      bookedDates.some((range) => {
+        return date >= range.dateFrom && date <= range.dateTo;
+      })
+    );
   };
-
-  console.log("bookedDates: ", bookedDates);
-  console.log("fromDate: ", fromDate);
-  console.log("toDate: ", toDate);
 
   useEffect(() => {
     const existingFavorites =
@@ -102,9 +103,9 @@ const SingleDetailVenuePage = () => {
     setIsFavorite(isVenueInFavorites || isVenueInCollections);
   }, [venueData]);
 
-  const street = venueData?.location.street?.replace(/ /g, "+") || "";
+  const address = venueData?.location.address?.replace(/ /g, "+") || "";
   const city = venueData?.location.city?.replace(/ /g, "+") || "";
-  const state = venueData?.location.state?.replace(/ /g, "+") || "";
+  const continent = venueData?.location.continent?.replace(/ /g, "+") || "";
 
   const highlightRange = ({ date, view }) => {
     if (view !== "month" || !fromDate || !toDate) {
@@ -158,17 +159,13 @@ const SingleDetailVenuePage = () => {
   }
 
   const numberOfDays = toDate ? calculateDateDifference(fromDate, toDate) : 1;
-  console.log("number of days:", numberOfDays);
-  console.log("fromDate:", fromDate);
 
   useEffect(() => {
     dispatch(getVenue(id, isAuthenticated))
       .then((data) => {
         setVenueData(data);
       })
-      .catch((error) => {
-        console.error("Failed to fetch venue data:", error);
-      });
+      .catch((error) => {});
   }, [id, dispatch]);
 
   useEffect(() => {
@@ -183,8 +180,6 @@ const SingleDetailVenuePage = () => {
     }
   }, [fromDate, venueData]);
 
-  console.log("venueData", venueData);
-
   return (
     <>
       {!isLoading && venueData && <BreadCrumbs venueData={venueData} />}
@@ -198,7 +193,7 @@ const SingleDetailVenuePage = () => {
           </div>
           <main className=" mt-4 sm:mt-10">
             <div className="section-container flex items-baseline gap-4">
-              <h2 className="mb-2">{venueData.title}</h2>
+              <h2 className="mb-2 capitalize">{venueData.name}</h2>
               {!isFavorite && (
                 <FaRegHeart
                   onClick={() => setOpen(true)}
@@ -229,9 +224,10 @@ const SingleDetailVenuePage = () => {
             <div className="section-container">
               <div className="mb-4 flex flex-wrap justify-between gap-2 text-sm font-bold sm:mb-10 md:text-xl lg:font-semibold">
                 <div className="mr-10">
-                  {!venueData.rating.length && <div>Currently no rating</div>}
+                  {venueData.rating === 0 && <div>Currently no rating</div>}
+                  {venueData.rating > 0 && <div>{venueData.rating}</div>}
                 </div>
-                <div className="mr-10">{venueData.squareMeter}m²</div>
+                <div className="mr-10">Max guests: {venueData.maxGuests}</div>
                 <div className="mr-10">{venueData.price}kr /night</div>
                 <div>
                   {venueData.beds} beds · {venueData.bathrooms} bathrooms
@@ -324,14 +320,17 @@ const SingleDetailVenuePage = () => {
               </div>
               <section className="mt-10 sm:mt-20">
                 <p className="font-semibold">
-                  {venueData.location.street + ","}{" "}
-                  {venueData.location.city + ","}{" "}
-                  {venueData.location.state + ","} {venueData.location.country}
+                  {venueData.location.address &&
+                    venueData.location.address + ","}{" "}
+                  {venueData.location.city && venueData.location.city + ","}{" "}
+                  {venueData.location.continent &&
+                    venueData.location.continent + ","}{" "}
+                  {venueData.location.country}
                 </p>
                 <div className="w-full">
                   <img
                     className="min-h-[200px] w-full rounded object-cover"
-                    src={`https://maps.googleapis.com/maps/api/staticmap?center=${street},${city},${state}&zoom=${
+                    src={`https://maps.googleapis.com/maps/api/staticmap?center=${address},${city},${continent}&zoom=${
                       isMobileView ? "13" : "11"
                     }&size=700x250&scale=2&maptype=roadmap
                   &markers=color:0xFD7E40%7Clabel:%7C59.4334664,17.8277448

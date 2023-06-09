@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { setSelectedView } from "../store/modules/displayedHomepageViewSlice";
 import { setCarouselIndex } from "../store/modules/carouselIndexSlice";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import { getItem } from "../utils/storage";
 
 const Menu = ({ setMenuActive }) => {
@@ -16,6 +17,7 @@ const Menu = ({ setMenuActive }) => {
   );
 
   const user = getItem("user");
+  const venueManager = user ? user.venueManager : false;
 
   const loginView = () => {
     navigate("/");

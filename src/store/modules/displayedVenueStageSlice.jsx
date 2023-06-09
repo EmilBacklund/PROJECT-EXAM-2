@@ -1,57 +1,59 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const displayedVenueStageSlice = createSlice({
-  name: "displayedVenueStage",
-  initialState: {
-    stage: 0,
-    allStagesAreValid: false,
-    submitAttempted: false,
-    stageData: {
-      stage1: {},
-      stage2: {},
-      stage3: {},
-      stage4: [],
-      stage5: {},
-      stage6: {
-        coverPhoto: {
-          img: null,
-          description: "",
-        },
-        photo1: {
-          img: null,
-          description: "",
-        },
-        photo2: {
-          img: null,
-          description: "",
-        },
-        photo3: {
-          img: null,
-          description: "",
-        },
-        photo4: {
-          img: null,
-          description: "",
-        },
-        photo5: {
-          img: null,
-          description: "",
-        },
-        photo6: {
-          img: null,
-          description: "",
-        },
-        photo7: {
-          img: null,
-          description: "",
-        },
-        photo8: {
-          img: null,
-          description: "",
-        },
+const initialState = {
+  stage: 0,
+  allStagesAreValid: false,
+  submitAttempted: false,
+  stageData: {
+    stage1: {},
+    stage2: {},
+    stage3: {},
+    stage4: [],
+    stage5: {},
+    stage6: {
+      coverPhoto: {
+        img: null,
+        description: "",
+      },
+      photo1: {
+        img: null,
+        description: "",
+      },
+      photo2: {
+        img: null,
+        description: "",
+      },
+      photo3: {
+        img: null,
+        description: "",
+      },
+      photo4: {
+        img: null,
+        description: "",
+      },
+      photo5: {
+        img: null,
+        description: "",
+      },
+      photo6: {
+        img: null,
+        description: "",
+      },
+      photo7: {
+        img: null,
+        description: "",
+      },
+      photo8: {
+        img: null,
+        description: "",
       },
     },
   },
+};
+
+const displayedVenueStageSlice = createSlice({
+  name: "displayedVenueStage",
+  initialState,
   reducers: {
     setStage: (state, action) => {
       state.stage = action.payload;

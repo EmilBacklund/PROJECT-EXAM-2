@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { setSelectedView } from "../store/modules/displayedHomepageViewSlice";
 import { setCarouselIndex } from "../store/modules/carouselIndexSlice";
 import { useSelector } from "react-redux";
+import { getItem } from "../utils/storage";
 
 const Menu = ({ setMenuActive }) => {
   const location = useLocation();
@@ -13,6 +14,8 @@ const Menu = ({ setMenuActive }) => {
   const isAuthenticated = useSelector(
     (state) => state.authentication.isAuthenticated
   );
+
+  const user = getItem("user");
 
   const loginView = () => {
     navigate("/");

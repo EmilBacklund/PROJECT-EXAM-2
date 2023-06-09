@@ -16,12 +16,11 @@ const Menu = ({ setMenuActive }) => {
     (state) => state.authentication.isAuthenticated
   );
 
-  const user = getItem("user");
-  const token = getItem("token");
-  const venueManager = user ? user.venueManager : logOut();
-
   useEffect(() => {
-    if (!user || !token) {
+    const user = getItem("user");
+    const token = getItem("token");
+
+    if (!user || !token || !user.venueManager) {
       logOut();
     }
   }, [setMenuActive]);

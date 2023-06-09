@@ -20,7 +20,7 @@ const Menu = ({ setMenuActive }) => {
     const user = getItem("user");
     const token = getItem("token");
 
-    if (!user || !token || !user.venueManager) {
+    if (!user || !token) {
       logOut();
     }
   }, [setMenuActive]);

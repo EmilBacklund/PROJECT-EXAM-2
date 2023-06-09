@@ -24,6 +24,7 @@ const EditVenueInfoModal = ({
     bathrooms: "",
     guests: "",
     media: "",
+    description: "",
   });
   const [media, setMedia] = useState([]);
   const [mediaFieldCount, setMediaFieldCount] = useState(1);
@@ -35,12 +36,13 @@ const EditVenueInfoModal = ({
   useEffect(() => {
     setVenueData(singleVenueData);
     setFormFields({
-      title: singleVenueData?.title || "",
+      title: singleVenueData?.name || "",
       price: singleVenueData?.price || "",
       squareMeter: singleVenueData?.squareMeter || "",
       beds: singleVenueData?.beds || "",
       bathrooms: singleVenueData?.bathrooms || "",
-      guests: singleVenueData?.guestQuantity || "",
+      guests: singleVenueData?.maxGuests || "",
+      description: singleVenueData?.description || "",
     });
     const initialMedia = singleVenueData?.media || [];
     setMedia(initialMedia);
@@ -63,22 +65,20 @@ const EditVenueInfoModal = ({
     }
   };
 
-  const handleMediaChange = (index, field, value) => {
+  const handleMediaChange = (index, value) => {
     setMedia((prevMedia) => {
-      if (prevMedia[index]) {
-        return prevMedia.map((item, idx) =>
-          idx === index ? { ...item, [field]: value } : item
-        );
-      } else {
-        return [...prevMedia, { [field]: value }];
-      }
+      const newMedia = [...prevMedia];
+      newMedia[index] = value;
+      const filteredMedia = newMedia.filter((item) => item !== "");
+
+      return filteredMedia;
     });
   };
 
   const handleNewMediaField = (index) => {
     if (index === mediaFieldCount && mediaFieldCount < 8) {
       setMediaFieldCount(mediaFieldCount + 1);
-      setMedia((prevMedia) => [...prevMedia, { image: "", description: "" }]);
+      setMedia((prevMedia) => [...prevMedia, ""]);
     }
   };
   return (
@@ -127,7 +127,10 @@ const EditVenueInfoModal = ({
                   {enabled && (
                     <p className="text-emerald-600">Your venue is active.</p>
                   )}
-                  <ToggleButton enabled={enabled} setEnabled={setEnabled} />
+                  <ToggleButton
+                    enabled={enabled || false}
+                    setEnabled={setEnabled}
+                  />
                 </div>
                 <div className=" flex flex-col gap-4 ">
                   <div className="flex justify-between gap-4">
@@ -223,9 +226,7 @@ const EditVenueInfoModal = ({
                       labelName="Cover Photo"
                       name="media"
                       value={media[0]?.image || ""}
-                      onChange={(e) =>
-                        handleMediaChange(0, "image", e.target.value)
-                      }
+                      onChange={(e) => handleMediaChange(0, e.target.value)}
                     />
                     <div className="relative mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-12">
                       <div className="absolute top-0 h-full w-full">
@@ -242,9 +243,7 @@ const EditVenueInfoModal = ({
                       <textarea
                         name="description"
                         value={media[0]?.description || ""}
-                        onChange={(e) =>
-                          handleMediaChange(0, "description", e.target.value)
-                        }
+                        onChange={(e) => handleMediaChange(0, e.target.value)}
                         className="mt-2 block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 
                               ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 
                               focus:ring-inset focus:ring-secondaryOrange sm:text-sm sm:leading-6"
@@ -262,20 +261,24 @@ const EditVenueInfoModal = ({
                     {Array(mediaFieldCount)
                       .fill()
                       .map((_, index) => (
-                        <div key={index + 1} className="">
+                        <div key={index + 1}>
+                          {index === mediaFieldCount - 1 && index !== 7 && (
+                            <p className="text-sm font-semibold text-emerald-600">
+                              Input URLs to add more images:
+                            </p>
+                          )}
+
                           <CustomInput
                             marginTop=""
                             required=""
                             labelName={`Photo ${index + 1}`}
                             placeholder="Photo URL"
-                            value={media[index + 1]?.image || ""}
+                            value={media[index + 1] || ""}
                             onChange={(e) => {
-                              handleMediaChange(
-                                index + 1,
-                                "image",
-                                e.target.value
-                              );
-                              handleNewMediaField(index + 1);
+                              handleMediaChange(index + 1, e.target.value);
+                              if (e.target.value !== "") {
+                                handleNewMediaField(index + 1);
+                              }
                             }}
                           />
                           <CustomInput
@@ -285,11 +288,6 @@ const EditVenueInfoModal = ({
                             placeholder="Photo description"
                             value={media[index + 1]?.description || ""}
                             onChange={(e) => {
-                              handleMediaChange(
-                                index + 1,
-                                "description",
-                                e.target.value
-                              );
                               handleNewMediaField(index + 1);
                             }}
                           />

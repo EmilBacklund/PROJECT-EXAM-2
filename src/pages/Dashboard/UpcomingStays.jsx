@@ -16,6 +16,12 @@ const UpcomingStays = () => {
     fetchUserBookings();
   }, [dispatch]);
 
+  useEffect(() => {
+    if (userBookingData) {
+      console.log(userBookingData);
+    }
+  }, [userBookingData]);
+
   const formatDate = (dateString) => {
     return new Date(dateString).toISOString().substring(0, 10);
   };

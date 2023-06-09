@@ -8,11 +8,10 @@ import EditVenueInfoModal from "./EditVenueInfoModal";
 import getVenue from "../../api/getVenue";
 
 const ManagingVenues = () => {
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState({});
   const [venues, setVenues] = useState([]);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [singleVenueData, setSingleVenueData] = useState(null);
   const isAuthenticated = useSelector(
     (state) => state.authentication.isAuthenticated
   );
@@ -23,7 +22,9 @@ const ManagingVenues = () => {
     getAllUserVenues()
       .then((res) => {
         setVenues(res);
+
         dispatch(setLoadingState(false));
+        console.log("venues", venues);
       })
       .catch((error) => {
         dispatch(setLoadingState(false));
@@ -36,8 +37,7 @@ const ManagingVenues = () => {
     try {
       dispatch(getVenue(venueId, isAuthenticated)).then((res) => {
         dispatch(setLoadingState(false));
-        setOpen(true);
-        setSingleVenueData(res);
+        setOpen(venueId);
       });
     } catch (error) {
       dispatch(setLoadingState(false));
@@ -46,13 +46,13 @@ const ManagingVenues = () => {
 
   return (
     <>
-      <div className="section-container">
+      <div className="section-container flex flex-col gap-4 divide-y-2">
         {venues.map((venue) => {
           return (
             <div key={venue.id}>
               <NavLink to={`/venue/${venue.id}`}>
-                <h3 className="mb-2 text-2xl font-bold capitalize text-primaryRed ">
-                  {venue.title}
+                <h3 className="mb-2 mt-4 text-2xl font-bold capitalize text-primaryRed ">
+                  {venue.name}
                 </h3>
               </NavLink>
               <div className="flex justify-between">
@@ -60,15 +60,23 @@ const ManagingVenues = () => {
                   <div className="aspect-video max-h-[166px] max-w-[295px]">
                     <img
                       className="dashboardImgShadow h-full w-full rounded-2xl object-cover"
-                      src={venue.coverPhoto}
+                      src={venue.media[0]}
                     />
                   </div>
                 </NavLink>
                 <div className="flex flex-col place-items-end justify-between gap-4">
                   <div className="flex flex-col items-end">
-                    {enabled && <p>Venue is active</p>}
-                    {!enabled && <p>Venue is not active</p>}
-                    <ToggleButton enabled={enabled} setEnabled={setEnabled} />
+                    {enabled[venue.id] && <p>Venue is active</p>}
+                    {!enabled[venue.id] && <p>Venue is not active</p>}
+                    <ToggleButton
+                      enabled={enabled[venue.id] || false}
+                      setEnabled={(isEnabled) =>
+                        setEnabled((prev) => ({
+                          ...prev,
+                          [venue.id]: isEnabled,
+                        }))
+                      }
+                    />
                   </div>
                   <button
                     onClick={() => {
@@ -85,11 +93,13 @@ const ManagingVenues = () => {
         })}
       </div>
       <EditVenueInfoModal
-        open={open}
+        open={!!open}
         setOpen={setOpen}
-        enabled={enabled}
-        setEnabled={setEnabled}
-        singleVenueData={singleVenueData}
+        enabled={enabled[open]}
+        setEnabled={(isEnabled) =>
+          setEnabled((prev) => ({ ...prev, [open]: isEnabled }))
+        }
+        singleVenueData={venues.find((venue) => venue.id === open)}
       />
     </>
   );

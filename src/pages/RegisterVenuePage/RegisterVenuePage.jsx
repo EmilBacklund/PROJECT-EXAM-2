@@ -28,18 +28,21 @@ const RegisterVenue = () => {
 
   let postData = {};
 
+  console.log("stageData", stageData);
+  console.log("allStagesAreValid", allStagesAreValid);
   if (stageData && allStagesAreValid) {
     postData = {
       maxGuests: stageData.stage1.guests,
       name: stageData.stage2.title,
       description: stageData.stage2.description,
       location: {
-        adress: stageData.stage3.street,
+        address: stageData.stage3.street,
         city: stageData.stage3.city,
         country: stageData.stage3.country,
         zip: stageData.stage3.zipCode,
         lat: stageData.stage3.lat,
         lng: stageData.stage3.lng,
+        continent: stageData.stage3.state,
       },
       meta: stageData.stage4,
       price: stageData.stage5.price,
@@ -48,8 +51,6 @@ const RegisterVenue = () => {
         .map((photo) => photo.img),
     };
   }
-
-  console.log("postData: ", postData);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -141,13 +142,14 @@ const RegisterVenue = () => {
                   postVenue(postData)
                     .then((venueId) => {
                       dispatch(submitAttempted(false));
+                      console.log("postData SUC: ", postData);
                       navigate(`/venue/${venueId.id}`);
-                      // Handle success (e.g., navigate to a different page)
                     })
                     .catch((error) => {
                       setError(error.response.data.errors);
+                      console.log(error.response.data.errors);
+                      console.log("postData ERR: ", postData);
                       dispatch(submitAttempted(true));
-                      // Handle error (e.g., show a message to the user)
                     });
                 }
           }

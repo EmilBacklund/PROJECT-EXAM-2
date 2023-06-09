@@ -63,6 +63,8 @@ export default function RegisterProgression() {
     return dispatch(setAllStagesAreValid(valid));
   };
 
+  console.log("Are all stages valid? ", areAllStagesValid().payload);
+
   let stages = [
     {
       stage: 1,

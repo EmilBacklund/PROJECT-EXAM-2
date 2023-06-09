@@ -20,7 +20,7 @@ const Menu = ({ setMenuActive }) => {
     const user = getItem("user");
     const token = getItem("token");
 
-    if (!user || !token) {
+    if (user && !token) {
       logOut();
     }
   }, [setMenuActive]);

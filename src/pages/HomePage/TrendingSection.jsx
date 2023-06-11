@@ -12,7 +12,6 @@ const TrendingSection = ({ data }) => {
         data={data}
         flexDirection={"md:flex-row"}
       />
-
       <TrendingCard
         key={2}
         secondCard={"secondCard"}

@@ -91,12 +91,14 @@ const HomePage = () => {
         processItems={getCheapVenues}
         key={1}
         title="Affordable Escapes"
+        delay={4500}
       />
       <SellingSection
         processItems={homeData ? getPopularDestinations : undefined}
         data={homeData}
         key={2}
         title="Popular Destinations"
+        delay={4000}
       />
       <TrendingSection data={homeData ? homeData : null} />
       <HostPromoteSection />

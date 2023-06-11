@@ -109,30 +109,31 @@ const Main = () => {
 
   return (
     <>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <div className="relative h-0 min-h-[600px] ">
-          <div className="absolute inset-0 max-h-[760px]">
-            {windowWidth > 768 && imageDesktop ? (
-              <img
-                className="h-full max-h-[760px] w-full object-cover"
-                src={imageDesktop.urls.full}
-                alt={imageDesktop.alt_description}
-              />
-            ) : (
-              imageMobile && (
-                <img
-                  className="h-full w-full object-cover "
-                  src={imageMobile.urls.full}
-                  alt={imageMobile.alt_description}
-                />
-              )
-            )}
-            {toggleView}
+      <div className="relative h-0 min-h-[600px] ">
+        {isLoading && (
+          <div className="relative h-0 min-h-[600px] w-full ">
+            <div className="skeleton"></div>
           </div>
+        )}
+        <div className="absolute inset-0 max-h-[760px]">
+          {windowWidth > 768 && imageDesktop ? (
+            <img
+              className="h-full max-h-[760px] w-full object-cover"
+              src={imageDesktop.urls.full}
+              alt={imageDesktop.alt_description}
+            />
+          ) : (
+            imageMobile && (
+              <img
+                className="h-full w-full object-cover "
+                src={imageMobile.urls.full}
+                alt={imageMobile.alt_description}
+              />
+            )
+          )}
+          {toggleView}
         </div>
-      )}
+      </div>
     </>
   );
 };

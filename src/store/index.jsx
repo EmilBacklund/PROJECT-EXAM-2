@@ -28,7 +28,7 @@ const reducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["displayedVenueStage", "authentication", "venues"], // Only persist displayedVenueStage slice
+  whitelist: ["displayedVenueStage", "authentication", "venues", "headerImage"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

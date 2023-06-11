@@ -11,8 +11,8 @@ function AddToFavorite({ open, setOpen, venueData, setIsFavorite }) {
   const [showModal, setShowModal] = useState(false);
   const [collections, setCollections] = useState([]);
   const id = venueData?.id;
-  const image = venueData?.media?.[0]?.image || venueData?.coverPhoto;
-  const title = venueData?.title;
+  const image = venueData?.media?.[0];
+  const title = venueData?.name;
   const [message, setMessage] = useState("");
 
   useEffect(() => {

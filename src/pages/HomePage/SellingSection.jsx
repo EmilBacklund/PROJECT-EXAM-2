@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import "../../styles/emblaStyles.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import Autoplay from "embla-carousel-autoplay";
 
-const SellingSection = ({ title, data, processItems }) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
+const SellingSection = ({ title, data, processItems, delay }) => {
+  const autoplayOptions = {
+    delay: delay,
+    rootNode: (emblaRoot) => emblaRoot.parentElement,
+  };
+
+  const [emblaRef] = useEmblaCarousel({ loop: true, align: "start" }, [
+    Autoplay(autoplayOptions),
+  ]);
   const [carouselData, setCarouselData] = useState([]);
 
   useEffect(() => {
     if (data && processItems) {
       setCarouselData(processItems(data));
     } else if (data) {
-      // if processItems is not provided, assume that no processing is needed
       setCarouselData(data);
     }
   }, [data, processItems]);

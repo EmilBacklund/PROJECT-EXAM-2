@@ -176,8 +176,9 @@ const Menu = ({ setMenuActive }) => {
               <div className="pb-3">
                 <NavLink
                   title={`${
-                    !venueManager &&
-                    "You need to be a venue manager to register a venue"
+                    !venueManager
+                      ? "You need to be a venue manager to register a venue"
+                      : ""
                   }`}
                   onClick={(event) => {
                     if (!venueManager) {

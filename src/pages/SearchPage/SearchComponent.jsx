@@ -151,12 +151,12 @@ const SearchComponent = () => {
   };
 
   return (
-    <div className="mb-2 sm:mb-10">
+    <div className="mb-4 sm:mb-10">
       {message.length > 0 && (
         <p className="font-bold text-red-500">{message}</p>
       )}
       <div className=" flex flex-col flex-wrap gap-2  md:flex-row">
-        <div className="min-w-[380px] flex-1">
+        <div className=" flex-1 md:min-w-[380px]">
           <Suggestions
             places={data}
             ready={ready}
@@ -169,7 +169,7 @@ const SearchComponent = () => {
             rounded="rounded-md"
           />
         </div>
-        <div className="flex min-w-[400px] gap-2 md:flex-1">
+        <div className="flex gap-2 md:min-w-[400px] md:flex-1">
           <DatePicker
             className="input input-shadow"
             value={startDate}

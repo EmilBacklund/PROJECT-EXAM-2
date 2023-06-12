@@ -1,15 +1,39 @@
 import { FaPlusCircle, FaHandPointRight, FaTrashAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import CreateCollectionModal from "../../components/CreateCollectionModal";
+import { useNavigate } from "react-router-dom";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 const DreamStaysPage = () => {
   const [favorites, setFavorites] = useState([]);
   const [collections, setCollections] = useState([]);
   const [showCreateCollectionModal, setCreateCollectionModal] = useState(false);
+  const navigate = useNavigate();
+  const [removedFavorites, setRemovedFavorites] = useState([]);
 
   useEffect(() => {
     document.title = `Holidaze | favorites`;
   }, []);
+
+  useEffect(() => {
+    console.log("removedFavorites: ", removedFavorites);
+  }, [removedFavorites]);
+
+  function handleFavoriteClick(favorite) {
+    let updatedFavorites = favorites.filter((fav) => fav.id !== favorite.id);
+
+    if (!removedFavorites.find((fav) => fav.id === favorite.id)) {
+      setRemovedFavorites([...removedFavorites, favorite]);
+    } else {
+      setRemovedFavorites(
+        removedFavorites.filter((fav) => fav.id !== favorite.id)
+      );
+      updatedFavorites = [...updatedFavorites, favorite];
+    }
+
+    setFavorites(updatedFavorites);
+    localStorage.setItem("Favorites", JSON.stringify(updatedFavorites));
+  }
 
   useEffect(() => {
     const localFavorites = localStorage.getItem("Favorites");
@@ -17,6 +41,7 @@ const DreamStaysPage = () => {
 
     if (localFavorites) {
       setFavorites(JSON.parse(localFavorites));
+      console.log("favorites: ", favorites);
     }
 
     if (localCollections) {
@@ -30,7 +55,7 @@ const DreamStaysPage = () => {
         open={showCreateCollectionModal}
         setOpen={setCreateCollectionModal}
       />
-      <h2 className="mt-4 md:mt-10">Dream Collection</h2>
+      <h2 className="mt-4 md:mb-4 md:mt-10">Dream Collection</h2>
       <div className="grid grid-cols-1 gap-2 profileSmallScreen:grid-cols-2 md:grid-cols-3 md:gap-4 lg:grid-cols-4">
         <button
           type="button"
@@ -66,26 +91,81 @@ const DreamStaysPage = () => {
             </button>
           ))}
       </div>
-      <div className="flex max-w-[453px] flex-col items-center gap-10 md:max-w-[925px] md:flex-row md:items-end md:justify-between">
-        <div className="max-w-[453px] md:flex-1">
-          <h2 className="mt-4 md:mt-10">Dream Stays</h2>
-          <p>
-            Save your favorite places to Dream Stays, and access them anytime
-            you wish. Browse, compare, and plan your ideal vacation with our
-            handpicked selections.
-          </p>
-          <button className="secondaryBtn group mt-4 flex items-center justify-center gap-2 uppercase transition-all duration-300 hover:bg-primaryRed hover:text-background">
-            <span>Find Accommodation's</span>
-            <span>
-              <FaHandPointRight className="w-0 animate-bounce-right opacity-0 transition-all duration-300 group-hover:h-6 group-hover:w-6 group-hover:opacity-100" />
-            </span>
-          </button>
+      <div
+        className={`
+      flex  flex-col items-center gap-10  md:flex-row md:items-end md:justify-between ${
+        favorites.length > 0 || removedFavorites.length > 0
+          ? ""
+          : "max-w-[453px] md:max-w-[925px]"
+      }`}
+      >
+        <div
+          className={` ${
+            favorites.length > 0 || removedFavorites.length > 0
+              ? ""
+              : "max-w-[453px] md:flex-1"
+          }`}
+        >
+          <h2 className="mt-4 md:mb-4 md:mt-10">Dream Stays</h2>
+          {(favorites.length > 0 || removedFavorites.length > 0) && (
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+              {
+                // Combine favorites and removedFavorites, remove duplicates based on 'id'
+                [...favorites, ...removedFavorites]
+                  .filter((v, i, a) => a.findIndex((t) => t.id === v.id) === i)
+                  .map((item, index) => (
+                    <div key={index} className="relative aspect-video">
+                      <div className="absolute right-2 top-2 z-20 rounded-full bg-background bg-opacity-80 p-2">
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => {
+                            handleFavoriteClick(item);
+                          }}
+                        >
+                          {!removedFavorites.find(
+                            (fav) => fav.id === item.id
+                          ) ? (
+                            <FaHeart className="h-6 w-6 text-primaryRed" />
+                          ) : (
+                            <FaRegHeart className="h-6 w-6 text-primaryRed" />
+                          )}
+                        </div>
+                      </div>
+                      <img
+                        className="h-full w-full cursor-pointer rounded-bl-lg rounded-br-[32px] rounded-tl-[32px] rounded-tr-lg object-cover"
+                        onClick={() => {
+                          navigate(`/venue/${item.id}`);
+                        }}
+                        src={item.image}
+                      />
+                    </div>
+                  ))
+              }
+            </div>
+          )}
+          {favorites.length === 0 && removedFavorites.length === 0 && (
+            <>
+              <p>
+                Save your favorite places to Dream Stays, and access them
+                anytime you wish. Browse, compare, and plan your ideal vacation
+                with our handpicked selections.
+              </p>
+              <button className="secondaryBtn group mt-4 flex items-center justify-center gap-2 uppercase transition-all duration-300 hover:bg-primaryRed hover:text-background">
+                <span>Find Accommodation's</span>
+                <span>
+                  <FaHandPointRight className="w-0 animate-bounce-right opacity-0 transition-all duration-300 group-hover:h-6 group-hover:w-6 group-hover:opacity-100" />
+                </span>
+              </button>
+            </>
+          )}
         </div>
-        <img
-          className="max-w-[125px] md:max-w-none "
-          src="/images/favoritePageIllustration.svg"
-          alt=""
-        />
+        {(!favorites.length || !removedFavorites.length) && (
+          <img
+            className="max-w-[125px] md:max-w-none "
+            src="/images/favoritePageIllustration.svg"
+            alt=""
+          />
+        )}
       </div>
     </main>
   );

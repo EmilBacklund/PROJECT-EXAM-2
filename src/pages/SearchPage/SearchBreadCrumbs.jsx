@@ -106,7 +106,7 @@ function SearchBreadCrumbs({ isLoading }) {
 
   return (
     <nav
-      className="mb-2 flex border-b border-gray-200 bg-white sm:mb-10"
+      className="mb-4 flex border-b border-gray-200 bg-white sm:mb-10"
       aria-label="Breadcrumb"
     >
       <ol

@@ -61,7 +61,7 @@ const SearchResults = () => {
 
   return (
     <>
-      <div className="section-container grid grid-cols-2 gap-x-6 gap-y-12">
+      <div className="mx-auto grid max-w-[1440px] grid-cols-1 gap-x-6 gap-y-12 md:w-11/12 md:grid-cols-2 md:px-0">
         {filteredVenues.map((venue, index) => (
           <div
             key={index}
@@ -111,7 +111,9 @@ const SearchResults = () => {
               </div>
               <div className="flex items-end justify-between">
                 <div className="flex items-center gap-2">
-                  <img src="/images/starsor.svg" />
+                  <div className="w-8 md:w-auto">
+                    <img src="/images/starsor.svg" />
+                  </div>
                   <p className="text-sm font-bold">
                     {venue.rating === 0 && "No rating yet"}
                     {venue.rating > 0 && (
@@ -122,8 +124,10 @@ const SearchResults = () => {
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xl font-semibold">{venue.price} /night</p>
-                  <p className="text-sm font-light underline">
+                  <p className="text-base font-semibold md:text-xl">
+                    {venue.price} /night
+                  </p>
+                  <p className="text-xs font-light underline md:text-sm">
                     {totalNights * venue.price === 0
                       ? venue.price
                       : totalNights * venue.price}

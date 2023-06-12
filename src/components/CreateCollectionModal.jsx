@@ -84,7 +84,7 @@ function CreateCollectionModal({ open, setOpen }) {
                     text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2  
                     sm:col-start-2 ${
                       value === "" || message !== ""
-                        ? "cursor-not-allowed bg-gray-300"
+                        ? "cursor-not-allowed bg-gray-300 "
                         : "bg-secondaryOrange hover:bg-[#EF6623] focus-visible:outline-[#EF6623]"
                     }}`}
                     onClick={saveCollection}
